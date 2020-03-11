@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Entrevoisins</string>
+    <string name="tab_neighbour_title">Mes voisins</string>
+    <string name="tab_favorites_title">Favoris</string>
+    <string name="activity_new_neighbour">Ajouter un voisin</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="about_me_title">A propos de moi</string>
+    <string name="action_settings">Settings</string>
+</resources>
