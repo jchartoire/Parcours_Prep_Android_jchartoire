@@ -37,4 +37,7 @@ Cadrage des fonctionnalités à ajouter :
 
 * Vous pouvez exécuter l'application, ainsi que ses tests, sur la machine virtuel de votre choix.
 
-<img src="./Images_GitHub/Screenshot_1584640571.png" width="400">
+<p align="center">
+  <img src="./Images_GitHub/Screenshot_1584640571.png" width="400">
+</p>
+
