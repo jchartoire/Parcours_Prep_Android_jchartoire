@@ -51,6 +51,7 @@
         android:backgroundTint="#fbfbfb"
         app:borderWidth="0dp"
         app:layout_anchor="@id/app_bar"
+        app:tint="#FFDA1E"
         app:layout_anchorGravity="bottom|end"
         app:srcCompat="@drawable/ic_star_border_black_24dp" />
 

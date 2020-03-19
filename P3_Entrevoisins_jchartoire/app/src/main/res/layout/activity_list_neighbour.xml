@@ -32,13 +32,13 @@
             app:tabIndicatorHeight="3dp">
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem"
+                android:id="@+id/tabItemNeighbours"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tab_neighbour_title" />
 
             <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItem2"
+                android:id="@+id/tabItemFavoris"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tab_favorites_title" />
