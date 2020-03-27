@@ -17,9 +17,9 @@ Cadrage des fonctionnalités à ajouter :
 [Note de cadrage](https://s3-eu-west-1.amazonaws.com/course.oc-static.com/projects/GEN+android+P3/De%CC%81veloppez+une+nouvelle+fonctionnalite%CC%81+pour+l%E2%80%99application+Entrevoisins-+Note+de+cadrage+(1).pdf)
 
 > Au clic sur un utilisateur, nouvel écran avec :
-> * Un bouton de retour à l'élément précédent ;
-> * L'avatar de l'utilisateur ;
-> * Le nom de l'utilisateur ;
+> * Un bouton de retour à l'élément précédent
+> * L'avatar de l'utilisateur
+> * Le nom de l'utilisateur
 > * Un bouton d'ajout du voisin à la liste de favoris
 > * Un onglet Favoris dans lequel les utilisateurs marqués comme favoris s'affichent.
 

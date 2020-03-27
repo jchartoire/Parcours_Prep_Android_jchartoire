@@ -20,14 +20,7 @@ import androidx.test.rule.ActivityTestRule;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
-import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
-import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
-import static androidx.test.espresso.matcher.ViewMatchers.isDescendantOfA;
-import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
-import static androidx.test.espresso.matcher.ViewMatchers.withId;
-import static androidx.test.espresso.matcher.ViewMatchers.withParentIndex;
-import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.core.IsNull.notNullValue;
@@ -59,7 +52,7 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_shouldNotBeEmpty() {
-        //First scroll to the position that needs to be matched and click on it.
+        // scroll to the position that needs to be matched and click on it.
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(matches(hasMinimumChildCount(1)));
     }
 
@@ -76,15 +69,18 @@ public class NeighboursListTest {
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT - 1));
     }
 
+    /**
+     * When we click on an item, a new detail page should launching
+     */
     @Test
     public void myNeighboursList_clickItem_shouldLaunchDetail_andShowNeihboursName() {
-        // Given : we store the name of the neighbour at position 4 of the list
+        // we store the name of the neighbour at position 4 of the list
         Neighbour neighbour = mApiService.getNeighbours().get(3);
         String neighbourName = neighbour.getName();
-        // When perform a click on the 4th item on view
+        // perform a click on the 4th item displayed
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(3, click()));
-        // Then : The detail activity is launching and neighbour's name in the detail content is the same as neighbour's name previously selected
-        onView(allOf(withId(R.id.textViewName), withText(neighbourName), isDisplayed())).check(matches(isDisplayed()));
+        // Then check if the textViewName field in detail activity contains neighbour's name
+        onView(allOf(withId(R.id.textViewName), isDisplayed())).check(matches(withText(neighbourName)));
     }
 
     /**
@@ -92,12 +88,12 @@ public class NeighboursListTest {
      */
     @Test
     public void myFavoritesNeighboursList_onlyContainsFavorites() {
-        // Given : there is no favorite at the beginning
+        // first, check there is no favorite at the beginning
         onView(allOf(withId(R.id.list_neighbours), withParentIndex(1))).check(withItemCount(0));
-        // When going to detail and add to favorite
+        // going to detail and add to favorite
         onView(allOf(withId(R.id.list_neighbours), withParentIndex(0))).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.favoriteFAB)).perform(click());
-        // Then : when going to favorite tab, there is just one new favorite added
+        // going to favorite tab, and check there is just one new favorite added
         onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
         onView(allOf(withText("Favoris"),isDescendantOfA(withId(R.id.tabs)))).perform(click());
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(1));

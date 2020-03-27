@@ -24,7 +24,7 @@ import static org.junit.Assert.assertTrue;
 public class NeighbourServiceTest {
 
     private NeighbourApiService service;
-    List<Neighbour> expectedNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
+    List<Neighbour> dummyNeighbours = DummyNeighbourGenerator.DUMMY_NEIGHBOURS;
 
 
     @Before
@@ -35,7 +35,7 @@ public class NeighbourServiceTest {
     @Test
     public void getNeighboursWithSuccess() {
         List<Neighbour> neighbours = service.getNeighbours();
-        assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(expectedNeighbours.toArray()));
+        assertThat(neighbours, IsIterableContainingInAnyOrder.containsInAnyOrder(dummyNeighbours.toArray()));
     }
 
     @Test
@@ -46,25 +46,29 @@ public class NeighbourServiceTest {
     }
 
     @Test
-    public void getNeighbourWithSuccess() {
-        Neighbour neighbour = expectedNeighbours.get(1);
-        Neighbour neighbourToGet = service.getNeighbourById(neighbour.getId());
+    public void getSpecificNeighbourWithSuccess() {
+        /* get a specific neighbour from the list of Neighbours by the service */
+        Neighbour neighbourToGet = dummyNeighbours.get(1);
+        Neighbour neighbour = service.getNeighbourById(neighbourToGet.getId());
         assertEquals(neighbour, neighbourToGet);
     }
 
     @Test
     public void getNeighbourAvatarWithSuccess() {
-        Neighbour neighbour = expectedNeighbours.get(0);
+        /* assert that avatar's url we get by the service is not null */
+        Neighbour neighbour = service.getNeighbours().get(0);
         assertNotNull(neighbour.getAvatarUrl());
     }
 
     @Test
     public void getNeighbourNameWithSuccess() {
-        Neighbour dummyNeighbour = expectedNeighbours.get(1);
-        String dummyneighbourName = dummyNeighbour.getName(); // get name of the second dummy neighbour of the generated list
+        /* get the name of the second dummy neighbour of the generated list */
+        Neighbour dummyNeighbour = dummyNeighbours.get(1);
+        String dummyNeighbourName = dummyNeighbour.getName();
         Neighbour neighbourToGet = service.getNeighbours().get(1);
-        String neighbourToGetNameExpected = neighbourToGet.getName(); // get name of the second neighbour from the service
-        assertEquals(dummyneighbourName, neighbourToGetNameExpected);
+        /* get the name of the second neighbour by the service */
+        String neighbourToGetNameExpected = neighbourToGet.getName();
+        assertEquals(dummyNeighbourName, neighbourToGetNameExpected);
     }
 
     @Test
@@ -78,10 +82,13 @@ public class NeighbourServiceTest {
 
     @Test
     public void getFavoritesWithSuccess() {
-        assertEquals(0,service.getFavoritesNeighbours().size());      //first, assert that favorite list is empty
+        /* first, assert that favorite list is empty */
+        assertEquals(0,service.getFavoritesNeighbours().size());
+        /* add a neighbour to favorite list */
         Neighbour neighbour = service.getNeighbours().get(0);
-        neighbour.setAsFavorite(true); //add a neighbour to favorite list
+        neighbour.setAsFavorite(true);
         List<Neighbour> favoritesNeighbours = service.getFavoritesNeighbours();
-        assertEquals(1, favoritesNeighbours.size());     //then, assert that favorite list is filled with 1 favorite
+        /* then, assert that favorite list is filled with 1 favorite */
+        assertEquals(1, favoritesNeighbours.size());
     }
 }

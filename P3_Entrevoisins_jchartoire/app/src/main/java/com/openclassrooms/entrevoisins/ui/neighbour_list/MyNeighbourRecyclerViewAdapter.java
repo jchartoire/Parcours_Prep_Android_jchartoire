@@ -38,7 +38,6 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.fragment_neighbour, parent, false);
         mContext = view.getContext();
-
         return new ViewHolder(view);
     }
 
@@ -58,13 +57,14 @@ public class MyNeighbourRecyclerViewAdapter extends RecyclerView.Adapter<MyNeigh
             }
         });
 
+        /* adding an OnClickListener on each item from the fragment_neighbour, and launch DetailsActivity */
         holder.mItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                long Id = neighbour.getId();
+                long Id = neighbour.getId();        // getting neighbour's ID of the clicked item
                 Intent myIntent = new Intent(mContext, DetailsActivity.class);
-                myIntent.putExtra("neighbourId", Id);
-                mContext.startActivity(myIntent);
+                myIntent.putExtra("neighbourId", Id);     // putting the neighbour's ID to an intent
+                mContext.startActivity(myIntent);               // then launching the activity with this intent
             }
         });
     }

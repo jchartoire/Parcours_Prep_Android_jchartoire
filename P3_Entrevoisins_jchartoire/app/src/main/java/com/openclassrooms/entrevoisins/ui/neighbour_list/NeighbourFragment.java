@@ -2,6 +2,10 @@ package com.openclassrooms.entrevoisins.ui.neighbour_list;
 
 import android.content.Context;
 import android.os.Bundle;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,27 +21,23 @@ import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 public class NeighbourFragment extends Fragment {
 
     private NeighbourApiService mApiService;
     private List<Neighbour> mNeighbours;
     private RecyclerView mRecyclerView;
-    private int position;
+    private int tabPosition;
 
     /**
      * Create and return a new instance
      *
      * @return @{@link NeighbourFragment}
      */
-    public static NeighbourFragment newInstance(int position) {
+    public static NeighbourFragment newInstance(int tabPosition) {
         NeighbourFragment fragment = new NeighbourFragment();
+        /* Adding a bundle in argument to the fragment to pass tab position */
         Bundle bundlePosition = new Bundle(1);
-        bundlePosition.putInt("position", position);
+        bundlePosition.putInt("tabPosition", tabPosition);
         fragment.setArguments(bundlePosition);
         return fragment;
     }
@@ -46,7 +46,7 @@ public class NeighbourFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mApiService = DI.getNeighbourApiService();
-        position = getArguments().getInt("position");
+        tabPosition = getArguments().getInt("tabPosition");
     }
 
     @Override
@@ -64,7 +64,8 @@ public class NeighbourFragment extends Fragment {
      * Init the List of neighbours
      */
     private void initList() {
-        switch (position) {
+        switch (tabPosition) {
+            /* setting the list of neighbours depending on the tab clicked */
             case 0:
                 mNeighbours = mApiService.getNeighbours();
                 break;

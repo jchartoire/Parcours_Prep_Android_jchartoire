@@ -35,89 +35,91 @@ public class DetailsActivity extends AppCompatActivity {
     TextView textViewAbout;
     @BindView(R.id.textViewLink)
     TextView textViewLink;
+    @BindView(R.id.favoriteFAB)
+    FloatingActionButton favoriteFAB;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.toolbar_layout)
+    CollapsingToolbarLayout toolbar_layout;
 
     private NeighbourApiService mApiService;
-    private String mNeighbourImageFull;
     private Neighbour mNeighbour;
-    FloatingActionButton fab;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_neighbour);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        fab = (FloatingActionButton) findViewById(R.id.favoriteFAB);
 
         mApiService = DI.getNeighbourApiService();
 
+        /* get the intent of the neighbour sent from MyNeighbourRecyclerViewAdapter */
         Intent intent = getIntent();
         long id = intent.getLongExtra("neighbourId", 0);
         Neighbour neighbour = mApiService.getNeighbourById(id);
         mNeighbour = neighbour;
 
-        init();
-        mNeighbourImageFull = mNeighbour.getAvatarUrl();
-        mNeighbourImageFull = mNeighbourImageFull.replace("https://i.pravatar.cc/100","https://i.pravatar.cc/500"); //better quality image url tranform for view in detail
-        ImageView app_bar_image = (ImageView) this.findViewById(R.id.app_bar_image);
+        updateButton();
 
+        /* better quality avatar image url tranform for view in detail */
+        String mNeighbourImageFull = mNeighbour.getAvatarUrl();
+        mNeighbourImageFull = mNeighbourImageFull.replace("https://i.pravatar.cc/100","https://i.pravatar.cc/500");
+
+        /* set the new image avatar to the app_bar_image ImageView */
         app_bar_image.setImageBitmap((null));
         Glide.with(this).load(mNeighbourImageFull).into(app_bar_image);
 
-//      (TextView) this.findViewById(R.id.textViewName)).setText(neighbour.getName());
-        textViewName.setText(neighbour.getName());
-
+        textViewName.setText(mNeighbour.getName());
         textViewAdress.setText(mNeighbour.getAddress());
         textViewPhone.setText(mNeighbour.getPhoneNumber());
         textViewLink.setText("www.facebook.fr/" + (mNeighbour.getName().toLowerCase()));
         textViewAbout.setText(mNeighbour.getAboutMe());
-        CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.toolbar_layout);
-        collapsingToolbar.setTitle(neighbour.getName());
+        toolbar_layout.setTitle(mNeighbour.getName());
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        favoriteFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                if (neighbour.getFavoriteStatus())
+                if (mNeighbour.getFavoriteStatus())
                 {
-                    neighbour.setAsFavorite(false);
+                    mNeighbour.setAsFavorite(false);
                     Snackbar.make(view, "Favoris retiré", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    Drawable newStar = getResources().getDrawable(R.drawable.ic_star_border_black_24dp, getTheme());
-                    fab.setImageDrawable(newStar);
+                    Drawable newStar = getResources().getDrawable(R.drawable.ic_star_empty_24dp, getTheme());
+                    favoriteFAB.setImageDrawable(newStar);
                 }
                 else
                 {
-                    neighbour.setAsFavorite(true);
+                    mNeighbour.setAsFavorite(true);
                     Snackbar.make(view, "Voisin ajouté aux favoris", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
-                    Drawable newStar = getResources().getDrawable(R.drawable.ic_star_black_24dp, getTheme());
-                    fab.setImageDrawable(newStar);
+                    Drawable newStar = getResources().getDrawable(R.drawable.ic_star_filled_24dp, getTheme());
+                    favoriteFAB.setImageDrawable(newStar);
                 }
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-
     }
-
-    private void init() {
+    
+    /* initialize favorite button state */
+    private void updateButton() {
         if (mNeighbour.getFavoriteStatus())
         {
-            Drawable newStar = getResources().getDrawable(R.drawable.ic_star_black_24dp, getTheme());
-            fab.setImageDrawable(newStar);
+            // yellow filled star
+            Drawable newStar = getResources().getDrawable(R.drawable.ic_star_filled_24dp, getTheme());
+            favoriteFAB.setImageDrawable(newStar);
         }
         else
         {
-            Drawable newStar = getResources().getDrawable(R.drawable.ic_star_border_black_24dp, getTheme());
-            fab.setImageDrawable(newStar);
+            // yellow border star
+            Drawable newStar = getResources().getDrawable(R.drawable.ic_star_empty_24dp, getTheme());
+            favoriteFAB.setImageDrawable(newStar);
         }
     }
 
     /**
-     * Override onSupportNavigateUp is set to get back to previous tab, not the home tab when touching the back button in appbar layout
+     * Override onSupportNavigateUp is set to get back to previous tab, not the home tab, when touching the back button in appbar layout
      */
     @Override
     public boolean onSupportNavigateUp(){
