@@ -25,7 +25,7 @@ public class Neighbour {
     /** About me */
     private String aboutMe;
 
-    /** About me */
+    /** Favorite status */
     private boolean isFavorite;
 
     /**
