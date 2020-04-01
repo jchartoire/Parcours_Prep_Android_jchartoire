@@ -1,4 +1,3 @@
-
 package com.openclassrooms.entrevoisins.neighbour_list;
 
 import com.openclassrooms.entrevoisins.R;
@@ -8,7 +7,6 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
-import org.greenrobot.eventbus.Logger;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -97,6 +95,8 @@ public class NeighboursListTest {
         onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
         onView(allOf(withText(R.string.tab_favorites_title),isDescendantOfA(withId(R.id.tabs)))).perform(click());
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(1));
+        // reset favorite to false
+        mApiService.setNeighbourAsFavorite(mApiService.getNeighbours().get(0), false);
     }
 
     /**
@@ -104,36 +104,32 @@ public class NeighboursListTest {
      */
     @Test
     public void myFavoritesNeighboursList_deleteAction_shouldRemoveNeighbourEverywhere() {
-        int ITEMS_COUNT = mApiService.getNeighbours().size();
+        int neighboursCount = mApiService.getNeighbours().size();
 
-        //TODO : vérifier qu'un utilisateur supprimé de la liste des favoris, est aussi supprimé dans l'onglet des voisins.
+        /*** Add one neighbour to favorite, in order to delete it from the favorite tab ***/
+        // going to detail and add to favorite
+        onView(allOf(withId(R.id.list_neighbours), withParentIndex(0))).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+        onView(withId(R.id.favoriteFAB)).perform(click());
+        // going to favorite tab, and check there is just one new favorite added
+        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
 
-//        // first, check there is no favorite at the beginning
-//        onView(allOf(withId(R.id.list_neighbours), withParentIndex(1))).check(withItemCount(0));
-//        // going to detail and add to favorite
-//        onView(allOf(withId(R.id.list_neighbours), withParentIndex(0))).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
-//        onView(withId(R.id.favoriteFAB)).perform(click());
-//        // going to favorite tab, and check there is just one new favorite added
-//        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
-
-        Neighbour neighbour = mApiService.getNeighbours().get(0);
-        mApiService.setNeighbourAsFavorite(neighbour,true);
-
-
+        /*** Count before delete ***/
         // check that neighbours list contains 12 elements
-        onView(allOf(withId(R.id.list_neighbours), withParentIndex(0))).check(withItemCount(ITEMS_COUNT));
+        onView(allOf(withId(R.id.list_neighbours), withParentIndex(0))).check(withItemCount(neighboursCount));
         // going to favorite tab
         onView(allOf(withText(R.string.tab_favorites_title),isDescendantOfA(withId(R.id.tabs)))).perform(click());
-
         // and check that favorite list contains 1 element
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(1));
-        // perform a click on a delete icon in favorite list
+
+        /*** perform a click on a delete icon in favorite list ***/
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
         // check favorite list contains 0 item after delete
+
+        /*** Count after delete ***/
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(0));
         // going to neighbour tab
         onView(allOf(withText(R.string.tab_neighbour_title),isDescendantOfA(withId(R.id.tabs)))).perform(click());
         // check that neighbours list contains 11 elements
-        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT - 1));
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(neighboursCount - 1));
     }
 }
