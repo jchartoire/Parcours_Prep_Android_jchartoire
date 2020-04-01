@@ -81,9 +81,10 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if (mNeighbour.getFavoriteStatus())
+                if (mApiService.getNeighbourFavoriteStatus(mNeighbour))
                 {
-                    mNeighbour.setAsFavorite(false);
+                    mApiService.setNeighbourAsFavorite(mNeighbour, false);
+                    //mNeighbour.setAsFavorite(false);
                     Snackbar.make(view, "Favoris retiré", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     Drawable newStar = getResources().getDrawable(R.drawable.ic_star_empty_24dp, getTheme());
@@ -91,7 +92,7 @@ public class DetailsActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    mNeighbour.setAsFavorite(true);
+                    mApiService.setNeighbourAsFavorite(mNeighbour, true);
                     Snackbar.make(view, "Voisin ajouté aux favoris", Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     Drawable newStar = getResources().getDrawable(R.drawable.ic_star_filled_24dp, getTheme());
@@ -104,7 +105,7 @@ public class DetailsActivity extends AppCompatActivity {
     
     /* initialize favorite button state */
     private void updateButton() {
-        if (mNeighbour.getFavoriteStatus())
+        if (mApiService.getNeighbourFavoriteStatus(mNeighbour))
         {
             // yellow filled star
             Drawable newStar = getResources().getDrawable(R.drawable.ic_star_filled_24dp, getTheme());

@@ -39,4 +39,17 @@ public interface NeighbourApiService {
      * @param neighbour
      */
     void createNeighbour(Neighbour neighbour);
+
+    /**
+     * set neighbour favorite state
+     * @param neighbour
+     */
+    void setNeighbourAsFavorite(Neighbour neighbour, boolean isFavorite);
+
+    /**
+     * get neighbour favorite state
+     * @param neighbour
+     * @return
+     */
+    boolean getNeighbourFavoriteStatus(Neighbour neighbour);
 }

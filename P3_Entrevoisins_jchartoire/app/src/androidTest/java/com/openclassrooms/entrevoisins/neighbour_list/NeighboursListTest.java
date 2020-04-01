@@ -8,6 +8,7 @@ import com.openclassrooms.entrevoisins.service.NeighbourApiService;
 import com.openclassrooms.entrevoisins.ui.neighbour_list.ListNeighbourActivity;
 import com.openclassrooms.entrevoisins.utils.DeleteViewAction;
 
+import org.greenrobot.eventbus.Logger;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import androidx.test.rule.ActivityTestRule;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.ViewPagerActions.scrollRight;
 import static androidx.test.espresso.matcher.ViewMatchers.*;
 import static com.openclassrooms.entrevoisins.utils.RecyclerViewItemCountAssertion.withItemCount;
 import static org.hamcrest.Matchers.allOf;
@@ -29,9 +31,6 @@ import static org.hamcrest.core.IsNull.notNullValue;
  */
 @RunWith(AndroidJUnit4.class)
 public class NeighboursListTest {
-
-    // This is fixed
-    private static int ITEMS_COUNT = 12;
 
     private ListNeighbourActivity mActivity;
     private NeighbourApiService mApiService;
@@ -61,6 +60,7 @@ public class NeighboursListTest {
      */
     @Test
     public void myNeighboursList_deleteAction_shouldRemoveItem() {
+        int ITEMS_COUNT = mApiService.getNeighbours().size();
         // Given : We remove the element at position 2
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT));
         // When perform a click on a delete icon
@@ -95,7 +95,45 @@ public class NeighboursListTest {
         onView(withId(R.id.favoriteFAB)).perform(click());
         // going to favorite tab, and check there is just one new favorite added
         onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
-        onView(allOf(withText("Favoris"),isDescendantOfA(withId(R.id.tabs)))).perform(click());
+        onView(allOf(withText(R.string.tab_favorites_title),isDescendantOfA(withId(R.id.tabs)))).perform(click());
         onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(1));
+    }
+
+    /**
+     * When we delete an item on favorite list, the item is removed in favorite AND full list
+     */
+    @Test
+    public void myFavoritesNeighboursList_deleteAction_shouldRemoveNeighbourEverywhere() {
+        int ITEMS_COUNT = mApiService.getNeighbours().size();
+
+        //TODO : vérifier qu'un utilisateur supprimé de la liste des favoris, est aussi supprimé dans l'onglet des voisins.
+
+//        // first, check there is no favorite at the beginning
+//        onView(allOf(withId(R.id.list_neighbours), withParentIndex(1))).check(withItemCount(0));
+//        // going to detail and add to favorite
+//        onView(allOf(withId(R.id.list_neighbours), withParentIndex(0))).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
+//        onView(withId(R.id.favoriteFAB)).perform(click());
+//        // going to favorite tab, and check there is just one new favorite added
+//        onView(withContentDescription(R.string.abc_action_bar_up_description)).perform(click());
+
+        Neighbour neighbour = mApiService.getNeighbours().get(0);
+        mApiService.setNeighbourAsFavorite(neighbour,true);
+
+
+        // check that neighbours list contains 12 elements
+        onView(allOf(withId(R.id.list_neighbours), withParentIndex(0))).check(withItemCount(ITEMS_COUNT));
+        // going to favorite tab
+        onView(allOf(withText(R.string.tab_favorites_title),isDescendantOfA(withId(R.id.tabs)))).perform(click());
+
+        // and check that favorite list contains 1 element
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(1));
+        // perform a click on a delete icon in favorite list
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).perform(RecyclerViewActions.actionOnItemAtPosition(0, new DeleteViewAction()));
+        // check favorite list contains 0 item after delete
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(0));
+        // going to neighbour tab
+        onView(allOf(withText(R.string.tab_neighbour_title),isDescendantOfA(withId(R.id.tabs)))).perform(click());
+        // check that neighbours list contains 11 elements
+        onView(allOf(withId(R.id.list_neighbours), isDisplayed())).check(withItemCount(ITEMS_COUNT - 1));
     }
 }

@@ -73,11 +73,13 @@ public class NeighbourServiceTest {
 
     @Test
     public void setFavoriteWithSuccess() {
-        /* get the second neighbour by the service and set it as favorite */
-        Neighbour neighbour = service.getNeighbours().get(1);
-        neighbour.setAsFavorite(true);
-        /* assert that the favorite state is saved and is gettable */
-        assertTrue(neighbour.getFavoriteStatus());
+        /* get a specific neighbour from the list of Neighbours by the service */
+        Neighbour neighbourToGet = dummyNeighbours.get(1);
+        Neighbour neighbour = service.getNeighbourById(neighbourToGet.getId());
+        /* get the first neighbour by the service and set it as favorite */
+        service.setNeighbourAsFavorite(neighbour,true);
+        /* assert that the favorite state is saved and is gettable from DummyNeighbourApiService*/
+        assertTrue(service.getNeighbourFavoriteStatus(neighbourToGet));
     }
 
     @Test
