@@ -1,0 +1,19 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.jchartoire.mareu.DetailActivity">
+
+    <item
+        android:id="@+id/edit_settings"
+        android:icon="@drawable/ic_edit_black_24dp"
+        android:orderInCategory="2"
+        android:title="Editer"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/ok_settings"
+        android:icon="@drawable/ic_check_black_24dp"
+        android:orderInCategory="3"
+        android:title="OK"
+        app:showAsAction="always" />
+
+</menu>

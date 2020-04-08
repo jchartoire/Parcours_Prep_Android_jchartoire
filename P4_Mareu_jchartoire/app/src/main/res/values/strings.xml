@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Maréu</string>
+
+    <string name="Filter_setting">Filtrer</string>
+
+    <string name="Activity_detail">Détail de la réunion</string>
+
+</resources>

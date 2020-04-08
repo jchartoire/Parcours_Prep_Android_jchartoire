@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <ViewSwitcher
+            android:id="@+id/viewSwitcher1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true">
+
+            <LinearLayout
+                android:id="@+id/edittextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+
+                <EditText
+                    android:id="@+id/TextView_title2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="#FFFFFF"
+                    android:hint="Titre"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"></EditText>
+
+            <LinearLayout
+                android:id="@+id/layout_leader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/TextView_leader_title2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Animateur :"
+                    android:textSize="15sp"
+                    android:textColor="#2C2B2B"></TextView>
+
+                <EditText
+                    android:id="@+id/TextView_leader2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:background="#FFFFFF"
+                    android:textSize="15sp"
+                    android:hint="Ajouter un animateur"></EditText>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/layout12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:id="@+id/layout22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/layout_debut2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/TextView_title_debut2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:background="#FFFFFF"
+                                android:minWidth="50dp"
+                                android:text="Début :"
+                                android:textSize="15sp"
+                                android:textColor="#2C2B2B"></TextView>
+
+                            <ImageView
+                                android:id="@+id/agenda_debut2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_event_black_24dp" />
+
+                            <EditText
+                                android:id="@+id/TextView_date_debut2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:background="#FFFFFF"
+                                android:minWidth="90dp"
+                                android:text="01/01/2020"
+                                android:textSize="15sp"
+                                android:textColor="#2C2B2B"></EditText>
+
+                            <ImageView
+                                android:id="@+id/horloge_debut2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+                            <EditText
+                                android:id="@+id/TextView_heure_debut2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#FFFFFF"
+                                android:minWidth="45dp"
+                                android:text="10h30"
+                                android:textSize="15sp"
+                                android:textColor="#2C2B2B"></EditText>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_fin2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/TextView_title_fin2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:minWidth="50dp"
+                                android:text="Fin :"
+                                android:textSize="15sp"
+                                android:textColor="#2C2B2B"></TextView>
+
+                            <ImageView
+                                android:id="@+id/agenda_fin2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_event_black_24dp" />
+
+                            <EditText
+                                android:id="@+id/TextView_date_fin2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:background="#FFFFFF"
+                                android:minWidth="90dp"
+                                android:text="01/01/2020"
+                                android:textSize="15sp"
+                                android:textColor="#2C2B2B"></EditText>
+
+                            <ImageView
+                                android:id="@+id/horloge_fin2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+                            <EditText
+                                android:id="@+id/TextView_heure_fin2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="#FFFFFF"
+                                android:minWidth="45dp"
+                                android:text="12h00"
+                                android:textSize="15sp"
+                                android:textColor="#2C2B2B"></EditText>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/imageViewCircle2"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        app:srcCompat="@drawable/circle_black_24dp" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/TextView_participants_title2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Participants :"
+                    android:textSize="15sp"
+                    android:textColor="#2C2B2B"></TextView>
+
+                <EditText
+                    android:id="@+id/TextView_participants2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="#FFFFFF"
+                    android:minHeight="50dp"
+                    android:textSize="15sp"
+                    android:hint="Ajouter des participants"></EditText>
+
+                <EditText
+                    android:id="@+id/TextView_description2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:background="#FFFFFF"
+                    android:minHeight="150dp"
+                    android:hint="Description"
+                    android:textSize="15sp"
+                    android:textColor="#2C2B2B"></EditText>
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:id="@+id/textviewView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/TextView_title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:text="title"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:textStyle="bold"></TextView>
+
+                <LinearLayout
+                    android:id="@+id/layout_leader2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TextView_leader_title1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="leader :"
+                        android:textSize="15sp"
+                        android:textColor="#2C2B2B"></TextView>
+
+                    <TextView
+                        android:id="@+id/TextView_leader1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="#FFFFFF"
+                        android:textSize="15sp"
+                        android:hint="Ajouter un leader"></TextView>
+
+                </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/layout21"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/layout_debut1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/TextView_title_debut1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:minWidth="50dp"
+                            android:text="Début :"
+                            android:textSize="15sp"
+                            android:textColor="#2C2B2B"></TextView>
+
+                        <ImageView
+                            android:id="@+id/agenda_debut1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_event_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/TextView_date_debut1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:minWidth="90dp"
+                            android:text="01/01/2020"
+                            android:textSize="15sp"
+                            android:textColor="#2C2B2B"></TextView>
+
+                        <ImageView
+                            android:id="@+id/horloge_debut1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/TextView_heure_debut1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="45dp"
+                            android:text="10h30"
+                            android:textSize="15sp"
+                            android:textColor="#2C2B2B"></TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_fin1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/TextView_title_fin1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:minWidth="50dp"
+                            android:text="Fin :"
+                            android:textSize="15sp"
+                            android:textColor="#2C2B2B"></TextView>
+
+                        <ImageView
+                            android:id="@+id/agenda_fin1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_event_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/TextView_date_fin1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="5dp"
+                            android:minWidth="90dp"
+                            android:text="01/01/2020"
+                            android:textSize="15sp"
+                            android:textColor="#2C2B2B"></TextView>
+
+                        <ImageView
+                            android:id="@+id/horloge_fin1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+                        <TextView
+                            android:id="@+id/TextView_heure_fin1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:minWidth="45dp"
+                            android:text="12h00"
+                            android:textSize="15sp"
+                            android:textColor="#2C2B2B"></TextView>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageViewCircle1"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentRight="true"
+                    app:srcCompat="@drawable/circle_black_24dp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/TextView_participants_title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="Participants :"
+                android:textSize="15sp"
+                android:textColor="#2C2B2B"></TextView>
+
+            <MultiAutoCompleteTextView
+                android:id="@+id/TextView_participants1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:minHeight="50dp"
+                android:textSize="15sp"
+                android:text="Ajouter des participants"></MultiAutoCompleteTextView>
+
+            <TextView
+                android:id="@+id/TextView_description1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:background="#FFFFFF"
+                android:minHeight="150dp"
+                android:text="Description"
+                android:textSize="15sp"
+                android:textColor="#2C2B2B"></TextView>
+
+        </LinearLayout>
+
+        </ViewSwitcher>
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
