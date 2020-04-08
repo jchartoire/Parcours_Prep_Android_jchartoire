@@ -1,6 +1,7 @@
 package com.jchartoire.mareu;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,16 +40,14 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, int position) {
         final Meeting meeting = mMeetings.get(position);
-        holder.mMeetingTitle.setText(meeting.getTitle());
+        holder.mMeetingTitle.setText(meeting.getTitle()); //todo: faire une concatenation ou plutot plusieurs textview ?
         holder.mImageViewCircle.setColorFilter(Color.parseColor(meeting.getColor()));
-
 
         holder.mDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //todo : ajouter fonction de suppression de l'item
                 System.out.println("deleting item :" + meeting.getTitle());
-
             }
         });
 
@@ -56,10 +55,10 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         holder.mItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                int Id = meeting.getId();        // getting meeting's ID of the clicked item
-//                Intent myIntent = new Intent(mContext, DetailActivity.class);
-//                myIntent.putExtra("meetingId", Id);     // putting the meeting's ID to an intent
-//                mContext.startActivity(myIntent);               // then launching the activity with this intent
+                int Id = meeting.getId();        // getting meeting's ID of the clicked item
+                Intent myIntent = new Intent(mContext, DetailActivity.class);
+                myIntent.putExtra("meetingId", Id);     // putting the meeting's ID to an intent
+                mContext.startActivity(myIntent);               // then launching the activity with this intent
                 System.out.println("starting activity details for :" + meeting.getTitle());
             }
         });
@@ -83,10 +82,6 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-
-//            mMeetingTitle = view.findViewById(R.id.id_text_Title);
-//            ImageButton = view.findViewById(R.id.imageViewDelete);
-//            mItem = view.findViewById(R.id.item);
         }
     }
 }

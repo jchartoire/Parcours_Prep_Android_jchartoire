@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#EDEDED"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <LinearLayout
@@ -27,7 +28,7 @@
 
 
                 <EditText
-                    android:id="@+id/TextView_title2"
+                    android:id="@+id/EditText_title2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -37,29 +38,29 @@
                     android:textSize="18sp"
                     android:textStyle="bold"></EditText>
 
-            <LinearLayout
-                android:id="@+id/layout_leader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/TextView_leader_title2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Animateur :"
-                    android:textSize="15sp"
-                    android:textColor="#2C2B2B"></TextView>
-
-                <EditText
-                    android:id="@+id/TextView_leader2"
+                <LinearLayout
+                    android:id="@+id/layout_leader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:background="#FFFFFF"
-                    android:textSize="15sp"
-                    android:hint="Ajouter un animateur"></EditText>
+                    android:layout_marginBottom="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/TextView_leader_title2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Animateur :"
+                        android:textColor="#2C2B2B"
+                        android:textSize="15sp"></TextView>
+
+                    <EditText
+                        android:id="@+id/EditText_leader2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:background="#FFFFFF"
+                        android:hint="Ajouter un animateur"
+                        android:textSize="15sp"></EditText>
 
                 </LinearLayout>
 
@@ -89,11 +90,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="5dp"
-                                android:background="#FFFFFF"
                                 android:minWidth="50dp"
                                 android:text="Début :"
-                                android:textSize="15sp"
-                                android:textColor="#2C2B2B"></TextView>
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></TextView>
 
                             <ImageView
                                 android:id="@+id/agenda_debut2"
@@ -103,15 +103,15 @@
                                 app:srcCompat="@drawable/ic_event_black_24dp" />
 
                             <EditText
-                                android:id="@+id/TextView_date_debut2"
+                                android:id="@+id/EditText_date_debut2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="5dp"
                                 android:background="#FFFFFF"
                                 android:minWidth="90dp"
                                 android:text="01/01/2020"
-                                android:textSize="15sp"
-                                android:textColor="#2C2B2B"></EditText>
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></EditText>
 
                             <ImageView
                                 android:id="@+id/horloge_debut2"
@@ -121,14 +121,14 @@
                                 app:srcCompat="@drawable/ic_access_time_black_24dp" />
 
                             <EditText
-                                android:id="@+id/TextView_heure_debut2"
+                                android:id="@+id/EditText_heure_debut2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="#FFFFFF"
                                 android:minWidth="45dp"
                                 android:text="10h30"
-                                android:textSize="15sp"
-                                android:textColor="#2C2B2B"></EditText>
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></EditText>
 
                         </LinearLayout>
 
@@ -145,8 +145,8 @@
                                 android:layout_marginRight="5dp"
                                 android:minWidth="50dp"
                                 android:text="Fin :"
-                                android:textSize="15sp"
-                                android:textColor="#2C2B2B"></TextView>
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></TextView>
 
                             <ImageView
                                 android:id="@+id/agenda_fin2"
@@ -156,15 +156,15 @@
                                 app:srcCompat="@drawable/ic_event_black_24dp" />
 
                             <EditText
-                                android:id="@+id/TextView_date_fin2"
+                                android:id="@+id/EditText_date_fin2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginRight="5dp"
                                 android:background="#FFFFFF"
                                 android:minWidth="90dp"
                                 android:text="01/01/2020"
-                                android:textSize="15sp"
-                                android:textColor="#2C2B2B"></EditText>
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></EditText>
 
                             <ImageView
                                 android:id="@+id/horloge_fin2"
@@ -174,14 +174,14 @@
                                 app:srcCompat="@drawable/ic_access_time_black_24dp" />
 
                             <EditText
-                                android:id="@+id/TextView_heure_fin2"
+                                android:id="@+id/EditText_heure_fin2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:background="#FFFFFF"
                                 android:minWidth="45dp"
                                 android:text="12h00"
-                                android:textSize="15sp"
-                                android:textColor="#2C2B2B"></EditText>
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></EditText>
 
                         </LinearLayout>
 
@@ -196,7 +196,6 @@
 
                 </RelativeLayout>
 
-
                 <TextView
                     android:id="@+id/TextView_participants_title2"
                     android:layout_width="match_parent"
@@ -204,49 +203,51 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
                     android:text="Participants :"
-                    android:textSize="15sp"
-                    android:textColor="#2C2B2B"></TextView>
+                    android:textColor="#2C2B2B"
+                    android:textSize="15sp"></TextView>
 
-                <EditText
-                    android:id="@+id/TextView_participants2"
+                <MultiAutoCompleteTextView
+                    android:id="@+id/EditText_participants"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:background="#FFFFFF"
+                    android:gravity="start"
+                    android:hint="Ajouter des participants"
                     android:minHeight="50dp"
-                    android:textSize="15sp"
-                    android:hint="Ajouter des participants"></EditText>
+                    android:textSize="15sp"></MultiAutoCompleteTextView>
 
                 <EditText
-                    android:id="@+id/TextView_description2"
+                    android:id="@+id/EditText_description2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:background="#FFFFFF"
+                    android:gravity="start"
+                    android:hint="Ajouter une description"
                     android:minHeight="150dp"
-                    android:hint="Description"
-                    android:textSize="15sp"
-                    android:textColor="#2C2B2B"></EditText>
+                    android:textColor="#2C2B2B"
+                    android:textSize="15sp"></EditText>
 
             </LinearLayout>
 
             <LinearLayout
-            android:id="@+id/textviewView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:orientation="vertical">
-
-
-            <TextView
-                android:id="@+id/TextView_title1"
+                android:id="@+id/textviewView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:text="title"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:textStyle="bold"></TextView>
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+
+                <TextView
+                    android:id="@+id/TextView_title1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:text="Titre de la réunion"
+                    android:textColor="#000000"
+                    android:textSize="18sp"
+                    android:textStyle="bold"></TextView>
 
                 <LinearLayout
                     android:id="@+id/layout_leader2"
@@ -259,180 +260,179 @@
                         android:id="@+id/TextView_leader_title1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="leader :"
-                        android:textSize="15sp"
-                        android:textColor="#2C2B2B"></TextView>
+                        android:text="Animateur :"
+                        android:textColor="#2C2B2B"
+                        android:textSize="15sp"></TextView>
 
                     <TextView
                         android:id="@+id/TextView_leader1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:background="#FFFFFF"
-                        android:textSize="15sp"
-                        android:hint="Ajouter un leader"></TextView>
+                        android:text="-"
+                        android:textSize="15sp"></TextView>
 
                 </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/layout11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/layout21"
+                <RelativeLayout
+                    android:id="@+id/layout11"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/layout_debut1"
+                        android:id="@+id/layout21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="5dp"
-                        android:orientation="horizontal">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:id="@+id/TextView_title_debut1"
+                        <LinearLayout
+                            android:id="@+id/layout_debut1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginRight="5dp"
-                            android:minWidth="50dp"
-                            android:text="Début :"
-                            android:textSize="15sp"
-                            android:textColor="#2C2B2B"></TextView>
+                            android:layout_marginBottom="5dp"
+                            android:orientation="horizontal">
 
-                        <ImageView
-                            android:id="@+id/agenda_debut1"
+                            <TextView
+                                android:id="@+id/TextView_title_debut1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:minWidth="50dp"
+                                android:text="Début :"
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></TextView>
+
+                            <ImageView
+                                android:id="@+id/agenda_debut1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_event_black_24dp" />
+
+                            <TextView
+                                android:id="@+id/TextView_date_debut1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:minWidth="90dp"
+                                android:text="01/01/2020"
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></TextView>
+
+                            <ImageView
+                                android:id="@+id/horloge_debut1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+                            <TextView
+                                android:id="@+id/TextView_heure_debut1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minWidth="45dp"
+                                android:text="10h30"
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></TextView>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout_fin1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_event_black_24dp" />
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/TextView_date_debut1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="5dp"
-                            android:minWidth="90dp"
-                            android:text="01/01/2020"
-                            android:textSize="15sp"
-                            android:textColor="#2C2B2B"></TextView>
+                            <TextView
+                                android:id="@+id/TextView_title_fin1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:minWidth="50dp"
+                                android:text="Fin :"
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></TextView>
 
-                        <ImageView
-                            android:id="@+id/horloge_debut1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_access_time_black_24dp" />
+                            <ImageView
+                                android:id="@+id/agenda_fin1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_event_black_24dp" />
 
-                        <TextView
-                            android:id="@+id/TextView_heure_debut1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="45dp"
-                            android:text="10h30"
-                            android:textSize="15sp"
-                            android:textColor="#2C2B2B"></TextView>
+                            <TextView
+                                android:id="@+id/TextView_date_fin1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="5dp"
+                                android:minWidth="90dp"
+                                android:text="01/01/2020"
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></TextView>
+
+                            <ImageView
+                                android:id="@+id/horloge_fin1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                app:srcCompat="@drawable/ic_access_time_black_24dp" />
+
+                            <TextView
+                                android:id="@+id/TextView_heure_fin1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:minWidth="45dp"
+                                android:text="12h00"
+                                android:textColor="#2C2B2B"
+                                android:textSize="15sp"></TextView>
+
+                        </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/layout_fin1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <ImageView
+                        android:id="@+id/imageViewCircle1"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        app:srcCompat="@drawable/circle_black_24dp" />
 
-                        <TextView
-                            android:id="@+id/TextView_title_fin1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="5dp"
-                            android:minWidth="50dp"
-                            android:text="Fin :"
-                            android:textSize="15sp"
-                            android:textColor="#2C2B2B"></TextView>
+                </RelativeLayout>
 
-                        <ImageView
-                            android:id="@+id/agenda_fin1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_event_black_24dp" />
+                <TextView
+                    android:id="@+id/TextView_participants_title1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:text="Participants :"
+                    android:textColor="#2C2B2B"
+                    android:textSize="15sp"></TextView>
 
-                        <TextView
-                            android:id="@+id/TextView_date_fin1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="5dp"
-                            android:minWidth="90dp"
-                            android:text="01/01/2020"
-                            android:textSize="15sp"
-                            android:textColor="#2C2B2B"></TextView>
+                <TextView
+                    android:id="@+id/TextView_participants1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:minHeight="50dp"
+                    android:text="Aucun participants"
+                    android:textSize="15sp"
+                    ></TextView>
 
-                        <ImageView
-                            android:id="@+id/horloge_fin1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            app:srcCompat="@drawable/ic_access_time_black_24dp" />
+                <TextView
+                    android:id="@+id/TextView_description1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:minHeight="150dp"
+                    android:text="Description vide"
+                    android:textColor="#2C2B2B"
+                    android:textSize="15sp"></TextView>
 
-                        <TextView
-                            android:id="@+id/TextView_heure_fin1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:minWidth="45dp"
-                            android:text="12h00"
-                            android:textSize="15sp"
-                            android:textColor="#2C2B2B"></TextView>
-
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/imageViewCircle1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
-                    app:srcCompat="@drawable/circle_black_24dp" />
-
-            </RelativeLayout>
-
-            <TextView
-                android:id="@+id/TextView_participants_title1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"
-                android:text="Participants :"
-                android:textSize="15sp"
-                android:textColor="#2C2B2B"></TextView>
-
-            <MultiAutoCompleteTextView
-                android:id="@+id/TextView_participants1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:minHeight="50dp"
-                android:textSize="15sp"
-                android:text="Ajouter des participants"></MultiAutoCompleteTextView>
-
-            <TextView
-                android:id="@+id/TextView_description1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:background="#FFFFFF"
-                android:minHeight="150dp"
-                android:text="Description"
-                android:textSize="15sp"
-                android:textColor="#2C2B2B"></TextView>
-
-        </LinearLayout>
+            </LinearLayout>
 
         </ViewSwitcher>
 

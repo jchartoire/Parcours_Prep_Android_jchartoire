@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.MultiAutoCompleteTextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jchartoire.mareu.model.Meeting;
@@ -20,7 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ItemListActivity extends AppCompatActivity {
 
     // dummy generator
-    private List<Meeting> mMeetings = Arrays.asList(
+        private List<Meeting> mMeetings = Arrays.asList(
             new Meeting(1, "Réunion R&D", "Thomas", "12:00",
                     "13:00", "08/04/2020", "08/04/2020", "#FC8E8E", "Salle 1", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
@@ -33,28 +35,28 @@ public class ItemListActivity extends AppCompatActivity {
             new Meeting(4, "Réunion marketing", "Thomas", "12:00",
                     "13:00", "08/04/2020", "08/04/2020", "#ABFC8E", "Salle 4", "troisième@boite.fr, quatrieme@boite.fr, cinquieme@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion budgétaire", "Julie", "13:00",
+            new Meeting(5, "Réunion budgétaire", "Julie", "13:00",
                     "13:00", "08/04/2020", "08/04/2020", "#8EFCF0", "Salle 5", "premier@boite.fr, troisième@boite.fr, cinquieme@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion vacances d'été", "Bernard", "8:20",
+            new Meeting(6, "Réunion vacances d'été", "Bernard", "8:20",
                     "13:00", "08/04/2020", "08/04/2020", "#8EC7FC", "Salle 6", "premier@boite.fr, quatrieme@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion marketing", "Leonie", "10:00",
+            new Meeting(7, "Rappel de consignes de sécurité", "Leonie", "10:00",
                     "13:00", "08/04/2020", "08/04/2020", "#8EC7FC", "Salle 6", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion tuperware", "Andrea", "12:40",
+            new Meeting(8, "Réunion tuperware", "Andrea", "12:40",
                     "13:00", "08/04/2020", "08/04/2020", "#AF8EFC", "Salle 7", "premier@boite.fr, deuxieme@boite.fr, quatrieme@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion stagiaire", "Louis", "15:30",
+            new Meeting(9, "Réunion stagiaire", "Louis", "15:30",
                     "13:00", "08/04/2020", "08/04/2020", "#AF8EFC", "Salle 7", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion marketing", "Arthur", "16:10",
+            new Meeting(10, "Téléconférence avec la norvège", "Arthur", "16:10",
                     "13:00", "08/04/2020", "08/04/2020", "#FC8EEE", "Salle 8", "deuxieme@boite.fr, troisième@boite.fr, cinquieme@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion marketing", "Morgan", "8:50",
+            new Meeting(11, "Fixation d'objectifs", "Morgan", "8:50",
                     "13:00", "08/04/2020", "08/04/2020", "#D2D2D2", "Salle 9", "troisième@boite.fr, quatrieme@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion marketing", "Luca", "14:00",
+            new Meeting(12, "Formation ERP", "Luca", "14:00",
                     "13:00", "08/04/2020", "08/04/2020", "#5A5A5A", "Salle 10", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
                     "Réunion pour faire le point sur les avancé du projet X552")
     );
@@ -65,7 +67,7 @@ public class ItemListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar); //todo: pourquoi le tirtre de la réunion ne veut plus s'afficher ?
 
         FloatingActionButton addFab = (FloatingActionButton) findViewById(R.id.add_fab);
         addFab.setOnClickListener(new View.OnClickListener() {
