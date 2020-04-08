@@ -1,54 +1,68 @@
 package com.jchartoire.mareu;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jchartoire.mareu.model.Meeting;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ItemListActivity extends AppCompatActivity {
 
-    // dummy
+    // dummy generator
     private List<Meeting> mMeetings = Arrays.asList(
             new Meeting(1, "Réunion R&D", "Thomas", "12:00",
-                    "13:00",  "08/04/2020", "08/04/2020", "#ffffff", "Salle 1", "premier@boite.fr", "Réunion pour faire le point sur les avancé du " +
-                    "projet X552"),
+                    "13:00", "08/04/2020", "08/04/2020", "#FC8E8E", "Salle 1", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
             new Meeting(2, "Réunion développement", "Marion", "9:00",
-                    "13:00",  "08/04/2020", "08/04/2020", "#ffffff", "Salle 2", "premier@boite.fr", "Réunion pour faire le point sur les avancé du " +
-                    "projet X552"),
+                    "13:00", "08/04/2020", "08/04/2020", "#FCCB93", "Salle 2", "quatrieme@boite.fr, cinquieme@boite.fr, sixieme@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
             new Meeting(3, "Réunion inventaire", "Sabrina", "10:00",
-                    "13:00",  "08/04/2020", "08/04/2020", "#ffffff", "Salle 1", "premier@boite.fr", "Réunion pour faire le point sur les avancé du " +
-                    "projet X552"),
+                    "13:00", "08/04/2020", "08/04/2020", "#F1FC8E", "Salle 3", "quatrieme@boite.fr, deuxieme@boite.fr, premier@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
             new Meeting(4, "Réunion marketing", "Thomas", "12:00",
-                    "13:00",  "08/04/2020", "08/04/2020", "#ffffff", "Salle 3", "premier@boite.fr", "Réunion pour faire le point sur les avancé du " +
-                    "projet X552")
+                    "13:00", "08/04/2020", "08/04/2020", "#ABFC8E", "Salle 4", "troisième@boite.fr, quatrieme@boite.fr, cinquieme@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
+            new Meeting(4, "Réunion budgétaire", "Julie", "13:00",
+                    "13:00", "08/04/2020", "08/04/2020", "#8EFCF0", "Salle 5", "premier@boite.fr, troisième@boite.fr, cinquieme@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
+            new Meeting(4, "Réunion vacances d'été", "Bernard", "8:20",
+                    "13:00", "08/04/2020", "08/04/2020", "#8EC7FC", "Salle 6", "premier@boite.fr, quatrieme@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
+            new Meeting(4, "Réunion marketing", "Leonie", "10:00",
+                    "13:00", "08/04/2020", "08/04/2020", "#8EC7FC", "Salle 6", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
+            new Meeting(4, "Réunion tuperware", "Andrea", "12:40",
+                    "13:00", "08/04/2020", "08/04/2020", "#AF8EFC", "Salle 7", "premier@boite.fr, deuxieme@boite.fr, quatrieme@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
+            new Meeting(4, "Réunion stagiaire", "Louis", "15:30",
+                    "13:00", "08/04/2020", "08/04/2020", "#AF8EFC", "Salle 7", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
+            new Meeting(4, "Réunion marketing", "Arthur", "16:10",
+                    "13:00", "08/04/2020", "08/04/2020", "#FC8EEE", "Salle 8", "deuxieme@boite.fr, troisième@boite.fr, cinquieme@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
+            new Meeting(4, "Réunion marketing", "Morgan", "8:50",
+                    "13:00", "08/04/2020", "08/04/2020", "#D2D2D2", "Salle 9", "troisième@boite.fr, quatrieme@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552"),
+            new Meeting(4, "Réunion marketing", "Luca", "14:00",
+                    "13:00", "08/04/2020", "08/04/2020", "#5A5A5A", "Salle 10", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
+                    "Réunion pour faire le point sur les avancé du projet X552")
     );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_scrolling);
+        setContentView(R.layout.activity_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
 //        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
@@ -62,7 +76,7 @@ public class ItemListActivity extends AppCompatActivity {
             }
         });
 
-      //  initRecyclerView();
+        initRecyclerView();
     }
 
     @Override
@@ -87,7 +101,7 @@ public class ItemListActivity extends AppCompatActivity {
     }
 
     private void initRecyclerView(){
-        RecyclerView recyclerView = findViewById(R.id.item_list);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(mMeetings);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
