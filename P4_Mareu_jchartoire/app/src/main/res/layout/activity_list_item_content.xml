@@ -1,62 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="16dp"
     android:layout_marginTop="12dp"
-    android:layout_marginBottom="8dp"
     android:layout_marginRight="16dp"
-    android:gravity="center"
+    android:layout_marginBottom="8dp"
     android:background="?android:selectableItemBackground"
-
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/imageViewCircle"
+        android:id="@+id/iv_list_room_color"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginRight="8dp"
-        app:srcCompat="@drawable/circle_black_24dp" />
+        android:layout_alignParentStart="true"
+        android:layout_marginEnd="8dp"
+        app:srcCompat="@drawable/circle_black_24dp"
+        android:contentDescription="@string/room_color_description" />
 
     <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iv_list_room_color"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/id_text_Title"
+            android:id="@+id/tv_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
-            android:text="Title"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textAppearance="?attr/textAppearanceListItem"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="Title" />
 
         <TextView
-            android:id="@+id/content"
+            android:id="@+id/tv_item_infos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="0dp"
-            android:text="Content"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:textAppearance="?attr/textAppearanceListItem"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Content" />
 
     </LinearLayout>
 
-    <Space
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-
     <ImageButton
-        android:id="@+id/imageViewDelete"
+        android:id="@+id/iv_delete_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="0dp"
         android:background="?android:selectableItemBackground"
-        app:srcCompat="@drawable/ic_delete_black_24dp" />
+        app:srcCompat="@drawable/ic_delete_black_24dp"
+        android:contentDescription="@null"
+        android:breakStrategy="simple"/>
+<!--    todo: comment gérerles retour à la ligne à partir de l'API 21 ?-->
 
-</LinearLayout>
+</RelativeLayout>

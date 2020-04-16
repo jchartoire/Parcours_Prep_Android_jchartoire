@@ -5,4 +5,7 @@
 
     <string name="Activity_detail">Détail de la réunion</string>
 
+    <string name="rooms_prompt">Choisissez une salle :</string>
+    <string name="room_color_description">room\'s color</string>
+
 </resources>

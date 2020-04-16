@@ -5,13 +5,15 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.MultiAutoCompleteTextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.jchartoire.mareu.di.DI;
 import com.jchartoire.mareu.model.Meeting;
+import com.jchartoire.mareu.service.ApiService;
 
-import java.util.Arrays;
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,54 +22,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ItemListActivity extends AppCompatActivity {
-
-    // dummy generator
-        private List<Meeting> mMeetings = Arrays.asList(
-            new Meeting(1, "Réunion R&D", "Thomas", "12:00",
-                    "13:00", "08/04/2020", "08/04/2020", "#FC8E8E", "Salle 1", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(2, "Réunion développement", "Marion", "9:00",
-                    "13:00", "08/04/2020", "08/04/2020", "#FCCB93", "Salle 2", "quatrieme@boite.fr, cinquieme@boite.fr, sixieme@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(3, "Réunion inventaire", "Sabrina", "10:00",
-                    "13:00", "08/04/2020", "08/04/2020", "#F1FC8E", "Salle 3", "quatrieme@boite.fr, deuxieme@boite.fr, premier@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(4, "Réunion marketing", "Thomas", "12:00",
-                    "13:00", "08/04/2020", "08/04/2020", "#ABFC8E", "Salle 4", "troisième@boite.fr, quatrieme@boite.fr, cinquieme@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(5, "Réunion budgétaire", "Julie", "13:00",
-                    "13:00", "08/04/2020", "08/04/2020", "#8EFCF0", "Salle 5", "premier@boite.fr, troisième@boite.fr, cinquieme@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(6, "Réunion vacances d'été", "Bernard", "8:20",
-                    "13:00", "08/04/2020", "08/04/2020", "#8EC7FC", "Salle 6", "premier@boite.fr, quatrieme@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(7, "Rappel de consignes de sécurité", "Leonie", "10:00",
-                    "13:00", "08/04/2020", "08/04/2020", "#8EC7FC", "Salle 6", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(8, "Réunion tuperware", "Andrea", "12:40",
-                    "13:00", "08/04/2020", "08/04/2020", "#AF8EFC", "Salle 7", "premier@boite.fr, deuxieme@boite.fr, quatrieme@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(9, "Réunion stagiaire", "Louis", "15:30",
-                    "13:00", "08/04/2020", "08/04/2020", "#AF8EFC", "Salle 7", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(10, "Téléconférence avec la norvège", "Arthur", "16:10",
-                    "13:00", "08/04/2020", "08/04/2020", "#FC8EEE", "Salle 8", "deuxieme@boite.fr, troisième@boite.fr, cinquieme@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(11, "Fixation d'objectifs", "Morgan", "8:50",
-                    "13:00", "08/04/2020", "08/04/2020", "#D2D2D2", "Salle 9", "troisième@boite.fr, quatrieme@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552"),
-            new Meeting(12, "Formation ERP", "Luca", "14:00",
-                    "13:00", "08/04/2020", "08/04/2020", "#5A5A5A", "Salle 10", "premier@boite.fr, deuxieme@boite.fr, troisième@boite.fr",
-                    "Réunion pour faire le point sur les avancé du projet X552")
-    );
+    private List<Meeting> meetings;
+    private ApiService apiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        ButterKnife.bind(this);
-        setSupportActionBar(toolbar); //todo: pourquoi le tirtre de la réunion ne veut plus s'afficher ?
+        setSupportActionBar(toolbar);
+        apiService = DI.getNeighbourApiService();
+
+        initList();
+
 
         FloatingActionButton addFab = (FloatingActionButton) findViewById(R.id.add_fab);
         addFab.setOnClickListener(new View.OnClickListener() {
@@ -90,23 +57,43 @@ public class ItemListActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+        // Handle action bar item clicks
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.filter_settings) {
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void initRecyclerView(){
+    private void initRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
-        ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(mMeetings);
+        ItemRecyclerViewAdapter adapter = new ItemRecyclerViewAdapter(meetings);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    /* Init the List of meetings */
+    private void initList() {
+        meetings = apiService.getMeetings();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // EventBus.getDefault().register(this); //todo: implémenter l'eventbus pour la suppression
+        initList();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initList();
+    }
+
+//    @Subscribe
+//    public void onDeleteMeeting(DeleteMeetingEvent event) {
+//        apiService.deleteMeeting(event.meeting);
+//        initList();
+//    }
 }

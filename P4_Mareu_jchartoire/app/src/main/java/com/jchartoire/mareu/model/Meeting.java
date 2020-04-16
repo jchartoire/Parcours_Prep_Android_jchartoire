@@ -1,50 +1,42 @@
 package com.jchartoire.mareu.model;
 
-//todo:mentor est-ce qu'il faut un modèle pour les salles ?
+import org.threeten.bp.LocalDateTime;
+
+import java.util.List;
 
 /**
- * Model object representing a Neighbour
+ * Model object representing a meeting
  */
 public class Meeting {
 
     private int id;
     private String title;
     private String leader;
-    private String startTime;
-    private String endTime;
-    private String startDate;
-    private String endDate;
-    private String color;
-    private String room;
-    private String participant;
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+    private Room room;
+    private List<User> users;
     private String description;
 
-    //todo:mentor à quoi cela sert-il ?
     /**
      * Constructor
-     * @param id
-     * @param title;
-     * @param leader;
-     * @param startTime;
-     * @param endTime;
-     * @param startDate;
-     * @param endDate;
-     * @param color;
-     * @param participant;
-     * @param description;
+     * @param id          The unique ID of the meeting
+     * @param title       The title of the meeting
+     * @param leader      The leader who animate of the meeting
+     * @param startDate   The starting date of the meeting
+     * @param endDate     The ending date of the meeting
+     * @param users       The list of the meeting participants
+     * @param description A complete description of the meeting
      */
-    public Meeting(int id, String title, String leader, String startTime, String endTime, String startDate, String endDate,
-                   String color, String room, String participant, String description) {
+    public Meeting(int id, String title, String leader, LocalDateTime startDate, LocalDateTime endDate, Room room,
+                   List<User> users, String description) {
         this.id = id;
         this.title = title;
         this.leader = leader;
-        this.startTime = startTime;
-        this.endTime = endTime;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.color = color;
         this.room = room;
-        this.participant = participant;
+        this.users = users;
         this.description = description;
     }
 
@@ -72,60 +64,36 @@ public class Meeting {
         this.leader = leader;
     }
 
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getStartDate() {
+    public LocalDateTime getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDateTime startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDateTime getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDateTime endDate) {
         this.endDate = endDate;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getRoom() {
+    public Room getRoom() {
         return room;
     }
 
-    public void setRoom(String room) {
+    public void setRoom(Room room) {
         this.room = room;
     }
 
-    public String getParticipant() {
-        return participant;
+    public List<User> getUsers() {
+        return users;
     }
 
-    public void setParticipant(String participant) {
-        this.participant = participant;
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 
     public String getDescription() {
