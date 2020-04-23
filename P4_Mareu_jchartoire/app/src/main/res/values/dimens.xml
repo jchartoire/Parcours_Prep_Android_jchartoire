@@ -1,5 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="bottom_bar_height">45dp</dimen>
+    <dimen name="extern_layout_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="text_margin">16dp</dimen>
+    <dimen name="fab_size">55dp</dimen>
+    <dimen name="imageView_size">40dp</dimen>
+    <dimen name="image_button_margin">0dp</dimen>
+    <dimen name="image_button_size">30dp</dimen>
+    <dimen name="imageview_margin">8dp</dimen>
+    <dimen name="layout_margin_1">12dp</dimen>
+    <dimen name="layout_margin_2">20dp</dimen>
+    <dimen name="text_size_bottom_bar">16sp</dimen>
+    <dimen name="text_size_normal">15sp</dimen>
+    <dimen name="text_size_title">18sp</dimen>
+    <dimen name="editText_size">30dp</dimen>
+    <dimen name="text_padding">10dp</dimen>
+    <dimen name="textView_size">30dp</dimen>
 </resources>

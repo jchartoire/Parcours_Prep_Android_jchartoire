@@ -4,77 +4,93 @@ import com.jchartoire.mareu.model.Meeting;
 import com.jchartoire.mareu.model.Room;
 import com.jchartoire.mareu.model.User;
 
-import org.threeten.bp.LocalDateTime;
-
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 abstract class DummyGenerator {
 
     private static List<Room> dummyRooms = Arrays.asList(
-            new Room(1, "Salle 1", 0xFFFC8E8E),
-            new Room(2, "Salle 2", 0xFFFCCB93),
-            new Room(3, "Salle 3", 0xFFF1FC8E),
-            new Room(4, "Salle 4", 0xFFABFC8E),
-            new Room(5, "Salle 5", 0xFF8EFCF0),
-            new Room(6, "Salle 6", 0xFF8EC7FC),
-            new Room(7, "Salle 7", 0xFFAF8EFC),
-            new Room(8, "Salle 8", 0xFFFC8EEE),
-            new Room(9, "Salle 9", 0xFFD2D2D2),
+            new Room(System.currentTimeMillis(), "Salle 1", 0xFFFC8E8E),
+            new Room(2, "Salle 2", 0xFF8EC7FC),
+            new Room(3, "Salle 3", 0xFFFCCB93),
+            new Room(4, "Salle 4", 0xFFAF8EFC),
+            new Room(5, "Salle 5", 0xFFF1FC8E),
+            new Room(6, "Salle 6", 0xFFFC8EEE),
+            new Room(7, "Salle 7", 0xFFABFC8E),
+            new Room(8, "Salle 8", 0xFFD2D2D2),
+            new Room(9, "Salle 9", 0xFF8EFCF0),
             new Room(10, "Salle 10", 0xFF5A5A5A)
     );
+    private static List<User> dummyUsers = Arrays.asList(
+
+            new User(1, "Amy", "Hall", "amy.hall@lamzone.com"),
+            new User(2, "Adam", "Cook", "adam.cook@lamzone.com"),
+            new User(3, "Alice", "Shaw", "alice.shaw@lamzone.com"),
+            new User(4, "Axel", " Ortiz", "axel.ortiz@lamzone.com"),
+            new User(5, "Amber", "Reed", "amber.reed@lamzone.com"),
+            new User(6, "Allan", "Stone", "allan.stone@lamzone.com"),
+            new User(7, "Anita", "Gray", "anita.gray@lamzone.com"),
+            new User(8, "Antony", "Moore", "antony.moore@lamzone.com"),
+            new User(9, "Anna", "Gordon", "anna.gordon@lamzone.com"),
+            new User(10, "Albert", "Lee", "albert.lee@lamzone.com")
+    );
+    private static List<Meeting> dummyMeetings = new ArrayList<>();
 
     static List<Room> generateRooms() {
         return new ArrayList<>(dummyRooms);
     }
 
-    private static List<User> dummyUsers = Arrays.asList(
-
-            new User(1, "Aurore Nelson", "aurore.nelson@ie.com"),
-            new User(2, "Adam Cook", "adam.cook@ie.com"),
-            new User(3, "Alice Holland", "alice.holland@ie.com"),
-            new User(4, "Axel Johnson", "axel.johnson@ie.com"),
-            new User(5, "Amber Reed", "amber.reed@ie.com"),
-            new User(6, "Allan Stone", "allan.stone@ie.com"),
-            new User(7, "Anita Ferguson", "anita.ferguson@ie.com"),
-            new User(8, "Antony Moore", "antony.moore@ie.com"),
-            new User(9, "Anna Gordon", "anna.gordon@ie.com"),
-            new User(10, "Albert Lee", "albert.lee@ie.com")
-    );
-
     static List<User> generateUsers() {
         return new ArrayList<>(dummyUsers);
     }
 
-    private static List<Meeting> dummyMeetings = Arrays.asList(
-            new Meeting(1, "Réunion R&D", "Noah",
-                    LocalDateTime.of(2020, 06, 01, 10, 15),
-                    LocalDateTime.of(2020, 04, 14, 11, 30),
-                    dummyRooms.get(1),
-                    Arrays.asList(dummyUsers.get(1), dummyUsers.get(2), dummyUsers.get(3)),
-                    "Réunion pour faire le point sur les avancées du projet X552"),
-            new Meeting(2, "Réunion marketing", "Marie",
-                    LocalDateTime.of(2020, 06, 02, 9, 30),
-                    LocalDateTime.of(2020, 04, 12, 12, 00),
-                    dummyRooms.get(3),
-                    Arrays.asList(dummyUsers.get(4), dummyUsers.get(5), dummyUsers.get(6)),
-                    "Réunion pour faire le point sur les ventes des 6 derniers mois"),
-            new Meeting(3, "Réunion inventaire", "Damien",
-                    LocalDateTime.of(2020, 06, 03, 14, 40),
-                    LocalDateTime.of(2020, 04, 14, 16, 10),
-                    dummyRooms.get(5),
-                    Arrays.asList(dummyUsers.get(1), dummyUsers.get(3), dummyUsers.get(5)),
-                    "Réunion pour faire le point sur l'inventaire de décembre"),
-            new Meeting(4, "Réunion stagiaire", "Kelly",
-                    LocalDateTime.of(2020, 06, 04, 15, 50),
-                    LocalDateTime.of(2020, 04, 14, 17, 20),
-                    dummyRooms.get(2),
-                    Arrays.asList(dummyUsers.get(7), dummyUsers.get(8), dummyUsers.get(9)),
-                    "Réunion pour attribuer les tâches aux nouveaux stagiaires")
-    );
-
     static List<Meeting> generateMeetings() {
+        Meeting meeting;
+        Calendar calendar = Calendar.getInstance();
+        calendar.getTimeInMillis();
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 0);
+        Date StartDate = calendar.getTime();
+        calendar.set(Calendar.HOUR_OF_DAY, 10);
+        Date EndDate = calendar.getTime();
+
+        String largeString = "Lorem ipsum dolor sit amet\n\n" +
+                "Togam orationem pudore existimatis aetatis esse castissima deductum.\n" +
+                "quantum omnem illo Crassi omnem isti deductum erudiretur a orationem.\n" +
+                "brevis hoc ut istam M ipsius a ad esse deinde.\n" +
+                "Utilia multa reducere viam eum ut admovente veritatis.\n\n" +
+                "veritatis cum viam admovente mariti stimulos reducere mariti ut similia.\n" +
+                "mariti veritatis potius obstinatum.\n\n" +
+                "► Quoniam mirari quosdam\n\n" +
+                "► Proinde concepta rabie saeviore\n\n" +
+                "► Novitates autem si spem adferunt\n\n" +
+                "► Nisi mihi Phaedrum, inquam\n\n" +
+                "► Ibi victu recreati et quiete\n\n";
+
+        for (int i = 1; i <= 20; i++) {
+            meeting = new Meeting(i, "Réunion " + i, dummyUsers.get(new Random().nextInt(9)), StartDate, EndDate,
+                    dummyRooms.get(new Random().nextInt(4)), Arrays.asList(dummyUsers.get(new Random().nextInt(9)),
+                    dummyUsers.get(new Random().nextInt(9)), dummyUsers.get(new Random().nextInt(9)),
+                    dummyUsers.get(new Random().nextInt(9))), largeString);
+            dummyMeetings.add(meeting);
+            if (calendar.get(Calendar.HOUR_OF_DAY) > 17) {
+                calendar.add(Calendar.DAY_OF_MONTH, 1);
+                calendar.set(Calendar.HOUR_OF_DAY, 8);
+                calendar.set(Calendar.MINUTE, 0);
+                StartDate = calendar.getTime();
+                calendar.add(Calendar.HOUR, 2);
+                EndDate = calendar.getTime();
+            } else {
+                calendar.add(Calendar.MINUTE, 30);
+                StartDate = calendar.getTime();
+                calendar.add(Calendar.HOUR, 2);
+                EndDate = calendar.getTime();
+            }
+        }
         return new ArrayList<>(dummyMeetings);
     }
 }

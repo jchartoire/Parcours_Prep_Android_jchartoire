@@ -1,7 +1,7 @@
 package com.jchartoire.mareu.model;
 
-import org.threeten.bp.LocalDateTime;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,17 +9,18 @@ import java.util.List;
  */
 public class Meeting {
 
-    private int id;
+    private long id;
     private String title;
-    private String leader;
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    private User leader;
+    private Date startDate; //todo: repasser en Date normal
+    private Date endDate;
     private Room room;
     private List<User> users;
     private String description;
 
     /**
      * Constructor
+     *
      * @param id          The unique ID of the meeting
      * @param title       The title of the meeting
      * @param leader      The leader who animate of the meeting
@@ -28,7 +29,7 @@ public class Meeting {
      * @param users       The list of the meeting participants
      * @param description A complete description of the meeting
      */
-    public Meeting(int id, String title, String leader, LocalDateTime startDate, LocalDateTime endDate, Room room,
+    public Meeting(long id, String title, User leader, Date startDate, Date endDate, Room room,
                    List<User> users, String description) {
         this.id = id;
         this.title = title;
@@ -40,11 +41,11 @@ public class Meeting {
         this.description = description;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -56,27 +57,27 @@ public class Meeting {
         this.title = title;
     }
 
-    public String getLeader() {
+    public User getLeader() {
         return leader;
     }
 
-    public void setLeader(String leader) {
+    public void setLeader(User leader) {
         this.leader = leader;
     }
 
-    public LocalDateTime getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDateTime startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDateTime getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDateTime endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 

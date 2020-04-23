@@ -5,27 +5,38 @@ package com.jchartoire.mareu.model;
  */
 public class User {
 
-    private int id;
+    private long id;
     private String name;
+    private String firstName;
     private String email;
 
     /**
-     * @param id    The unique ID of the user
-     * @param name  The name of the user
-     * @param email The email of the user
+     * @param id        The unique ID of the user
+     * @param name      The name of the user
+     * @param firstName The firstname of the user
+     * @param email     The email of the user
      */
-    public User(int id, String name, String email) {
+    public User(long id, String firstName, String name, String email) {
         this.id = id;
+        this.firstName = firstName;
         this.name = name;
         this.email = email;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String name) {
+        this.name = firstName;
     }
 
     public String getName() {
@@ -46,6 +57,6 @@ public class User {
 
     @Override
     public String toString() {
-        return (this.name + " <" + this.email + ">");            // What to display in the Spinner list.
+        return (this.email);   // What to display in the Spinner or EditText.
     }
 }

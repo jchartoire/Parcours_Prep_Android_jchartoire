@@ -32,9 +32,19 @@ public class DummyApiService implements ApiService {
     }
 
     @Override
-    public User getUserById(int Id) {
+    public User getUserById(long Id) {
         for (User user : users) {
             if (user.getId() == Id) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        for (User user : users) {
+            if (user.getEmail() .equals(email)) {
                 return user;
             }
         }
@@ -55,7 +65,7 @@ public class DummyApiService implements ApiService {
     }
 
     @Override
-    public Room getRoomById(int Id) {
+    public Room getRoomById(long Id) {
         for (Room room : rooms) {
             if (room.getId() == Id) {
                 return room;
@@ -71,6 +81,7 @@ public class DummyApiService implements ApiService {
 
     @Override
     public void deleteMeeting(Meeting meeting) {
+        meetings.remove(meeting);
     }
 
     @Override
@@ -79,7 +90,7 @@ public class DummyApiService implements ApiService {
     }
 
     @Override
-    public Meeting getMeetingById(int Id) {
+    public Meeting getMeetingById(long Id) {
         for (Meeting meeting : meetings) {
             if (meeting.getId() == Id) {
                 return meeting;
@@ -87,5 +98,4 @@ public class DummyApiService implements ApiService {
         }
         return null;
     }
-
 }

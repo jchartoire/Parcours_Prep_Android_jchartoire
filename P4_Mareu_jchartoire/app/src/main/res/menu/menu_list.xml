@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.jchartoire.mareu.ItemListActivity">
+    <item
+        android:id="@+id/filter_date"
+        android:orderInCategory="100"
+        android:title="@string/filter_date_item"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/filter_room"
+        android:orderInCategory="100"
+        android:title="@string/filter_room_item"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/reset_filter"
+        android:orderInCategory="100"
+        android:title="@string/reset_filter_item"
+        app:showAsAction="never" />
+</menu>

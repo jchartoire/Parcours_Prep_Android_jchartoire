@@ -17,7 +17,7 @@ public interface ApiService {
     List<User> getUsers();
 
     /**
-     * @param user
+     * @param user object designating a user
      */
     void deleteUser(User user);
 
@@ -27,7 +27,13 @@ public interface ApiService {
      * @param Id The unique ID of the user
      * @return Return a User
      */
-    User getUserById(int Id);
+    User getUserById(long Id);
+
+    /**
+     * @param email The unique email of the user
+     * @return Return a User
+     */
+    User getUserByEmail(String email);
 
     /**
      * rooms service
@@ -35,7 +41,7 @@ public interface ApiService {
     List<Room> getRooms();
 
     /**
-     * @param room
+     * @param room object designating a room
      */
     void deleteRoom(Room room);
 
@@ -45,7 +51,7 @@ public interface ApiService {
      * @param Id The unique ID of the room
      * @return Return a Room
      */
-    Room getRoomById(int Id);
+    Room getRoomById(long Id);
 
     /**
      * meetings service
@@ -53,7 +59,7 @@ public interface ApiService {
     List<Meeting> getMeetings();
 
     /**
-     * @param meeting
+     * @param meeting object designating a meeting
      */
     void deleteMeeting(Meeting meeting);
 
@@ -63,5 +69,5 @@ public interface ApiService {
      * @param Id The unique ID of the meeting
      * @return Return a Meeting
      */
-    Meeting getMeetingById(int Id);
+    Meeting getMeetingById(long Id);
 }

@@ -5,7 +5,7 @@ package com.jchartoire.mareu.model;
  */
 public class Room {
 
-    private int id;
+    private long id;
     private String roomName;
     private int color;
 
@@ -14,17 +14,17 @@ public class Room {
      * @param roomName The name of the room
      * @param color    The color identifier of the room
      */
-    public Room(int id, String roomName, int color) {
+    public Room(long id, String roomName, int color) {
         this.id = id;
         this.roomName = roomName;
         this.color = color;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

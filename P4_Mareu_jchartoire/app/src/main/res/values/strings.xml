@@ -1,11 +1,46 @@
 <resources>
     <string name="app_name">Maréu</string>
 
-    <string name="Filter_setting">Filtrer</string>
+    <!-- item menu text -->
+    <string name="filter_date_item">Filtrer par date</string>
+    <string name="filter_room_item">Filtrer par salle</string>
+    <string name="reset_filter_item">Réinitialiser le filtre</string>
 
+    <!-- activity detail text -->
     <string name="Activity_detail">Détail de la réunion</string>
-
     <string name="rooms_prompt">Choisissez une salle :</string>
     <string name="room_color_description">room\'s color</string>
 
+    <!-- text tools -->
+    <string name="Comma_separator">%1$s, %2$s</string>
+
+    <!-- bottom bar text -->
+    <string name="no_Filter_Text">Filtrage = aucun</string>
+    <string name="filter_By_Date_Text">Filtrage = date : \</string>
+    <string name="filter_text">Filtrage = \</string>
+    <string name="reset_filter_text">"Réinitialiser"</string>
+
+    <!-- snackbar info -->
+    <string name="wrong_email">Email invalide</string>
+    <string name="leader_missing">Email de l\'animateur manquant</string>
+    <string name="title_missing">Titre manquant</string>
+    <string name="participants_missing">Aucun participant renseigné</string>
+    <string name="wrong_start_date">L\'horaire de la réunion empiète sur une réunion déjà programmée.\nRepoussez l\'heure, ou changez de salle.</string>
+    <string name="negative_button_text">Annuler</string>
+    <string name="save_message">Sauvegarder ?</string>
+
+    <!-- layout detail text -->
+    <string name="date">Date :</string>
+    <string name="hour">Heure :</string>
+    <string name="participants">Participants :</string>
+    <string name="no_participants">Aucun participants</string>
+    <string name="subject">Sujet :</string>
+    <string name="void_description">Description vide</string>
+    <string name="leader">Animateur :</string>
+    <string name="hour_example">00h00</string>
+    <string name="date_example">01/01/2020</string>
+    <string name="title_hint">Titre</string>
+    <string name="no_leader_hint">Aucun animateur</string>
+    <string name="add_participants_hint">Ajouter des participants</string>
+    <string name="add_description_hint">Ajouter une description</string>
 </resources>
