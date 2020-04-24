@@ -84,7 +84,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         textviewViewBinding = binding.textviewView;
 
         /*=== Get service ===*/
-        apiService = DI.getNeighbourApiService();
+        apiService = DI.getApiService();
 
         /*=== init meeting details ===*/
         initDetails();

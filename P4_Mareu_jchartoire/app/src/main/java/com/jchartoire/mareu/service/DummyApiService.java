@@ -25,6 +25,7 @@ public class DummyApiService implements ApiService {
 
     @Override
     public void deleteUser(User user) {
+        users.remove(user);
     }
 
     public void createUser(User user) {
@@ -58,6 +59,7 @@ public class DummyApiService implements ApiService {
 
     @Override
     public void deleteRoom(Room room) {
+        rooms.remove(room);
     }
 
     public void createRoom(Room room) {

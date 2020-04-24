@@ -62,7 +62,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         Drawable drawable = getDrawable(R.drawable.ic_filter_list_black_24dp);
         binding.toolbar.setOverflowIcon(drawable);
 
-        apiService = DI.getNeighbourApiService();
+        apiService = DI.getApiService();
 
         binding.addFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -286,6 +286,8 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         super.onResume();
         initList();
         initFilterInfoBar();
+        setFilter(filterType, filterPattern); //TODO : obligé si on veut mettre la liste à jour en revenant de la création d'une réunion
+        adapter.notifyDataSetChanged();
     }
 
     @Override

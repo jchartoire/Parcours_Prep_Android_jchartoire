@@ -11,9 +11,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-abstract class DummyGenerator {
+public abstract class DummyGenerator {
 
-    private static List<Room> dummyRooms = Arrays.asList(
+    public static List<Room> dummyRooms = Arrays.asList(
             new Room(System.currentTimeMillis(), "Salle 1", 0xFFFC8E8E),
             new Room(2, "Salle 2", 0xFF8EC7FC),
             new Room(3, "Salle 3", 0xFFFCCB93),
@@ -25,7 +25,7 @@ abstract class DummyGenerator {
             new Room(9, "Salle 9", 0xFF8EFCF0),
             new Room(10, "Salle 10", 0xFF5A5A5A)
     );
-    private static List<User> dummyUsers = Arrays.asList(
+    public static List<User> dummyUsers = Arrays.asList(
 
             new User(1, "Amy", "Hall", "amy.hall@lamzone.com"),
             new User(2, "Adam", "Cook", "adam.cook@lamzone.com"),
@@ -38,7 +38,7 @@ abstract class DummyGenerator {
             new User(9, "Anna", "Gordon", "anna.gordon@lamzone.com"),
             new User(10, "Albert", "Lee", "albert.lee@lamzone.com")
     );
-    private static List<Meeting> dummyMeetings = new ArrayList<>();
+    public static List<Meeting> dummyMeetings = new ArrayList<>();
 
     static List<Room> generateRooms() {
         return new ArrayList<>(dummyRooms);
@@ -71,7 +71,7 @@ abstract class DummyGenerator {
                 "► Nisi mihi Phaedrum, inquam\n\n" +
                 "► Ibi victu recreati et quiete\n\n";
 
-        for (int i = 1; i <= 20; i++) {
+        for (int i = 1; i <= 5; i++) {
             meeting = new Meeting(i, "Réunion " + i, dummyUsers.get(new Random().nextInt(9)), StartDate, EndDate,
                     dummyRooms.get(new Random().nextInt(4)), Arrays.asList(dummyUsers.get(new Random().nextInt(9)),
                     dummyUsers.get(new Random().nextInt(9)), dummyUsers.get(new Random().nextInt(9)),

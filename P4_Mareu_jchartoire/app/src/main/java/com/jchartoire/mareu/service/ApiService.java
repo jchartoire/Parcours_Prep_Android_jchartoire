@@ -17,7 +17,7 @@ public interface ApiService {
     List<User> getUsers();
 
     /**
-     * @param user object designating a user
+     * @param user object representing a user
      */
     void deleteUser(User user);
 
