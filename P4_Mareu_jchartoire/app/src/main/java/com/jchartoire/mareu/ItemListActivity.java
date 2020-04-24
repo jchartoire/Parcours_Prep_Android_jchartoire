@@ -18,12 +18,16 @@ import android.widget.Spinner;
 
 import com.jchartoire.mareu.databinding.ActivityListBinding;
 import com.jchartoire.mareu.di.DI;
+import com.jchartoire.mareu.events.DeleteMeetingEvent;
 import com.jchartoire.mareu.model.Meeting;
 import com.jchartoire.mareu.model.Room;
 import com.jchartoire.mareu.service.ApiService;
 import com.jchartoire.mareu.tools.DatePickerFragment;
-import com.jchartoire.mareu.tools.filterParams;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -41,10 +45,12 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     LinearLayout spinnerLayout;
     String selectedRoomFilterString;
     ArrayAdapter<Room> roomsAdapter;
-    private List<Meeting> meetings;
+    private List<Meeting> meetings, meetingsFiltered;
     private List<Room> rooms;
     private ApiService apiService;
     private ActivityListBinding binding;
+    private int filterType = 0;
+    private String filterPattern = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +63,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         binding.toolbar.setOverflowIcon(drawable);
 
         apiService = DI.getNeighbourApiService();
-
-        initList();
-        initFilterInfoBar();
 
         binding.addFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +79,8 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
             }
         });
 
+        initList();
+        initFilterInfoBar();
         initRecyclerView();
         spinnerRoomSetup();
     }
@@ -110,11 +115,10 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     }
 
     private void initRecyclerView() {
-        adapter = new ItemRecyclerViewAdapter(meetings);
+        setFilter(filterType, filterPattern);
+        adapter = new ItemRecyclerViewAdapter(meetingsFiltered);
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        adapter.setFilter(filterParams.getFilterType(), filterParams.getFilterPattern());
         adapter.notifyDataSetChanged();
     }
 
@@ -133,8 +137,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     /*=== Init the List of meetings ===*/
     private void initFilterInfoBar() {
         // reset bottom filter info bar
-        int filterType = filterParams.getFilterType();
-        String filterPattern = filterParams.getFilterPattern();
         switch (filterType) {
             case 0:
                 // reset bottom filter info bar
@@ -159,23 +161,15 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        initList();
-        initFilterInfoBar();
-        adapter.notifyDataSetChanged();
-    }
-
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // save current filter
-        filterParams.setFilterType(1);
+        filterType = 1;
         Calendar calendar = Calendar.getInstance();
         // get initial today's date and edit only Year, Month, Day
         calendar.set(year, month, day);
         String dateSet = dateFormatter.format(calendar.getTime());
-        filterParams.setFilterPattern(dateSet);
-        adapter.setFilter(filterParams.getFilterType(), filterParams.getFilterPattern());
+        filterPattern = dateSet;
+        setFilter(filterType, filterPattern);
         adapter.notifyDataSetChanged();
         // set bottom filter info bar
         binding.filterType.setText(String.format("%s%s", getString(R.string.filter_By_Date_Text), dateSet));
@@ -219,9 +213,9 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (selectedRoomFilterString != null) {
-                    adapter.setFilter(2, selectedRoomFilterString);
-                    filterParams.setFilterType(2);
-                    filterParams.setFilterPattern(selectedRoomFilterString);
+                    setFilter(2, selectedRoomFilterString);
+                    filterType = 2;
+                    filterPattern = selectedRoomFilterString;
                     adapter.notifyDataSetChanged();
                     // set bottom filter info bar
                     binding.filterType.setText(String.format("%s%s", getString(R.string.filter_text), selectedRoomFilterString));
@@ -243,13 +237,68 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     public void resetFilter() {
         // reset filter
         selectedRoomFilterString = "";
-        adapter.setFilter(0, null);
-        filterParams.setFilterType(0);
-        filterParams.setFilterPattern(null);
+        setFilter(0, null);
+        filterType = 0;
+        filterPattern = null;
         adapter.notifyDataSetChanged();
         // reset bottom filter info bar
         binding.filterType.setText(getString(R.string.no_Filter_Text));
         ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = 0;
         binding.bottomBar.getLayoutParams().height = 0;
+    }
+
+    void setFilter(int type, String param) {
+        switch (type) {
+            case 0: // Reset filter
+                if (meetingsFiltered != null) {
+                    // update existing list
+                    meetingsFiltered.clear();
+                    meetingsFiltered.addAll(meetings);
+                } else {
+                    //start with a new fresh copy list
+                    meetingsFiltered = new ArrayList<>(meetings);
+                }
+                break;
+            case 1: // filter by date
+                meetingsFiltered.clear();
+                for (Meeting meeting : meetings) {
+                    if (dateFormatter.format(meeting.getStartDate()).equals(param)) {
+                        meetingsFiltered.add(meeting);
+                    }
+                }
+                break;
+            case 2: // filter by room
+                meetingsFiltered.clear();
+                for (Meeting meeting : meetings) {
+                    if (meeting.getRoom().getRoomName().equals(param)) {
+                        meetingsFiltered.add(meeting);
+                    }
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initList();
+        initFilterInfoBar();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (! EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+    }
+
+    /*=== Fired if the user clicks on a delete button ===*/
+    @Subscribe
+    public void onDeleteMeeting(DeleteMeetingEvent event) {
+        apiService.deleteMeeting(event.meeting);
+        initList();
+        setFilter(filterType, filterPattern);
+        adapter.notifyDataSetChanged();
     }
 }
