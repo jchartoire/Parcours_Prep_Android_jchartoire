@@ -69,6 +69,6 @@
         android:contentDescription="@null"
         android:scaleType="fitCenter"
         app:srcCompat="@drawable/ic_delete_black_24dp" />
-    <!--    todo: comment gérerles retour à la ligne à partir de l'API 21 ?-->
+    <!--    todo: comment gérer les retour à la ligne à partir de l'API 21 ? (césure uniquement aux espaces)-->
 
 </RelativeLayout>

@@ -12,7 +12,7 @@ public class Meeting {
     private long id;
     private String title;
     private User leader;
-    private Date startDate; //todo: repasser en Date normal
+    private Date startDate;
     private Date endDate;
     private Room room;
     private List<User> users;

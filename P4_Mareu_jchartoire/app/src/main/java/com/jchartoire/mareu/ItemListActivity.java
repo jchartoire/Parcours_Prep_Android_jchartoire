@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
 import com.jchartoire.mareu.databinding.ActivityListBinding;
@@ -26,6 +27,7 @@ import com.jchartoire.mareu.tools.filterParams;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,15 +37,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import static com.jchartoire.mareu.tools.DateUtils.dateFormatter;
 
 public class ItemListActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
+    ItemRecyclerViewAdapter adapter;
+    LinearLayout spinnerLayout;
+    String selectedRoomFilterString;
+    ArrayAdapter<Room> roomsAdapter;
     private List<Meeting> meetings;
     private List<Room> rooms;
     private ApiService apiService;
     private ActivityListBinding binding;
-    ItemRecyclerViewAdapter adapter;
-    Spinner spnRoom;
-    View spinnerView;
-    String selectedRoomFilterString;
-    ArrayAdapter<Room> roomsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +90,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks
         int id = item.getItemId();
-        DialogFragment newFragmentDate = new DatePickerFragment(this);
-
+        DialogFragment newFragmentDate = new DatePickerFragment(this, new Date());
         switch (id) {
             case R.id.reset_filter:
                 resetFilter();
@@ -184,11 +184,17 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     }
 
     void spinnerRoomSetup() {
-        spinnerView = getLayoutInflater().inflate(R.layout.dialog_spinner, null);
-        spnRoom = spinnerView.findViewById(R.id.spinner_room);
         roomsAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, rooms);
         roomsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        Spinner spnRoom = new Spinner(this);
         spnRoom.setAdapter(roomsAdapter);
+        spinnerLayout = new LinearLayout(this);
+        LinearLayout.LayoutParams parameter = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT);
+        parameter.setMargins(100, 20, 100, 20);
+        spnRoom.setLayoutParams(parameter);
+        spinnerLayout.addView(spnRoom);
         spnRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -206,9 +212,9 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
 
     public void setRoomFilter() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        if (spinnerView.getParent() != null)
-            ((ViewGroup) spinnerView.getParent()).removeView(spinnerView);
-        builder.setView(spinnerView);
+        if (spinnerLayout.getParent() != null)
+            ((ViewGroup) spinnerLayout.getParent()).removeView(spinnerLayout);
+        builder.setView(spinnerLayout);
         builder.setTitle("Choisissez la salle : ");
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {

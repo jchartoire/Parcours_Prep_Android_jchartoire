@@ -242,10 +242,12 @@
                 android:gravity="start"
                 android:hint="@string/add_description_hint"
                 android:inputType="none"
+                android:justificationMode="inter_word"
                 android:minHeight="150dp"
                 android:padding="@dimen/text_padding"
                 android:textColor="#2C2B2B"
                 android:textSize="@dimen/text_size_normal" />
+            <!-- todo: justifier le texte = https://dzone.com/articles/android-%E2%80%93-how-display  -->
 
         </TableLayout>
     </ScrollView>

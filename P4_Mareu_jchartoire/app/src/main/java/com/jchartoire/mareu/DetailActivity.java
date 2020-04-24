@@ -15,16 +15,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ViewSwitcher;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.jchartoire.mareu.databinding.ActivityDetailBinding;
+import com.jchartoire.mareu.databinding.FragmentDetailContentEdittextBinding;
+import com.jchartoire.mareu.databinding.FragmentDetailContentTextviewBinding;
 import com.jchartoire.mareu.di.DI;
 import com.jchartoire.mareu.model.Meeting;
 import com.jchartoire.mareu.model.Room;
@@ -52,19 +50,6 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     // layout viewSwitcher
     private ViewSwitcher viewSwitcherBinding;
-    private View textViewView, editTextView;
-
-    // Detail layout content editText view
-    private ImageView etvIvRoomColor;
-    private Spinner spnRoom;
-    private EditText etDescription, etMeetingTitle;
-    private TextView tvClickableDate, tvClickableStartHour, tvClickableEndHour;
-    private MultiAutoCompleteTextView mactvParticipants;
-    private AutoCompleteTextView actvLeader;
-
-    // Detail layout content textView view
-    private ImageView tvvIvRoomColor;
-    private TextView tvRoom, tvLeader, tvStartDate, tvStartHour, tvEndHour, tvParticipants, tvDescription, tvMeetingTitle;
 
     private MenuItem ok_settings, edit_settings;
 
@@ -80,6 +65,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     private boolean createNewMeeting;
 
     private ActivityDetailBinding binding;
+    private FragmentDetailContentEdittextBinding edittextViewBinding;
+    private FragmentDetailContentTextviewBinding textviewViewBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,33 +77,11 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        /*=== Binding / findViewById ===*/
+        /*=== Binding ===*/
         //viewSwitcher content
         viewSwitcherBinding = binding.viewSwitcher;
-        textViewView = findViewById(R.id.textviewView);
-        editTextView = findViewById(R.id.edittextView);
-
-        //Detail layout content editText view
-        etMeetingTitle = binding.edittextView.etMeetingTitle;
-        etvIvRoomColor = binding.edittextView.etvIvRoomColor;
-        spnRoom = binding.edittextView.spnRoom;
-        actvLeader = binding.edittextView.actvLeader;
-        tvClickableDate = binding.edittextView.tvClickableDate;
-        tvClickableStartHour = binding.edittextView.tvClickableStartHour;
-        tvClickableEndHour = binding.edittextView.tvClickableEndHour;
-        mactvParticipants = binding.edittextView.mactvParticipants;
-        etDescription = binding.edittextView.etDescription;
-
-        //Detail layout content textView view
-        tvMeetingTitle = binding.textviewView.tvMeetingTitle;
-        tvvIvRoomColor = binding.textviewView.tvvIvRoomColor;
-        tvRoom = binding.textviewView.tvRoom;
-        tvLeader = binding.textviewView.tvLeader;
-        tvStartDate = binding.textviewView.tvStartDate;
-        tvStartHour = binding.textviewView.tvStartHour;
-        tvEndHour = binding.textviewView.tvEndHour;
-        tvParticipants = binding.textviewView.tvParticipants;
-        tvDescription = binding.textviewView.tvDescription;
+        edittextViewBinding = binding.edittextView;
+        textviewViewBinding = binding.textviewView;
 
         /*=== Get service ===*/
         apiService = DI.getNeighbourApiService();
@@ -125,9 +90,9 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         initDetails();
 
         /*=== Set textView OnClickListener ===*/
-        tvClickableDate.setOnClickListener(this);
-        tvClickableStartHour.setOnClickListener(this);
-        tvClickableEndHour.setOnClickListener(this);
+        edittextViewBinding.tvClickableDate.setOnClickListener(this);
+        edittextViewBinding.tvClickableStartHour.setOnClickListener(this);
+        edittextViewBinding.tvClickableEndHour.setOnClickListener(this);
 
         /*=== setup all interactive text fields and datePickers ===*/
         widgetsSetup();
@@ -164,13 +129,13 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             calendar.set(Calendar.MINUTE, 0);
             selectedStartDate = calendar.getTime();
             // update textView
-            tvClickableDate.setText(dateFormatter.format(selectedStartDate));
-            tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
+            edittextViewBinding.tvClickableDate.setText(dateFormatter.format(selectedStartDate));
+            edittextViewBinding.tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
             // set default meeting duration to 2 hours
             calendar.add(Calendar.HOUR_OF_DAY, 2);
             selectedEndDate = calendar.getTime();
             // update textView
-            tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
+            edittextViewBinding.tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
             // save new date to the meeting
             meeting.setStartDate(selectedStartDate);
             meeting.setEndDate(selectedEndDate);
@@ -184,13 +149,13 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     void widgetsSetup() {
         /*=== Rooms spinner setup===*/
         roomsAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, rooms);
-        spnRoom.setAdapter(roomsAdapter);
-        spnRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        edittextViewBinding.spnRoom.setAdapter(roomsAdapter);
+        edittextViewBinding.spnRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Get the value selected by the user
                 selectedRoom = (Room) (parent.getSelectedItem());
-                etvIvRoomColor.setColorFilter(selectedRoom.getColor());
+                edittextViewBinding.etvIvRoomColor.setColorFilter(selectedRoom.getColor());
             }
 
             @Override
@@ -201,12 +166,12 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         /*=== MultiAutoCompleteTextView setup , set adapter to fill the data in suggestion list ===*/
         ArrayAdapter<User> mactvAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, users);    // set adapter to fill the
         // data in suggestion list
-        mactvParticipants.setAdapter(mactvAdapter);
-        mactvParticipants.setThreshold(1);    // set threshold value 1 that help us to start the searching from first character
-        mactvParticipants.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());   // set tokenizer that distinguish the various substrings by comma
+        edittextViewBinding.mactvParticipants.setAdapter(mactvAdapter);
+        edittextViewBinding.mactvParticipants.setThreshold(1);    // set threshold value 1 that help us to start the searching from first character
+        edittextViewBinding.mactvParticipants.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());   // set tokenizer that distinguish the various substrings by comma
 
         /*=== AutoCompleteTextView setup, set adapter to fill the data in suggestion list ===*/
-        AutoCompleteTextView actv_leader = actvLeader;
+        AutoCompleteTextView actv_leader = edittextViewBinding.actvLeader;
         ArrayAdapter<User> actvAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, users);
         actv_leader.setAdapter(actvAdapter);
         // set threshold value that help us to start the searching from first character
@@ -221,7 +186,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
             selectedStartDate = calendar.getTime();
-            tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
+            edittextViewBinding.tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
             calendar.add(Calendar.HOUR_OF_DAY, 1);
         } else if (pickerTag.equals("timePicker_end")) {
             calendar.setTime(selectedEndDate);
@@ -229,7 +194,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             calendar.set(Calendar.MINUTE, minute);
         }
         selectedEndDate = calendar.getTime();
-        tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
+        edittextViewBinding.tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -240,7 +205,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.YEAR, year);
         selectedStartDate = calendar.getTime();
-        tvClickableDate.setText(dateFormatter.format(selectedStartDate));
+        edittextViewBinding.tvClickableDate.setText(dateFormatter.format(selectedStartDate));
         // set EndDate same as StartDate, whithout modifying Hour and Minute end
         calendar.setTime(selectedEndDate);
         calendar.set(Calendar.DAY_OF_MONTH, day);
@@ -252,13 +217,13 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     void setEditionMode(boolean editionMode) {
         if (editionMode) {
             // switch to EditText view
-            viewSwitcherBinding.setDisplayedChild(viewSwitcherBinding.indexOfChild(editTextView));
+            viewSwitcherBinding.setDisplayedChild(viewSwitcherBinding.indexOfChild(edittextViewBinding.getRoot()));
             // setup visible menu buttons
             ok_settings.setVisible(true);
             edit_settings.setVisible(false);
         } else {
             // switch to TextView view
-            viewSwitcherBinding.setDisplayedChild(viewSwitcherBinding.indexOfChild(textViewView));
+            viewSwitcherBinding.setDisplayedChild(viewSwitcherBinding.indexOfChild(binding.textviewView.getRoot()));
             // setup visible menu buttons
             ok_settings.setVisible(false);
             edit_settings.setVisible(true);
@@ -267,15 +232,15 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     void saveMeetingDetails() {
         /*=== Get EditText content and save it to meeting ===*/
-        meeting.setTitle(etMeetingTitle.getText().toString());
-        meeting.setLeader(apiService.getUserByEmail(actvLeader.getText().toString()));
-        String[] usersEmailList = mactvParticipants.getText().toString().split("\\s*,\\s*");
+        meeting.setTitle(edittextViewBinding.etMeetingTitle.getText().toString());
+        meeting.setLeader(apiService.getUserByEmail(edittextViewBinding.actvLeader.getText().toString()));
+        String[] usersEmailList = edittextViewBinding.mactvParticipants.getText().toString().split("\\s*,\\s*");
         List<User> usersList = new ArrayList<>();
         for (String email : usersEmailList) {
             usersList.add(apiService.getUserByEmail(email));
         }
         meeting.setUsers(usersList);
-        meeting.setDescription(etDescription.getText().toString());
+        meeting.setDescription(edittextViewBinding.etDescription.getText().toString());
         meeting.setRoom(selectedRoom);
         meeting.setStartDate(selectedStartDate);
         meeting.setEndDate(selectedEndDate);
@@ -288,47 +253,47 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     void updateTextView() {
         /*=== Update TextView content ===*/
-        tvMeetingTitle.setText(meeting.getTitle());
-        tvLeader.setText(meeting.getLeader().getEmail());
+        textviewViewBinding.tvMeetingTitle.setText(meeting.getTitle());
+        textviewViewBinding.tvLeader.setText(meeting.getLeader().getEmail());
         for (int j = 0; j < meeting.getUsers().size(); j++) {
             if (j == 0) {
-                tvParticipants.setText(meeting.getUsers().get(j).getEmail());
+                textviewViewBinding.tvParticipants.setText(meeting.getUsers().get(j).getEmail());
             } else {
-                tvParticipants.setText(getString(R.string.Comma_separator, tvParticipants.getText(), meeting.getUsers().get(j).getEmail()));
+                textviewViewBinding.tvParticipants.setText(getString(R.string.Comma_separator, textviewViewBinding.tvParticipants.getText(), meeting.getUsers().get(j).getEmail()));
             }
         }
-        tvDescription.setText(meeting.getDescription());
-        tvRoom.setText(meeting.getRoom().getRoomName());
-        tvStartDate.setText(dateFormatter.format(meeting.getStartDate()));
-        tvStartHour.setText(timeFormatter.format(meeting.getStartDate()));
-        tvEndHour.setText(timeFormatter.format(meeting.getEndDate()));
-        tvvIvRoomColor.setColorFilter(meeting.getRoom().getColor());
+        textviewViewBinding.tvDescription.setText(meeting.getDescription());
+        textviewViewBinding.tvRoom.setText(meeting.getRoom().getRoomName());
+        textviewViewBinding.tvStartDate.setText(dateFormatter.format(meeting.getStartDate()));
+        textviewViewBinding.tvStartHour.setText(timeFormatter.format(meeting.getStartDate()));
+        textviewViewBinding.tvEndHour.setText(timeFormatter.format(meeting.getEndDate()));
+        textviewViewBinding.tvvIvRoomColor.setColorFilter(meeting.getRoom().getColor());
     }
 
     void updateEditText() {
         /*=== update EditTextView content ===*/
-        etMeetingTitle.setText(meeting.getTitle());
-        actvLeader.setText(meeting.getLeader().toString());
+        edittextViewBinding.etMeetingTitle.setText(meeting.getTitle());
+        edittextViewBinding.actvLeader.setText(meeting.getLeader().toString());
 
         for (int j = 0; j < meeting.getUsers().size(); j++) {
             if (j == 0) {
-                mactvParticipants.setText(meeting.getUsers().get(j).getEmail());
+                edittextViewBinding.mactvParticipants.setText(meeting.getUsers().get(j).getEmail());
             } else {
-                mactvParticipants.setText(getString(R.string.Comma_separator, mactvParticipants.getText(), meeting.getUsers().get(j).getEmail()));
+                edittextViewBinding.mactvParticipants.setText(getString(R.string.Comma_separator, edittextViewBinding.mactvParticipants.getText(), meeting.getUsers().get(j).getEmail()));
             }
         }
-        etDescription.setText(meeting.getDescription());
+        edittextViewBinding.etDescription.setText(meeting.getDescription());
 
         /*=== Update the spinner selected item, matching the room of the meeting ===*/
         for (int i = 0; i < rooms.size(); i++) {
             if (roomsAdapter.getItem(i) == meeting.getRoom()) {
-                spnRoom.setSelection(i);
+                edittextViewBinding.spnRoom.setSelection(i);
                 break;
             }
         }
-        tvClickableDate.setText(dateFormatter.format(meeting.getStartDate()));
-        tvClickableStartHour.setText(timeFormatter.format(meeting.getStartDate()));
-        tvClickableEndHour.setText(timeFormatter.format(meeting.getEndDate()));
+        edittextViewBinding.tvClickableDate.setText(dateFormatter.format(meeting.getStartDate()));
+        edittextViewBinding.tvClickableStartHour.setText(timeFormatter.format(meeting.getStartDate()));
+        edittextViewBinding.tvClickableEndHour.setText(timeFormatter.format(meeting.getEndDate()));
     }
 
     @Override
@@ -351,14 +316,14 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.edit_settings:
-                if (viewSwitcherBinding.getCurrentView() == textViewView) {
+                if (viewSwitcherBinding.getCurrentView() == textviewViewBinding.getRoot()) {
                     updateEditText();
                     setEditionMode(true);
                 }
                 return true;
 
             case R.id.ok_settings:
-                if (viewSwitcherBinding.getCurrentView() == editTextView) {
+                if (viewSwitcherBinding.getCurrentView() == edittextViewBinding.getRoot()) {
                     // remove focus from editText
                     this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                     if (editTextValidator()) {
@@ -383,37 +348,40 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     /*=== TextView date and time OnClick setup ===*/
     @Override
     public void onClick(View v) {
-        DialogFragment newFragmentTime = new TimePickerFragment(this);
-        DialogFragment newFragmentDate = new DatePickerFragment(this);
+        DialogFragment newFragmentTime;
+        DialogFragment newFragmentDate;
 
         switch (v.getId()) {
             case R.id.tv_clickable_date:
                 pickerTag = "datePicker";
+                newFragmentDate = new DatePickerFragment(this, selectedStartDate);
                 newFragmentDate.show(getSupportFragmentManager(), pickerTag);
                 break;
             case R.id.tv_clickable_start_hour:
                 pickerTag = "timePicker_start";
+                newFragmentTime = new TimePickerFragment(this, selectedStartDate);
                 newFragmentTime.show(getSupportFragmentManager(), pickerTag);
                 break;
             case R.id.tv_clickable_end_hour:
                 pickerTag = "timePicker_end";
+                newFragmentTime = new TimePickerFragment(this, selectedEndDate);
                 newFragmentTime.show(getSupportFragmentManager(), pickerTag);
                 break;
         }
     }
 
     public boolean editTextValidator() {
-        if (TextUtils.isEmpty(etMeetingTitle.getText())) {
+        if (TextUtils.isEmpty(edittextViewBinding.etMeetingTitle.getText())) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.title_missing),
                     Snackbar.LENGTH_LONG).setAction("Error", null).show();
             return true;
         }
-        if (TextUtils.isEmpty(actvLeader.getText())) {
+        if (TextUtils.isEmpty(edittextViewBinding.actvLeader.getText())) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.leader_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
             return true;
         }
-        if (TextUtils.isEmpty(mactvParticipants.getText())) {
+        if (TextUtils.isEmpty(edittextViewBinding.mactvParticipants.getText())) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.participants_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
             return true;
@@ -435,15 +403,13 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         return false;
     }
 
-    public void dialogConfirmation()
-    {
+    public void dialogConfirmation() {
         if (ok_settings.isVisible()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(getResources().getString(R.string.save_message));
             builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    if(!editTextValidator())
-                    {
+                    if (! editTextValidator()) {
                         saveMeetingDetails();
                         finish();
                     }
@@ -460,7 +426,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         }
     }
 
-    /*=== Override onSupportNavigateUp is set to get back to previous tab, not the home tab, when touching the back button in appbar layout ===*/
+    /*=== handle back button in menu bar ===*/
     @Override
     public boolean onSupportNavigateUp() {
         dialogConfirmation();
@@ -468,7 +434,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     @Override
-    public void onBackPressed() { //todo: je voudrais aussi avoir un handle sur le navigateUp
+    public void onBackPressed() {
         dialogConfirmation();
     }
 

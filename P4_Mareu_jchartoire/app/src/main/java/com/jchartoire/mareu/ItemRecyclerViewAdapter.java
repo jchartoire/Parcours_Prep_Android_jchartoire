@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.jchartoire.mareu.databinding.ItemContentBinding;
 import com.jchartoire.mareu.di.DI;
 import com.jchartoire.mareu.model.Meeting;
 import com.jchartoire.mareu.service.ApiService;
@@ -25,7 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import static com.jchartoire.mareu.tools.DateUtils.dateFormatter;
 
-public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder> {
+public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
     private List<Meeting> meetings, meetingsFiltered;
     private Context context;
     private ApiService apiService;
@@ -48,19 +49,21 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
+        ItemContentBinding binding;
+        binding = ItemContentBinding.bind(holder.itemView);
+
         final Meeting meeting = meetingsFiltered.get(position);
         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.FRANCE);
-        holder.meetingTitle.setText(String.format("%s - %s - %s", meeting.getTitle(), timeFormatter.format(meeting.getStartDate()), meeting.getLeader().getFirstName()));
+        binding.tvItemTitle.setText(String.format("%s - %s - %s", meeting.getTitle(), timeFormatter.format(meeting.getStartDate()), meeting.getLeader().getFirstName()));
         for (int j = 0; j < meeting.getUsers().size(); j++) {
             if (j == 0) {
-                holder.itemInfos.setText(meeting.getUsers().get(j).getEmail());
+                binding.tvItemInfos.setText(meeting.getUsers().get(j).getEmail());
             } else {
-                holder.itemInfos.setText(String.format("%s, %s", holder.itemInfos.getText(), meeting.getUsers().get(j).getEmail()));
+                binding.tvItemInfos.setText(String.format("%s, %s", binding.tvItemInfos.getText(), meeting.getUsers().get(j).getEmail()));
             }
         }
-        holder.imageViewCircle.setColorFilter(meeting.getRoom().getColor());
-
-        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+        binding.ivListRoomColor.setColorFilter(meeting.getRoom().getColor());
+        binding.ivDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 apiService.deleteMeeting(meeting);
@@ -71,7 +74,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         });
 
         /* adding an OnClickListener on each item, and launch DetailsActivity */
-        holder.item.setOnClickListener(new View.OnClickListener() {
+        binding.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -88,27 +91,13 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         return meetingsFiltered.size();
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
-
-
-        ImageView imageViewCircle = itemView.findViewById(R.id.iv_list_room_color);
-        TextView meetingTitle = itemView.findViewById(R.id.tv_item_title);
-        TextView itemInfos = itemView.findViewById(R.id.tv_item_infos);
-        ImageButton deleteButton = itemView.findViewById(R.id.iv_delete_button);
-        RelativeLayout item = itemView.findViewById(R.id.item); //todo: comment utiliser view Binding dans un recyclerview ?
-
-        ViewHolder(View view) {
-            super(view);
-        }
-    }
-
     void setFilter(int type, String param) {
         switch (type) {
             case 0: // Reset filter
                 meetingsFiltered = meetings;
                 break;
             case 1: // filter by date
-                meetingsFiltered = new ArrayList<>();
+                meetingsFiltered = new ArrayList<>(); //TODO:
                 for (Meeting meeting : meetings) {
                     if (dateFormatter.format(meeting.getStartDate()).equals(param)) {
                         meetingsFiltered.add(meeting);
@@ -124,5 +113,12 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
                 }
                 break;
         }
+    }
+}
+
+class ViewHolder extends RecyclerView.ViewHolder {
+    //TODO: la classe doit restée sortie ? avant elle était en inner class, dans l'arborescence elle crée un sous fichier
+    ViewHolder(View view) {
+        super(view);
     }
 }

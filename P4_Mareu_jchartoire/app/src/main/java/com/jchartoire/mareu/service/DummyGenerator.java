@@ -77,15 +77,14 @@ abstract class DummyGenerator {
                     dummyUsers.get(new Random().nextInt(9)), dummyUsers.get(new Random().nextInt(9)),
                     dummyUsers.get(new Random().nextInt(9))), largeString);
             dummyMeetings.add(meeting);
-            if (calendar.get(Calendar.HOUR_OF_DAY) > 17) {
+            calendar.add(Calendar.MINUTE, 30);
+            if (calendar.get(Calendar.HOUR_OF_DAY) > 15) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
                 calendar.set(Calendar.HOUR_OF_DAY, 8);
-                calendar.set(Calendar.MINUTE, 0);
                 StartDate = calendar.getTime();
                 calendar.add(Calendar.HOUR, 2);
                 EndDate = calendar.getTime();
             } else {
-                calendar.add(Calendar.MINUTE, 30);
                 StartDate = calendar.getTime();
                 calendar.add(Calendar.HOUR, 2);
                 EndDate = calendar.getTime();
