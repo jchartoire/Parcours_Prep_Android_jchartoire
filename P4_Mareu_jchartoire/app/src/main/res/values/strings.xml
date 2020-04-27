@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Maréu</string>
+    <string name="positive_button_text">Oui</string>
+    <string name="negative_button_text">Non</string>
 
     <!-- item menu text -->
     <string name="filter_date_item">Filtrer par date</string>
@@ -10,9 +12,6 @@
     <string name="Activity_detail">Détail de la réunion</string>
     <string name="rooms_prompt">Choisissez une salle :</string>
     <string name="room_color_description">room\'s color</string>
-
-    <!-- text tools -->
-    <string name="Comma_separator">%1$s, %2$s</string>
 
     <!-- bottom bar text -->
     <string name="no_Filter_Text">Filtrage = aucun</string>
@@ -25,9 +24,10 @@
     <string name="leader_missing">Email de l\'animateur manquant</string>
     <string name="title_missing">Titre manquant</string>
     <string name="participants_missing">Aucun participant renseigné</string>
-    <string name="wrong_start_date">L\'horaire de la réunion empiète sur une réunion déjà programmée.\nRepoussez l\'heure, ou changez de salle.</string>
-    <string name="negative_button_text">Annuler</string>
+    <string name="meeting_already_exist">L\'horaire de la réunion empiète sur une réunion déjà programmée.\nRepoussez l\'heure, ou changez de salle.</string>
     <string name="save_message">Sauvegarder ?</string>
+
+
 
     <!-- layout detail text -->
     <string name="date">Date :</string>

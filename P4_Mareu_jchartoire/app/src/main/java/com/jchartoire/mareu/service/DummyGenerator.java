@@ -50,6 +50,8 @@ public abstract class DummyGenerator {
 
     static List<Meeting> generateMeetings() {
         Meeting meeting;
+        //configure the first meeting for be always room1, 8:00, today.
+        int dummyRoom = 0;
         Calendar calendar = Calendar.getInstance();
         calendar.getTimeInMillis();
         calendar.set(Calendar.HOUR_OF_DAY, 8);
@@ -57,7 +59,6 @@ public abstract class DummyGenerator {
         Date StartDate = calendar.getTime();
         calendar.set(Calendar.HOUR_OF_DAY, 10);
         Date EndDate = calendar.getTime();
-
         String largeString = "Lorem ipsum dolor sit amet\n\n" +
                 "Togam orationem pudore existimatis aetatis esse castissima deductum.\n" +
                 "quantum omnem illo Crassi omnem isti deductum erudiretur a orationem.\n" +
@@ -71,9 +72,9 @@ public abstract class DummyGenerator {
                 "► Nisi mihi Phaedrum, inquam\n\n" +
                 "► Ibi victu recreati et quiete\n\n";
 
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 20; i++) {
             meeting = new Meeting(i, "Réunion " + i, dummyUsers.get(new Random().nextInt(9)), StartDate, EndDate,
-                    dummyRooms.get(new Random().nextInt(4)), Arrays.asList(dummyUsers.get(new Random().nextInt(9)),
+                    dummyRooms.get(dummyRoom), Arrays.asList(dummyUsers.get(new Random().nextInt(9)),
                     dummyUsers.get(new Random().nextInt(9)), dummyUsers.get(new Random().nextInt(9)),
                     dummyUsers.get(new Random().nextInt(9))), largeString);
             dummyMeetings.add(meeting);
@@ -86,9 +87,10 @@ public abstract class DummyGenerator {
                 EndDate = calendar.getTime();
             } else {
                 StartDate = calendar.getTime();
-                calendar.add(Calendar.HOUR, 2);
+                calendar.add(Calendar.HOUR, 1);
                 EndDate = calendar.getTime();
             }
+            dummyRoom = new Random().nextInt(4);
         }
         return new ArrayList<>(dummyMeetings);
     }

@@ -298,6 +298,12 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         }
     }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
     /*=== Fired if the user clicks on a delete button ===*/
     @Subscribe
     public void onDeleteMeeting(DeleteMeetingEvent event) {

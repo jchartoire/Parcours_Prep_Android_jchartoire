@@ -65,8 +65,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     private boolean createNewMeeting;
 
     private ActivityDetailBinding binding;
-    private FragmentDetailContentEdittextBinding edittextViewBinding;
-    private FragmentDetailContentTextviewBinding textviewViewBinding;
+    private FragmentDetailContentEdittextBinding editTextViewBinding;
+    private FragmentDetailContentTextviewBinding textViewViewBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +80,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         /*=== Binding ===*/
         //viewSwitcher content
         viewSwitcherBinding = binding.viewSwitcher;
-        edittextViewBinding = binding.edittextView;
-        textviewViewBinding = binding.textviewView;
+        editTextViewBinding = binding.edittextView;
+        textViewViewBinding = binding.textviewView;
 
         /*=== Get service ===*/
         apiService = DI.getApiService();
@@ -90,9 +90,9 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         initDetails();
 
         /*=== Set textView OnClickListener ===*/
-        edittextViewBinding.tvClickableDate.setOnClickListener(this);
-        edittextViewBinding.tvClickableStartHour.setOnClickListener(this);
-        edittextViewBinding.tvClickableEndHour.setOnClickListener(this);
+        editTextViewBinding.tvClickableDate.setOnClickListener(this);
+        editTextViewBinding.tvClickableStartHour.setOnClickListener(this);
+        editTextViewBinding.tvClickableEndHour.setOnClickListener(this);
 
         /*=== setup all interactive text fields and datePickers ===*/
         widgetsSetup();
@@ -124,18 +124,18 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             //get the date of the day
             Calendar calendar = Calendar.getInstance();
             calendar.getTimeInMillis();
-            // set default meeting at 10:00
-            calendar.set(Calendar.HOUR_OF_DAY, 10);
+            // set default meeting at 8:00
+            calendar.set(Calendar.HOUR_OF_DAY, 8);
             calendar.set(Calendar.MINUTE, 0);
             selectedStartDate = calendar.getTime();
             // update textView
-            edittextViewBinding.tvClickableDate.setText(dateFormatter.format(selectedStartDate));
-            edittextViewBinding.tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
+            editTextViewBinding.tvClickableDate.setText(dateFormatter.format(selectedStartDate));
+            editTextViewBinding.tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
             // set default meeting duration to 2 hours
             calendar.add(Calendar.HOUR_OF_DAY, 2);
             selectedEndDate = calendar.getTime();
             // update textView
-            edittextViewBinding.tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
+            editTextViewBinding.tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
             // save new date to the meeting
             meeting.setStartDate(selectedStartDate);
             meeting.setEndDate(selectedEndDate);
@@ -149,13 +149,13 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     void widgetsSetup() {
         /*=== Rooms spinner setup===*/
         roomsAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, rooms);
-        edittextViewBinding.spnRoom.setAdapter(roomsAdapter);
-        edittextViewBinding.spnRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        editTextViewBinding.spnRoom.setAdapter(roomsAdapter);
+        editTextViewBinding.spnRoom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // Get the value selected by the user
                 selectedRoom = (Room) (parent.getSelectedItem());
-                edittextViewBinding.etvIvRoomColor.setColorFilter(selectedRoom.getColor());
+                editTextViewBinding.etvIvRoomColor.setColorFilter(selectedRoom.getColor());
             }
 
             @Override
@@ -166,12 +166,12 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         /*=== MultiAutoCompleteTextView setup , set adapter to fill the data in suggestion list ===*/
         ArrayAdapter<User> mactvAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, users);    // set adapter to fill the
         // data in suggestion list
-        edittextViewBinding.mactvParticipants.setAdapter(mactvAdapter);
-        edittextViewBinding.mactvParticipants.setThreshold(1);    // set threshold value 1 that help us to start the searching from first character
-        edittextViewBinding.mactvParticipants.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());   // set tokenizer that distinguish the various substrings by comma
+        editTextViewBinding.mactvParticipants.setAdapter(mactvAdapter);
+        editTextViewBinding.mactvParticipants.setThreshold(1);    // set threshold value 1 that help us to start the searching from first character
+        editTextViewBinding.mactvParticipants.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());   // set tokenizer that distinguish the various substrings by comma
 
         /*=== AutoCompleteTextView setup, set adapter to fill the data in suggestion list ===*/
-        AutoCompleteTextView actv_leader = edittextViewBinding.actvLeader;
+        AutoCompleteTextView actv_leader = editTextViewBinding.actvLeader;
         ArrayAdapter<User> actvAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, users);
         actv_leader.setAdapter(actvAdapter);
         // set threshold value that help us to start the searching from first character
@@ -186,7 +186,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
             calendar.set(Calendar.MINUTE, minute);
             selectedStartDate = calendar.getTime();
-            edittextViewBinding.tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
+            editTextViewBinding.tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
             calendar.add(Calendar.HOUR_OF_DAY, 1);
         } else if (pickerTag.equals("timePicker_end")) {
             calendar.setTime(selectedEndDate);
@@ -194,7 +194,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             calendar.set(Calendar.MINUTE, minute);
         }
         selectedEndDate = calendar.getTime();
-        edittextViewBinding.tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
+        editTextViewBinding.tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -205,7 +205,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         calendar.set(Calendar.MONTH, month);
         calendar.set(Calendar.YEAR, year);
         selectedStartDate = calendar.getTime();
-        edittextViewBinding.tvClickableDate.setText(dateFormatter.format(selectedStartDate));
+        editTextViewBinding.tvClickableDate.setText(dateFormatter.format(selectedStartDate));
         // set EndDate same as StartDate, whithout modifying Hour and Minute end
         calendar.setTime(selectedEndDate);
         calendar.set(Calendar.DAY_OF_MONTH, day);
@@ -217,7 +217,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     void setEditionMode(boolean editionMode) {
         if (editionMode) {
             // switch to EditText view
-            viewSwitcherBinding.setDisplayedChild(viewSwitcherBinding.indexOfChild(edittextViewBinding.getRoot()));
+            viewSwitcherBinding.setDisplayedChild(viewSwitcherBinding.indexOfChild(editTextViewBinding.getRoot()));
             // setup visible menu buttons
             ok_settings.setVisible(true);
             edit_settings.setVisible(false);
@@ -232,15 +232,15 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     void saveMeetingDetails() {
         /*=== Get EditText content and save it to meeting ===*/
-        meeting.setTitle(edittextViewBinding.etMeetingTitle.getText().toString());
-        meeting.setLeader(apiService.getUserByEmail(edittextViewBinding.actvLeader.getText().toString()));
-        String[] usersEmailList = edittextViewBinding.mactvParticipants.getText().toString().split("\\s*,\\s*");
+        meeting.setTitle(editTextViewBinding.etMeetingTitle.getText().toString());
+        meeting.setLeader(apiService.getUserByEmail(editTextViewBinding.actvLeader.getText().toString()));
+        String[] usersEmailList = editTextViewBinding.mactvParticipants.getText().toString().split("\\s*,\\s*");
         List<User> usersList = new ArrayList<>();
         for (String email : usersEmailList) {
             usersList.add(apiService.getUserByEmail(email));
         }
         meeting.setUsers(usersList);
-        meeting.setDescription(edittextViewBinding.etDescription.getText().toString());
+        meeting.setDescription(editTextViewBinding.etDescription.getText().toString());
         meeting.setRoom(selectedRoom);
         meeting.setStartDate(selectedStartDate);
         meeting.setEndDate(selectedEndDate);
@@ -253,47 +253,47 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     void updateTextView() {
         /*=== Update TextView content ===*/
-        textviewViewBinding.tvMeetingTitle.setText(meeting.getTitle());
-        textviewViewBinding.tvLeader.setText(meeting.getLeader().getEmail());
+        textViewViewBinding.tvMeetingTitle.setText(meeting.getTitle());
+        textViewViewBinding.tvLeader.setText(meeting.getLeader().getEmail());
         for (int j = 0; j < meeting.getUsers().size(); j++) {
             if (j == 0) {
-                textviewViewBinding.tvParticipants.setText(meeting.getUsers().get(j).getEmail());
+                textViewViewBinding.tvParticipants.setText(meeting.getUsers().get(j).getEmail());
             } else {
-                textviewViewBinding.tvParticipants.setText(getString(R.string.Comma_separator, textviewViewBinding.tvParticipants.getText(), meeting.getUsers().get(j).getEmail()));
+                textViewViewBinding.tvParticipants.setText(String.format("%s, %s", textViewViewBinding.tvParticipants.getText(), meeting.getUsers().get(j).getEmail()));
             }
         }
-        textviewViewBinding.tvDescription.setText(meeting.getDescription());
-        textviewViewBinding.tvRoom.setText(meeting.getRoom().getRoomName());
-        textviewViewBinding.tvStartDate.setText(dateFormatter.format(meeting.getStartDate()));
-        textviewViewBinding.tvStartHour.setText(timeFormatter.format(meeting.getStartDate()));
-        textviewViewBinding.tvEndHour.setText(timeFormatter.format(meeting.getEndDate()));
-        textviewViewBinding.tvvIvRoomColor.setColorFilter(meeting.getRoom().getColor());
+        textViewViewBinding.tvDescription.setText(meeting.getDescription());
+        textViewViewBinding.tvRoom.setText(meeting.getRoom().getRoomName());
+        textViewViewBinding.tvStartDate.setText(dateFormatter.format(meeting.getStartDate()));
+        textViewViewBinding.tvStartHour.setText(timeFormatter.format(meeting.getStartDate()));
+        textViewViewBinding.tvEndHour.setText(timeFormatter.format(meeting.getEndDate()));
+        textViewViewBinding.tvvIvRoomColor.setColorFilter(meeting.getRoom().getColor());
     }
 
     void updateEditText() {
         /*=== update EditTextView content ===*/
-        edittextViewBinding.etMeetingTitle.setText(meeting.getTitle());
-        edittextViewBinding.actvLeader.setText(meeting.getLeader().toString());
+        editTextViewBinding.etMeetingTitle.setText(meeting.getTitle());
+        editTextViewBinding.actvLeader.setText(meeting.getLeader().toString());
 
         for (int j = 0; j < meeting.getUsers().size(); j++) {
             if (j == 0) {
-                edittextViewBinding.mactvParticipants.setText(meeting.getUsers().get(j).getEmail());
+                editTextViewBinding.mactvParticipants.setText(meeting.getUsers().get(j).getEmail());
             } else {
-                edittextViewBinding.mactvParticipants.setText(getString(R.string.Comma_separator, edittextViewBinding.mactvParticipants.getText(), meeting.getUsers().get(j).getEmail()));
+                editTextViewBinding.mactvParticipants.setText(String.format("%s, %s", editTextViewBinding.mactvParticipants.getText(), meeting.getUsers().get(j).getEmail()));
             }
         }
-        edittextViewBinding.etDescription.setText(meeting.getDescription());
+        editTextViewBinding.etDescription.setText(meeting.getDescription());
 
         /*=== Update the spinner selected item, matching the room of the meeting ===*/
         for (int i = 0; i < rooms.size(); i++) {
             if (roomsAdapter.getItem(i) == meeting.getRoom()) {
-                edittextViewBinding.spnRoom.setSelection(i);
+                editTextViewBinding.spnRoom.setSelection(i);
                 break;
             }
         }
-        edittextViewBinding.tvClickableDate.setText(dateFormatter.format(meeting.getStartDate()));
-        edittextViewBinding.tvClickableStartHour.setText(timeFormatter.format(meeting.getStartDate()));
-        edittextViewBinding.tvClickableEndHour.setText(timeFormatter.format(meeting.getEndDate()));
+        editTextViewBinding.tvClickableDate.setText(dateFormatter.format(meeting.getStartDate()));
+        editTextViewBinding.tvClickableStartHour.setText(timeFormatter.format(meeting.getStartDate()));
+        editTextViewBinding.tvClickableEndHour.setText(timeFormatter.format(meeting.getEndDate()));
     }
 
     @Override
@@ -316,14 +316,14 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.edit_settings:
-                if (viewSwitcherBinding.getCurrentView() == textviewViewBinding.getRoot()) {
+                if (viewSwitcherBinding.getCurrentView() == textViewViewBinding.getRoot()) {
                     updateEditText();
                     setEditionMode(true);
                 }
                 return true;
 
             case R.id.ok_settings:
-                if (viewSwitcherBinding.getCurrentView() == edittextViewBinding.getRoot()) {
+                if (viewSwitcherBinding.getCurrentView() == editTextViewBinding.getRoot()) {
                     // remove focus from editText
                     this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                     if (editTextValidator()) {
@@ -371,17 +371,17 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     public boolean editTextValidator() {
-        if (TextUtils.isEmpty(edittextViewBinding.etMeetingTitle.getText())) {
+        if (TextUtils.isEmpty(editTextViewBinding.etMeetingTitle.getText())) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.title_missing),
                     Snackbar.LENGTH_LONG).setAction("Error", null).show();
             return true;
         }
-        if (TextUtils.isEmpty(edittextViewBinding.actvLeader.getText())) {
+        if (TextUtils.isEmpty(editTextViewBinding.actvLeader.getText())) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.leader_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
             return true;
         }
-        if (TextUtils.isEmpty(edittextViewBinding.mactvParticipants.getText())) {
+        if (TextUtils.isEmpty(editTextViewBinding.mactvParticipants.getText())) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.participants_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
             return true;
@@ -391,7 +391,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             Date testEndDate = meetingToTest.getEndDate();
             if (meetingToTest != meeting && meetingToTest.getRoom() == selectedRoom && DateInRange(TestStartDate, testEndDate, selectedStartDate, selectedEndDate)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(getResources().getString(R.string.wrong_start_date));
+                builder.setMessage(getResources().getString(R.string.meeting_already_exist));
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
@@ -407,7 +407,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         if (ok_settings.isVisible()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(getResources().getString(R.string.save_message));
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            builder.setPositiveButton(getResources().getString(R.string.positive_button_text), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     if (! editTextValidator()) {
                         saveMeetingDetails();
@@ -446,7 +446,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     /*=== AutoCompleteTextView validator ===*/
     class Validator implements AutoCompleteTextView.Validator, View.OnFocusChangeListener {
-
+//TODO: "longueur des contrôleurs(Fragmentset/ouActivités)inférieure à 300 lignes" peut on sortir ce genre de classe ou methode ?
         @Override
         public boolean isValid(CharSequence text) {
             String[] valideUsersList = new String[users.size()];
