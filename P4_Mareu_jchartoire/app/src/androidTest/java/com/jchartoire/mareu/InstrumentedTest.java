@@ -38,6 +38,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
 import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
@@ -162,11 +163,11 @@ public class InstrumentedTest {
         calendar.getTimeInMillis();
         // fill up required fields
         onView(withId(R.id.add_fab)).perform(click());
-        onView(withId(R.id.et_meeting_title)).perform(ViewActions.typeText("New Meeting Test"), closeSoftKeyboard());
-        onView(withId(R.id.actv_leader)).perform(ViewActions.typeText("adam.cook@lamzone.com"), closeSoftKeyboard());
-        onView(withId(R.id.mactv_Participants)).perform(ViewActions.typeText("amy.hall@lamzone.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_meeting_title)).perform(scrollTo(), ViewActions.typeText("New Meeting Test"), closeSoftKeyboard());
+        onView(withId(R.id.actv_leader)).perform(scrollTo(), ViewActions.typeText("adam.cook@lamzone.com"), closeSoftKeyboard());
+        onView(withId(R.id.mactv_Participants)).perform(scrollTo(), ViewActions.typeText("amy.hall@lamzone.com"), closeSoftKeyboard());
         // Set a date on the date picker dialog (same as first dummyMeeting, today, 8:00, room 1)
-        onView(withId(R.id.tv_clickable_date)).perform(click());
+        onView(withId(R.id.tv_clickable_date)).perform(scrollTo(), click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)));
         onView(withText("OK")).perform(click());
@@ -176,7 +177,7 @@ public class InstrumentedTest {
         onView(withText(R.string.meeting_already_exist)).check(matches(isDisplayed()));
         onView(withText("OK")).perform(click());
         // change the room to room 10 (room 5 to 10 aren't used in dummyGenerator)
-        onView(withId(R.id.spn_room)).perform(click());
+        onView(withId(R.id.spn_room)).perform(scrollTo(), click());
         onData(anything()).atPosition(9).perform(click());
         onView(withId(R.id.ok_settings)).perform(click());
         // check that new meeting is showing up in meetings list
@@ -259,11 +260,11 @@ public class InstrumentedTest {
         onView(withId(R.id.recycler_view)).check(matches(hasChildCount(0)));
         // create a new meeting
         onView(withId(R.id.add_fab)).perform(click());
-        onView(withId(R.id.et_meeting_title)).perform(ViewActions.typeText("Meeting Test"), closeSoftKeyboard());
-        onView(withId(R.id.actv_leader)).perform(ViewActions.typeText("adam.cook@lamzone.com"), closeSoftKeyboard());
-        onView(withId(R.id.mactv_Participants)).perform(ViewActions.typeText("amy.hall@lamzone.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_meeting_title)).perform(scrollTo(), ViewActions.typeText("Meeting Test"), closeSoftKeyboard());
+        onView(withId(R.id.actv_leader)).perform(scrollTo(), ViewActions.typeText("adam.cook@lamzone.com"), closeSoftKeyboard());
+        onView(withId(R.id.mactv_Participants)).perform(scrollTo(), ViewActions.typeText("amy.hall@lamzone.com"), closeSoftKeyboard());
         // Set a date on the date picker dialog
-        onView(withId(R.id.tv_clickable_date)).perform(click());
+        onView(withId(R.id.tv_clickable_date)).perform(scrollTo(), click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)));
         onView(withText("OK")).perform(click());
