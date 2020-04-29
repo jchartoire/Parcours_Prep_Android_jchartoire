@@ -1,7 +1,6 @@
 package com.jchartoire.mareu;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -34,7 +33,6 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import static androidx.constraintlayout.widget.Constraints.TAG;
 import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
@@ -42,6 +40,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.matcher.ViewMatchers.assertThat;
+import static androidx.test.espresso.matcher.ViewMatchers.hasChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.hasMinimumChildCount;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -120,8 +119,6 @@ public class InstrumentedTest {
         onView(withId(R.id.recycler_view)).check(matches(hasMinimumChildCount(1)));
         // check item is not void and contains meeting title
         onView(withId(R.id.recycler_view)).check(matches(hasDescendant(withText(containsString(dummyTitle)))));
-        // perform click on first item
-        onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
     }
 
     /**
@@ -259,7 +256,7 @@ public class InstrumentedTest {
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)));
         onView(withText("OK")).perform(click());
-
+        onView(withId(R.id.recycler_view)).check(matches(hasChildCount(0)));
         // create a new meeting
         onView(withId(R.id.add_fab)).perform(click());
         onView(withId(R.id.et_meeting_title)).perform(ViewActions.typeText("Meeting Test"), closeSoftKeyboard());
@@ -268,9 +265,9 @@ public class InstrumentedTest {
         // Set a date on the date picker dialog
         onView(withId(R.id.tv_clickable_date)).perform(click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH + 1), calendar.get(Calendar.DAY_OF_MONTH)));
+                calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)));
         onView(withText("OK")).perform(click());
         onView(withId(R.id.ok_settings)).perform(click());
-        onView(withId(R.id.reset_filter_button)).perform(click());
+        onView(withId(R.id.recycler_view)).check(matches(hasChildCount(1)));
     }
 }
