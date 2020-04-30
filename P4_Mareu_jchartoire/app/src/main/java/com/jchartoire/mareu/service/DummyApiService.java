@@ -4,7 +4,10 @@ import com.jchartoire.mareu.model.Meeting;
 import com.jchartoire.mareu.model.Room;
 import com.jchartoire.mareu.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.jchartoire.mareu.tools.DateUtils.dateFormatter;
 
 /**
  * Dummy mock for the Api
@@ -14,6 +17,7 @@ public class DummyApiService implements ApiService {
     private List<User> users = DummyGenerator.generateUsers();
     private List<Room> rooms = DummyGenerator.generateRooms();
     private List<Meeting> meetings = DummyGenerator.generateMeetings();
+    private List<Meeting> meetingsFiltered = new ArrayList<>(meetings);
 
     /**
      * {@inheritDoc}
@@ -45,7 +49,7 @@ public class DummyApiService implements ApiService {
     @Override
     public User getUserByEmail(String email) {
         for (User user : users) {
-            if (user.getEmail() .equals(email)) {
+            if (user.getEmail().equals(email)) {
                 return user;
             }
         }
@@ -62,6 +66,7 @@ public class DummyApiService implements ApiService {
         rooms.remove(room);
     }
 
+    @Override
     public void createRoom(Room room) {
         rooms.add(room);
     }
@@ -79,6 +84,34 @@ public class DummyApiService implements ApiService {
     @Override
     public List<Meeting> getMeetings() {
         return meetings;
+    }
+
+    @Override
+    public List<Meeting> getFilteredMeetings(int type, String param) {
+        switch (type) {
+            case 0: // Reset filter
+                // update existing list
+                meetingsFiltered.clear();
+                meetingsFiltered.addAll(meetings);
+                break;
+            case 1: // filter by date
+                meetingsFiltered.clear();
+                for (Meeting meeting : meetings) {
+                    if (dateFormatter.format(meeting.getStartDate()).equals(param)) {
+                        meetingsFiltered.add(meeting);
+                    }
+                }
+                break;
+            case 2: // filter by room
+                meetingsFiltered.clear();
+                for (Meeting meeting : meetings) {
+                    if (meeting.getRoom().getRoomName().equals(param)) {
+                        meetingsFiltered.add(meeting);
+                    }
+                }
+                break;
+        }
+        return meetingsFiltered;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.jchartoire.mareu;
 
-import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -30,7 +29,6 @@ import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.espresso.contrib.RecyclerViewActions;
 import androidx.test.espresso.matcher.RootMatchers;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
-import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import static androidx.test.espresso.Espresso.onData;
@@ -102,14 +100,6 @@ public class InstrumentedTest {
         resetDummyList();
     }
 
-    @Test
-    public void useAppContext() {
-        // Context of the app under test.
-        Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.jchartoire.mareu", appContext.getPackageName());
-        //TODO: le test crée par défaut est utile ?
-    }
-
     /**
      * We ensure that our recyclerview is displaying at least one item with correct info
      */
@@ -163,9 +153,9 @@ public class InstrumentedTest {
         calendar.getTimeInMillis();
         // fill up required fields
         onView(withId(R.id.add_fab)).perform(click());
-        onView(withId(R.id.et_meeting_title)).perform(scrollTo(), ViewActions.typeText("New Meeting Test"), closeSoftKeyboard());
-        onView(withId(R.id.actv_leader)).perform(scrollTo(), ViewActions.typeText("adam.cook@lamzone.com"), closeSoftKeyboard());
-        onView(withId(R.id.mactv_Participants)).perform(scrollTo(), ViewActions.typeText("amy.hall@lamzone.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_meeting_title)).perform(scrollTo(), ViewActions.replaceText("New Meeting Test"), closeSoftKeyboard());
+        onView(withId(R.id.actv_leader)).perform(scrollTo(), ViewActions.replaceText("amy.hall@lamzone.com"), closeSoftKeyboard());
+        onView(withId(R.id.mactv_Participants)).perform(scrollTo(), ViewActions.replaceText("adam.cook@lamzone.com"), closeSoftKeyboard());
         // Set a date on the date picker dialog (same as first dummyMeeting, today, 8:00, room 1)
         onView(withId(R.id.tv_clickable_date)).perform(scrollTo(), click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(calendar.get(Calendar.YEAR),
@@ -220,16 +210,11 @@ public class InstrumentedTest {
      */
     @Test
     public void dateFilter_show_only_matching_date() {
+        // count meetings that are scheduled today
         Calendar calendar = Calendar.getInstance();
         calendar.getTimeInMillis();
         String currentDate = dateFormatter.format(calendar.getTimeInMillis());
-        int itemCount = 0;
-        for (int i = 0; i < apiService.getMeetings().size(); i++) {
-            if (dateFormatter.format(apiService.getMeetings().get(i).getStartDate()).equals(currentDate)) {
-                itemCount++;
-            }
-        }
-        onView(withId(R.id.recycler_view)).check(matches(hasMinimumChildCount(1)));
+        int itemCount = apiService.getFilteredMeetings(1, currentDate).size();
         // set filter by Date
         openActionBarOverflowOrOptionsMenu(itemListActivity.getBaseContext());
         onView(withText(R.string.filter_date_item)).perform(click());
@@ -260,9 +245,9 @@ public class InstrumentedTest {
         onView(withId(R.id.recycler_view)).check(matches(hasChildCount(0)));
         // create a new meeting
         onView(withId(R.id.add_fab)).perform(click());
-        onView(withId(R.id.et_meeting_title)).perform(scrollTo(), ViewActions.typeText("Meeting Test"), closeSoftKeyboard());
-        onView(withId(R.id.actv_leader)).perform(scrollTo(), ViewActions.typeText("adam.cook@lamzone.com"), closeSoftKeyboard());
-        onView(withId(R.id.mactv_Participants)).perform(scrollTo(), ViewActions.typeText("amy.hall@lamzone.com"), closeSoftKeyboard());
+        onView(withId(R.id.et_meeting_title)).perform(scrollTo(), ViewActions.replaceText("Meeting Test"), closeSoftKeyboard());
+        onView(withId(R.id.actv_leader)).perform(scrollTo(), ViewActions.replaceText("adam.cook@lamzone.com"), closeSoftKeyboard());
+        onView(withId(R.id.mactv_Participants)).perform(scrollTo(), ViewActions.replaceText("amy.hall@lamzone.com"), closeSoftKeyboard());
         // Set a date on the date picker dialog
         onView(withId(R.id.tv_clickable_date)).perform(scrollTo(), click());
         onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(calendar.get(Calendar.YEAR),

@@ -39,21 +39,19 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        ItemContentBinding binding;
-        binding = ItemContentBinding.bind(holder.itemView);
-
         final Meeting meeting = meetingList.get(position);
         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.FRANCE);
-        binding.tvItemTitle.setText(String.format("%s - %s - %s", meeting.getTitle(), timeFormatter.format(meeting.getStartDate()), meeting.getLeader().getFirstName()));
+        holder.binding.tvItemTitle.setText(String.format("%s - %s - %s", meeting.getTitle(), timeFormatter.format(meeting.getStartDate()),
+                meeting.getLeader().getFirstName()));
         for (int j = 0; j < meeting.getUsers().size(); j++) {
             if (j == 0) {
-                binding.tvItemInfos.setText(meeting.getUsers().get(j).getEmail());
+                holder.binding.tvItemInfos.setText(meeting.getUsers().get(j).getEmail());
             } else {
-                binding.tvItemInfos.setText(String.format("%s, %s", binding.tvItemInfos.getText(), meeting.getUsers().get(j).getEmail()));
+                holder.binding.tvItemInfos.setText(String.format("%s, %s", holder.binding.tvItemInfos.getText(), meeting.getUsers().get(j).getEmail()));
             }
         }
-        binding.ivListRoomColor.setColorFilter(meeting.getRoom().getColor());
-        binding.ivDeleteButton.setOnClickListener(new View.OnClickListener() {
+        holder.binding.ivListRoomColor.setColorFilter(meeting.getRoom().getColor());
+        holder.binding.ivDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EventBus.getDefault().post(new DeleteMeetingEvent(meeting));
@@ -61,7 +59,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         });
 
         /* adding an OnClickListener on each item, and launch DetailsActivity */
-        binding.item.setOnClickListener(new View.OnClickListener() {
+        holder.binding.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 long Id = meeting.getId();        // getting meeting's ID of the clicked item
@@ -81,7 +79,10 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
 }
 
 class ViewHolder extends RecyclerView.ViewHolder {
+    ItemContentBinding binding;
+
     ViewHolder(View view) {
         super(view);
+        binding = ItemContentBinding.bind(view);
     }
 }

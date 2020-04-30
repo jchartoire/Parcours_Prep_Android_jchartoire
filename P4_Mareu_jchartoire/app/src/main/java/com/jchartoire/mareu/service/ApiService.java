@@ -13,6 +13,7 @@ public interface ApiService {
 
     /**
      * users service
+     * @return Return a User
      */
     List<User> getUsers();
 
@@ -37,6 +38,7 @@ public interface ApiService {
 
     /**
      * rooms service
+     * @return Return a Room
      */
     List<Room> getRooms();
 
@@ -55,8 +57,15 @@ public interface ApiService {
 
     /**
      * meetings service
+     * @return Return the list of meetings
      */
     List<Meeting> getMeetings();
+
+    /**
+     * meetings service
+     * @return Return the list of filtered meetings
+     */
+    List<Meeting> getFilteredMeetings(int type, String param);
 
     /**
      * @param meeting object designating a meeting
