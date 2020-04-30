@@ -43,7 +43,7 @@
                 <ImageView
                     android:id="@+id/etv_iv_room_color"
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="40dp"
                     android:layout_column="0"
                     android:layout_span="2"
                     android:contentDescription="@string/room_color_description"
@@ -63,39 +63,6 @@
                     android:textSize="@dimen/text_size_normal"
                     android:textStyle="bold"
                     tools:ignore="PrivateResource" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="5dp"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_column="0"
-                    android:layout_span="2"
-                    android:lines="1"
-                    android:text="@string/leader"
-                    android:textColor="#2C2B2B"
-                    android:textSize="@dimen/text_size_normal"
-                    android:textStyle="bold" />
-
-                <AutoCompleteTextView
-                    android:id="@+id/actv_leader"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_column="1"
-                    android:layout_span="3"
-                    android:background="@drawable/edittext_border"
-                    android:gravity="center_vertical"
-                    android:hint="@string/no_leader_hint"
-                    android:inputType="textEmailAddress"
-                    android:minHeight="@dimen/editText_size"
-                    android:padding="@dimen/text_padding"
-                    android:textSize="@dimen/text_size_normal" />
 
             </TableRow>
 
@@ -145,6 +112,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
                 android:gravity="center_vertical">
 
                 <ImageView
@@ -205,6 +173,38 @@
                         android:textColor="#2C2B2B"
                         android:textSize="@dimen/text_size_normal" />
                 </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_span="2"
+                    android:lines="1"
+                    android:text="@string/leader"
+                    android:textColor="#2C2B2B"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold" />
+
+                <AutoCompleteTextView
+                    android:id="@+id/actv_leader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_column="1"
+                    android:layout_span="3"
+                    android:background="@drawable/edittext_border"
+                    android:gravity="center_vertical"
+                    android:hint="@string/no_leader_hint"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="@dimen/editText_size"
+                    android:padding="@dimen/text_padding"
+                    android:textSize="@dimen/text_size_normal" />
 
             </TableRow>
 

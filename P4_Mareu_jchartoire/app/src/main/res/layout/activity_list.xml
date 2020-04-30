@@ -55,7 +55,7 @@
         tools:layout_height="@dimen/bottom_bar_height"
         android:layout_gravity="bottom"
         android:animateLayoutChanges="true"
-        android:background="#FFAB91"
+        android:background="#009688"
         android:orientation="horizontal"
         app:layout_anchor="@+id/item_layout"
         app:layout_anchorGravity="bottom|center">

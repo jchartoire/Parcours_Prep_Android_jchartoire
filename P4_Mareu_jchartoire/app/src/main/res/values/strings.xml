@@ -27,8 +27,6 @@
     <string name="meeting_already_exist">L\'horaire de la réunion empiète sur une réunion déjà programmée.\nRepoussez l\'heure, ou changez de salle.</string>
     <string name="save_message">Sauvegarder ?</string>
 
-
-
     <!-- layout detail text -->
     <string name="date">Date :</string>
     <string name="hour">Heure :</string>
