@@ -28,14 +28,14 @@
         android:paddingTop="?attr/actionBarSize">
 
         <include
-            android:id="@+id/edittextView"
-            layout="@layout/fragment_detail_content_edittext"
+            android:id="@+id/textviewView"
+            layout="@layout/fragment_detail_content_textview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <include
-            android:id="@+id/textviewView"
-            layout="@layout/fragment_detail_content_textview"
+            android:id="@+id/edittextView"
+            layout="@layout/fragment_detail_content_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

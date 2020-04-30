@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#F8F8F8"
@@ -22,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:autofillHints="Title"
-                android:background="#FFFFFF"
+                android:background="@drawable/edittext_border"
                 android:gravity="center_vertical"
                 android:hint="@string/title_hint"
                 android:inputType="text"
@@ -53,10 +54,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
-                    android:backgroundTint="@color/colorPrimary"
+                    android:background="@drawable/spinner_border"
+                    android:dropDownWidth="wrap_content"
+                    android:dropDownVerticalOffset="?attr/dropdownListPreferredItemHeight"
+                    android:popupElevation="3dp"
                     android:prompt="@string/rooms_prompt"
-                    android:spinnerMode="dialog"
-                    android:textStyle="bold" />
+                    android:spinnerMode="dropdown"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textStyle="bold"
+                    tools:ignore="PrivateResource" />
 
             </TableRow>
 
@@ -83,7 +89,7 @@
                     android:layout_height="wrap_content"
                     android:layout_column="1"
                     android:layout_span="3"
-                    android:background="#FFFFFF"
+                    android:background="@drawable/edittext_border"
                     android:gravity="center_vertical"
                     android:hint="@string/no_leader_hint"
                     android:inputType="textEmailAddress"
@@ -126,7 +132,7 @@
                     android:id="@+id/tv_clickable_date"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
-                    android:background="#FFFFFF"
+                    android:background="@drawable/edittext_border"
                     android:gravity="center_vertical"
                     android:minWidth="100dp"
                     android:padding="@dimen/text_padding"
@@ -174,7 +180,7 @@
                         android:id="@+id/tv_clickable_start_hour"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
+                        android:background="@drawable/edittext_border"
                         android:gravity="center_vertical"
                         android:padding="@dimen/text_padding"
                         android:text="@string/hour_example"
@@ -192,7 +198,7 @@
                         android:id="@+id/tv_clickable_end_hour"
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
-                        android:background="#FFFFFF"
+                        android:background="@drawable/edittext_border"
                         android:gravity="center_vertical"
                         android:padding="@dimen/text_padding"
                         android:text="@string/hour_example"
@@ -217,7 +223,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
-                android:background="#FFFFFF"
+                android:background="@drawable/edittext_border"
                 android:gravity="start"
                 android:hint="@string/add_participants_hint"
                 android:inputType="textEmailAddress"
@@ -239,9 +245,9 @@
                 android:id="@+id/et_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="?attr/actionBarSize"
                 android:autofillHints="Description text"
-                android:background="#FFFFFF"
+                android:background="@drawable/edittext_border"
                 android:gravity="start"
                 android:hint="@string/add_description_hint"
                 android:inputType="none"
@@ -250,7 +256,6 @@
                 android:padding="@dimen/text_padding"
                 android:textColor="#2C2B2B"
                 android:textSize="@dimen/text_size_normal" />
-            <!-- todo: justifier le texte = https://dzone.com/articles/android-%E2%80%93-how-display  -->
 
         </TableLayout>
     </ScrollView>
