@@ -76,7 +76,7 @@ public abstract class DummyGenerator {
         // generate random meetings
         for (int i = 1; i <= 20; i++) {
             Room dummyRoom = dummyRooms.get(new Random().nextInt(4));
-            User dummyLeader = dummyUsers.get(new Random().nextInt(4));
+            User dummyLeader = dummyUsers.get(new Random().nextInt(10));
             List<User> dummyParticipants = Arrays.asList(dummyUsers.get(new Random().nextInt(10)),
                     dummyUsers.get(new Random().nextInt(10)),
                     dummyUsers.get(new Random().nextInt(10)));
@@ -93,7 +93,7 @@ public abstract class DummyGenerator {
                 dummyEndDate = calendar.getTime();
             } else {
                 dummyStartDate = calendar.getTime();
-                calendar.add(Calendar.HOUR, 2);
+                calendar.add(Calendar.HOUR, 1);
                 dummyEndDate = calendar.getTime();
             }
         }
