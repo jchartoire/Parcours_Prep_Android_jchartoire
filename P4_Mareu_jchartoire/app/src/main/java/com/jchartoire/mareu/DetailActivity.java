@@ -446,7 +446,6 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     /*=== AutoCompleteTextView validator ===*/
     class Validator implements AutoCompleteTextView.Validator, View.OnFocusChangeListener {
-        //TODO: "longueur des contrôleurs(Fragmentset/ouActivités)inférieure à 300 lignes" peut on sortir ce genre de classe ou methode ?
         @Override
         public boolean isValid(CharSequence text) {
             String[] valideUsersList = new String[users.size()];

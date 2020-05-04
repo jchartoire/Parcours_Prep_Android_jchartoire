@@ -207,8 +207,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
 
     public void setRoomFilter() {
         spinnerRoomSetup();
-        //TODO : meilleure solution ? je repasse dans le setup pour : spnRoom.setSelection(0);
-        // sinon le spinner reste sur "salle 2" par ex quand je reset le filtre. inialement spinnerRoomSetup(); était dans le onCreate
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (spinnerLayout.getParent() != null)
             ((ViewGroup) spinnerLayout.getParent()).removeView(spinnerLayout);
