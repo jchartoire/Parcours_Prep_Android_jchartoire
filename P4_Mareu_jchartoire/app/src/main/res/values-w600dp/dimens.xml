@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="bottom_bar_height">50dp</dimen>
+    <dimen name="extern_layout_margin">30dp</dimen>
+    <dimen name="fab_margin">30dp</dimen>
+    <dimen name="imageView_size">50dp</dimen>
+    <dimen name="image_button_margin">10dp</dimen>
+    <dimen name="image_button_size">40dp</dimen>
+    <dimen name="imageview_margin">20dp</dimen>
+    <dimen name="layout_margin_1">15dp</dimen>
+    <dimen name="layout_margin_2">30dp</dimen>
+    <dimen name="text_size_bottom_bar">18sp</dimen>
+    <dimen name="text_size_normal">18sp</dimen>
+    <dimen name="text_size_title">20sp</dimen>
+</resources>

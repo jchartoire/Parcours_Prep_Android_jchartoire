@@ -118,7 +118,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         binding.recyclerView.setAdapter(adapter);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.notifyDataSetChanged();
-        System.out.println("meetings.size() = " + meetings.size());
     }
 
     /*=== Init the List of meetings ===*/
@@ -170,7 +169,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         filterPattern = dateSet;
         meetings = apiService.getFilteredMeetings(filterType, filterPattern);
         adapter.notifyDataSetChanged();
-        System.out.println("meetings.size() = " + meetings.size());
         // set bottom filter info bar
         binding.filterType.setText(String.format("%s%s", getString(R.string.filter_By_Date_Text), dateSet));
         ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
@@ -219,7 +217,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
                     filterType = 2;
                     filterPattern = selectedRoomFilterString;
                     adapter.notifyDataSetChanged();
-                    System.out.println("meetings.size() = " + meetings.size());
                     // set bottom filter info bar
                     binding.filterType.setText(String.format("%s%s", getString(R.string.filter_text), selectedRoomFilterString));
                     ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
@@ -244,7 +241,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         filterType = 0;
         filterPattern = null;
         adapter.notifyDataSetChanged();
-        System.out.println("meetings.size() = " + meetings.size());
         // reset bottom filter info bar
         binding.filterType.setText(getString(R.string.no_Filter_Text));
         ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = 0;
@@ -258,7 +254,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         initFilterInfoBar();
         meetings = apiService.getFilteredMeetings(filterType, filterPattern);
         adapter.notifyDataSetChanged();
-        System.out.println("meetings.size() = " + meetings.size());
     }
 
     @Override
@@ -282,6 +277,5 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         initList();
         meetings = apiService.getFilteredMeetings(filterType, filterPattern);
         adapter.notifyDataSetChanged();
-        System.out.println("meetings.size() = " + meetings.size());
     }
 }
