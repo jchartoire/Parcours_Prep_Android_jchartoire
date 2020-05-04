@@ -43,7 +43,7 @@ public class UnitTest {
     @Test
     @Order(1)
     @Tag("MeetingAPI")
-    @DisplayName("Get Meetings list with success")
+    @DisplayName("Get Meetings list")
     void getMeetings() {
         List<Meeting> meetings = apiService.getMeetings();
         Matchers.containsInAnyOrder(meetings, dummyMeetings.toArray());
@@ -52,7 +52,7 @@ public class UnitTest {
     @Test
     @Order(2)
     @Tag("MeetingAPI")
-    @DisplayName("Delete a meeting from the meetings list with success")
+    @DisplayName("Delete a meeting from the meetings list")
     void deleteMeeting() {
         Meeting meetingToDelete = apiService.getMeetings().get(0);
         assertTrue(apiService.getMeetings().contains(meetingToDelete));
@@ -63,7 +63,7 @@ public class UnitTest {
     @Test
     @Order(3)
     @Tag("MeetingAPI")
-    @DisplayName("Get a meeting by ID with success")
+    @DisplayName("Get a meeting by ID")
     void getMeetingById() {
         /* get a specific meeting from the list of Meetings by the service */
         Meeting dummyMeeting = dummyMeetings.get(0);
@@ -74,7 +74,7 @@ public class UnitTest {
     @Test
     @Order(4)
     @Tag("MeetingAPI")
-    @DisplayName("Create new meeting with success")
+    @DisplayName("Create new meeting")
     void createMeeting() {
         /* create a new meeting with just an ID, others details can remain empty */
         long newId = System.currentTimeMillis();
@@ -87,7 +87,7 @@ public class UnitTest {
     @Test
     @Order(5)
     @Tag("MeetingAPI")
-    @DisplayName("Get meeting's details with success")
+    @DisplayName("Get meeting's details")
     void getMeetingDetails() {
         // dummy detail of first meeting
         String dummyTitle = "dummyTitle";
@@ -144,7 +144,7 @@ public class UnitTest {
     @Test
     @Order(7)
     @Tag("UserAPI")
-    @DisplayName("Get Users list with success")
+    @DisplayName("Get Users list")
     void getUsers() {
         List<User> users = apiService.getUsers();
         Matchers.containsInAnyOrder(users, dummyUsers.toArray());
@@ -153,7 +153,7 @@ public class UnitTest {
     @Test
     @Order(8)
     @Tag("UserAPI")
-    @DisplayName("Get a user by email with success")
+    @DisplayName("Get a user by email")
     void getUserByEmail() {
         /* get a specific user from the list of Users by the service */
         User dummyUser = dummyUsers.get(0);
@@ -164,7 +164,7 @@ public class UnitTest {
     @Test
     @Order(9)
     @Tag("UserAPI")
-    @DisplayName("Get user's details with success")
+    @DisplayName("Get user's details")
     void getUserDetails() {
         /* get first user by the service */
         User userToTest = apiService.getUsers().get(0);
@@ -178,7 +178,7 @@ public class UnitTest {
     @Test
     @Order(10)
     @Tag("RoomAPI")
-    @DisplayName("Get room's details with success")
+    @DisplayName("Get room's details")
     void getRoomDetails() {
         /* get a dummy room of the generated list */
         Room dummyRoom = dummyRooms.get(0);
