@@ -11,61 +11,18 @@ import java.util.List;
  */
 public interface ApiService {
 
-    /**
-     * users service
-     * @return Return a User
-     */
-    List<User> getUsers();
+//region API Meeting
 
     /**
-     * @param user object representing a user
-     */
-    void deleteUser(User user);
-
-    void createUser(User user);
-
-    /**
-     * @param Id The unique ID of the user
-     * @return Return a User
-     */
-    User getUserById(long Id);
-
-    /**
-     * @param email The unique email of the user
-     * @return Return a User
-     */
-    User getUserByEmail(String email);
-
-    /**
-     * rooms service
-     * @return Return a Room
-     */
-    List<Room> getRooms();
-
-    /**
-     * @param room object designating a room
-     */
-    void deleteRoom(Room room);
-
-    void createRoom(Room room);
-
-    /**
-     * @param Id The unique ID of the room
-     * @return Return a Room
-     */
-    Room getRoomById(long Id);
-
-    /**
-     * meetings service
      * @return Return the list of meetings
      */
     List<Meeting> getMeetings();
 
     /**
-     * meetings service
-     * @return Return the list of filtered meetings
+     * @param Id The unique ID of the meeting
+     * @return Return a Meeting
      */
-    List<Meeting> getFilteredMeetings(int type, String param);
+    Meeting getMeetingById(long Id);
 
     /**
      * @param meeting object designating a meeting
@@ -75,8 +32,34 @@ public interface ApiService {
     void createMeeting(Meeting meeting);
 
     /**
-     * @param Id The unique ID of the meeting
-     * @return Return a Meeting
+     * @return Return the list of filtered meetings
      */
-    Meeting getMeetingById(long Id);
+    List<Meeting> getFilteredMeetings(int type, String param);//endregion
+//region API User
+
+    /**
+     * @return Return a User
+     */
+    List<User> getUsers();
+
+    /**
+     * @param email The unique email of the user
+     * @return Return a User
+     */
+    User getUserByEmail(String email);
+//endregion
+
+//region API Room
+
+    /**
+     * @return Return a Room
+     */
+    List<Room> getRooms();
+
+    /**
+     * @param Id The unique ID of the Room
+     * @return Return a Room
+     */
+    Room getRoomById(long Id);
+//endregion
 }

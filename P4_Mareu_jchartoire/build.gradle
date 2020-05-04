@@ -17,6 +17,7 @@ buildscript {
 }
 
 allprojects {
+    buildDir = "F:/Android-Studio-Builds/${rootProject.name}/${project.name}"
     repositories {
         google()
         jcenter()

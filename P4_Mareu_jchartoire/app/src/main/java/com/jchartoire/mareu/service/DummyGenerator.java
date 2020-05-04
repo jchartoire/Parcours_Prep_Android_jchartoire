@@ -11,10 +11,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import static com.jchartoire.mareu.tools.DateUtils.getDateFor;
+
 public abstract class DummyGenerator {
 
     public static List<Room> dummyRooms = Arrays.asList(
-            new Room(System.currentTimeMillis(), "Salle 1", 0xFFFC8E8E),
+            new Room(1, "Salle 1", 0xFFFC8E8E),
             new Room(2, "Salle 2", 0xFF8EC7FC),
             new Room(3, "Salle 3", 0xFFFCCB93),
             new Room(4, "Salle 4", 0xFFAF8EFC),
@@ -26,7 +28,6 @@ public abstract class DummyGenerator {
             new Room(10, "Salle 10", 0xFF5A5A5A)
     );
     public static List<User> dummyUsers = Arrays.asList(
-
             new User(1, "Amy", "Hall", "amy.hall@lamzone.com"),
             new User(2, "Adam", "Cook", "adam.cook@lamzone.com"),
             new User(3, "Alice", "Shaw", "alice.shaw@lamzone.com"),
@@ -50,47 +51,51 @@ public abstract class DummyGenerator {
 
     static List<Meeting> generateMeetings() {
         Meeting meeting;
-        //configure the first meeting for be always room1, 8:00, today.
-        int dummyRoom = 0;
+        // add the first meeting with static data
+        meeting = new Meeting(0, "dummyTitle", dummyUsers.get(0),
+                getDateFor(2020, Calendar.JANUARY, 1, 8, 0),
+                getDateFor(2020, Calendar.JANUARY, 1, 12, 0),
+                dummyRooms.get(0), Arrays.asList(dummyUsers.get(0),
+                dummyUsers.get(1)), "dummyString");
+        dummyMeetings.add(meeting);
+
+        //configure the next meeting starting at 8am today.
         Calendar calendar = Calendar.getInstance();
         calendar.getTimeInMillis();
         calendar.set(Calendar.HOUR_OF_DAY, 8);
         calendar.set(Calendar.MINUTE, 0);
-        Date StartDate = calendar.getTime();
-        calendar.set(Calendar.HOUR_OF_DAY, 10);
-        Date EndDate = calendar.getTime();
-        String largeString = "Lorem ipsum dolor sit amet\n\n" +
-                "Togam orationem pudore existimatis aetatis esse castissima deductum.\n" +
-                "quantum omnem illo Crassi omnem isti deductum erudiretur a orationem.\n" +
-                "brevis hoc ut istam M ipsius a ad esse deinde.\n" +
-                "Utilia multa reducere viam eum ut admovente veritatis.\n\n" +
-                "veritatis cum viam admovente mariti stimulos reducere mariti ut similia.\n" +
-                "mariti veritatis potius obstinatum.\n\n" +
-                "► Quoniam mirari quosdam\n\n" +
-                "► Proinde concepta rabie saeviore\n\n" +
-                "► Novitates autem si spem adferunt\n\n" +
-                "► Nisi mihi Phaedrum, inquam\n\n" +
-                "► Ibi victu recreati et quiete\n\n";
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        Date dummyStartDate = calendar.getTime();
+        calendar.add(Calendar.HOUR, 1);
+        Date dummyEndDate = calendar.getTime();
 
+        String dummyString = "Lorem ipsum dolor sit amet\n\n" + "► Line 1\n\n" + "► Line 2\n\n" + "► Line 3\n\n" + "► Line 4\n\n" +
+                "► Line 5\n\n" + "► Line 6\n\n" + "► Line 7\n\n" + "► Line 8\n\n" + "► Line 9\n\n" + "► Line 10\n\n";
+
+        // generate random meetings
         for (int i = 1; i <= 20; i++) {
-            meeting = new Meeting(i, "Réunion " + i, dummyUsers.get(new Random().nextInt(9)), StartDate, EndDate,
-                    dummyRooms.get(dummyRoom), Arrays.asList(dummyUsers.get(new Random().nextInt(9)),
-                    dummyUsers.get(new Random().nextInt(9)), dummyUsers.get(new Random().nextInt(9)),
-                    dummyUsers.get(new Random().nextInt(9))), largeString);
+            Room dummyRoom = dummyRooms.get(new Random().nextInt(4));
+            User dummyLeader = dummyUsers.get(new Random().nextInt(4));
+            List<User> dummyParticipants = Arrays.asList(dummyUsers.get(new Random().nextInt(10)),
+                    dummyUsers.get(new Random().nextInt(10)),
+                    dummyUsers.get(new Random().nextInt(10)));
+
+            meeting = new Meeting(i, "Réunion " + i, dummyLeader, dummyStartDate, dummyEndDate, dummyRoom, dummyParticipants, dummyString);
             dummyMeetings.add(meeting);
+
             calendar.add(Calendar.MINUTE, 30);
             if (calendar.get(Calendar.HOUR_OF_DAY) > 15) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
                 calendar.set(Calendar.HOUR_OF_DAY, 8);
-                StartDate = calendar.getTime();
+                dummyStartDate = calendar.getTime();
                 calendar.add(Calendar.HOUR, 2);
-                EndDate = calendar.getTime();
+                dummyEndDate = calendar.getTime();
             } else {
-                StartDate = calendar.getTime();
-                calendar.add(Calendar.HOUR, 1);
-                EndDate = calendar.getTime();
+                dummyStartDate = calendar.getTime();
+                calendar.add(Calendar.HOUR, 2);
+                dummyEndDate = calendar.getTime();
             }
-            dummyRoom = new Random().nextInt(4);
         }
         return new ArrayList<>(dummyMeetings);
     }

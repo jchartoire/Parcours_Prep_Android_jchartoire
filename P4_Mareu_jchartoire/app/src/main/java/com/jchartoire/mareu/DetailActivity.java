@@ -103,8 +103,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
         /*=== get the intent of the meeting sent from ItemRecyclerViewAdapter ===*/
         Intent intent = getIntent();
-        long id = intent.getLongExtra("meetingId", 0);
-        if (id != 0) {
+        long id = intent.getLongExtra("meetingId", - 1);
+        if (id != - 1) {
             createNewMeeting = false;
             meeting = apiService.getMeetingById(id);
 
@@ -446,7 +446,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     /*=== AutoCompleteTextView validator ===*/
     class Validator implements AutoCompleteTextView.Validator, View.OnFocusChangeListener {
-//TODO: "longueur des contrôleurs(Fragmentset/ouActivités)inférieure à 300 lignes" peut on sortir ce genre de classe ou methode ?
+        //TODO: "longueur des contrôleurs(Fragmentset/ouActivités)inférieure à 300 lignes" peut on sortir ce genre de classe ou methode ?
         @Override
         public boolean isValid(CharSequence text) {
             String[] valideUsersList = new String[users.size()];

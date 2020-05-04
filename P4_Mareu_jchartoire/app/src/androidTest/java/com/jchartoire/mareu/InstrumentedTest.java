@@ -149,8 +149,6 @@ public class InstrumentedTest {
      */
     @Test
     public void detailActivity_newMeetingEditor() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.getTimeInMillis();
         // fill up required fields
         onView(withId(R.id.add_fab)).perform(click());
         onView(withId(R.id.et_meeting_title)).perform(scrollTo(), ViewActions.replaceText("New Meeting Test"), closeSoftKeyboard());
@@ -158,8 +156,7 @@ public class InstrumentedTest {
         onView(withId(R.id.mactv_Participants)).perform(scrollTo(), ViewActions.replaceText("adam.cook@lamzone.com"), closeSoftKeyboard());
         // Set a date on the date picker dialog (same as first dummyMeeting, today, 8:00, room 1)
         onView(withId(R.id.tv_clickable_date)).perform(scrollTo(), click());
-        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH)));
+        onView(withClassName(Matchers.equalTo(DatePicker.class.getName()))).perform(PickerActions.setDate(2020, 1, 1));
         onView(withText("OK")).perform(click());
         // try to save the new meeting
         onView(withId(R.id.ok_settings)).perform(click());

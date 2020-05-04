@@ -19,71 +19,30 @@ public class DummyApiService implements ApiService {
     private List<Meeting> meetings = DummyGenerator.generateMeetings();
     private List<Meeting> meetingsFiltered = new ArrayList<>(meetings);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<User> getUsers() {
-        return users;
-    }
-
-    @Override
-    public void deleteUser(User user) {
-        users.remove(user);
-    }
-
-    public void createUser(User user) {
-        users.add(user);
-    }
-
-    @Override
-    public User getUserById(long Id) {
-        for (User user : users) {
-            if (user.getId() == Id) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public User getUserByEmail(String email) {
-        for (User user : users) {
-            if (user.getEmail().equals(email)) {
-                return user;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public List<Room> getRooms() {
-        return rooms;
-    }
-
-    @Override
-    public void deleteRoom(Room room) {
-        rooms.remove(room);
-    }
-
-    @Override
-    public void createRoom(Room room) {
-        rooms.add(room);
-    }
-
-    @Override
-    public Room getRoomById(long Id) {
-        for (Room room : rooms) {
-            if (room.getId() == Id) {
-                return room;
-            }
-        }
-        return null;
-    }
-
+//region API Meeting
     @Override
     public List<Meeting> getMeetings() {
         return meetings;
+    }
+
+    @Override
+    public Meeting getMeetingById(long Id) {
+        for (Meeting meeting : meetings) {
+            if (meeting.getId() == Id) {
+                return meeting;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void deleteMeeting(Meeting meeting) {
+        meetings.remove(meeting);
+    }
+
+    @Override
+    public void createMeeting(Meeting meeting) {
+        meetings.add(meeting);
     }
 
     @Override
@@ -113,24 +72,39 @@ public class DummyApiService implements ApiService {
         }
         return meetingsFiltered;
     }
+//endregion
 
+//region API User
     @Override
-    public void deleteMeeting(Meeting meeting) {
-        meetings.remove(meeting);
+    public List<User> getUsers() {
+        return users;
     }
 
     @Override
-    public void createMeeting(Meeting meeting) {
-        meetings.add(meeting);
-    }
-
-    @Override
-    public Meeting getMeetingById(long Id) {
-        for (Meeting meeting : meetings) {
-            if (meeting.getId() == Id) {
-                return meeting;
+    public User getUserByEmail(String email) {
+        for (User user : users) {
+            if (user.getEmail().equals(email)) {
+                return user;
             }
         }
         return null;
     }
+//endregion
+
+//region API Room
+    @Override
+    public List<Room> getRooms() {
+        return rooms;
+    }
+
+    @Override
+    public Room getRoomById(long Id) {
+        for (Room room : rooms) {
+            if (room.getId() == Id) {
+                return room;
+            }
+        }
+        return null;
+    }
+//endregion
 }
