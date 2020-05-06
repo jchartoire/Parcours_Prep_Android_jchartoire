@@ -42,7 +42,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         final Meeting meeting = meetingList.get(position);
         SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.FRANCE);
         holder.binding.tvItemTitle.setText(String.format("%s - %s - %s", meeting.getTitle(), timeFormatter.format(meeting.getStartDate()),
-                meeting.getLeader().getFirstName()));
+                meeting.getRoom().getRoomName()));
         for (int j = 0; j < meeting.getUsers().size(); j++) {
             if (j == 0) {
                 holder.binding.tvItemInfos.setText(meeting.getUsers().get(j).getEmail());

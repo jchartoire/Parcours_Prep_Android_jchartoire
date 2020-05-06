@@ -12,14 +12,14 @@ public class User {
 
     /**
      * @param id        The unique ID of the user
-     * @param name      The name of the user
+     * @param lastName      The lastName of the user
      * @param firstName The firstname of the user
      * @param email     The email of the user
      */
-    public User(long id, String firstName, String name, String email) {
+    public User(long id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
-        this.name = name;
+        this.name = lastName;
         this.email = email;
     }
 
