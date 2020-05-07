@@ -8,6 +8,7 @@ import java.util.Locale;
 public final class DateUtils {
     public static SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.FRANCE);
     public static SimpleDateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.FRANCE);
+
     private DateUtils() {
     }
 

@@ -18,7 +18,7 @@ public class DummyApiService implements ApiService {
     private List<Room> rooms = DummyGenerator.generateRooms();
     private List<Meeting> meetings = DummyGenerator.generateMeetings();
 
-//region API Meeting
+    //region API Meeting
     @Override
     public List<Meeting> getMeetings() {
         return meetings;
@@ -68,9 +68,9 @@ public class DummyApiService implements ApiService {
         }
         return meetingsFiltered;
     }
-//endregion
+    //endregion
 
-//region API User
+    //region API User
     @Override
     public List<User> getUsers() {
         return users;
@@ -85,9 +85,9 @@ public class DummyApiService implements ApiService {
         }
         return null;
     }
-//endregion
+    //endregion
 
-//region API Room
+    //region API Room
     @Override
     public List<Room> getRooms() {
         return rooms;
@@ -102,5 +102,5 @@ public class DummyApiService implements ApiService {
         }
         return null;
     }
-//endregion
+    //endregion
 }

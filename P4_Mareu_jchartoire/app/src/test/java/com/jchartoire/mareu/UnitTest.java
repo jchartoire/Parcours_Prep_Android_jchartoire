@@ -28,7 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class UnitTest {
+class UnitTest {
     private ApiService apiService;
     private List<Meeting> dummyMeetings = DummyGenerator.dummyMeetings;
     private List<User> dummyUsers = DummyGenerator.dummyUsers;
@@ -171,6 +171,7 @@ public class UnitTest {
         /* assert that all details are get correctly */
         assertEquals("amy.hall@lamzone.com", userToTest.getEmail());
         assertEquals("Amy", userToTest.getFirstName());
+        assertEquals("Hall", userToTest.getLastName());
     }
     //endregion
 

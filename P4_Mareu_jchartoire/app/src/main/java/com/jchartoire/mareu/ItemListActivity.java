@@ -44,8 +44,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     private ApiService apiService;
     private ItemRecyclerViewAdapter adapter;
     private LinearLayout spinnerLayout;
-    private ArrayAdapter<Room> roomsAdapter;
-    private List<Meeting> meetings;
     private List<Room> rooms;
     private int filterType = 0;
     private String filterPattern = null;
@@ -113,7 +111,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
 
     /*=== Init the List of meetings ===*/
     private void initList() {
-        meetings = apiService.getFilteredMeetings(filterType, filterPattern);
+        List<Meeting> meetings = apiService.getFilteredMeetings(filterType, filterPattern);
         Collections.sort(meetings, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting m1, Meeting m2) {
@@ -173,7 +171,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     }
 
     void spinnerRoomSetup() {
-        roomsAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, rooms);
+        ArrayAdapter<Room> roomsAdapter = new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, rooms);
         roomsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Spinner spnRoom = new Spinner(this);
         spnRoom.setAdapter(roomsAdapter);

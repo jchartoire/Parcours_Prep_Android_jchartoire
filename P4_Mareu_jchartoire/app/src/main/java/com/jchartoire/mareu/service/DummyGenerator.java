@@ -69,7 +69,6 @@ public abstract class DummyGenerator {
         Date dummyStartDate = calendar.getTime();
         calendar.add(Calendar.HOUR, 1);
         Date dummyEndDate = calendar.getTime();
-
         String dummyString = "Lorem ipsum dolor sit amet\n\n" + "► Line 1\n\n" + "► Line 2\n\n" + "► Line 3\n\n" + "► Line 4\n\n" +
                 "► Line 5\n\n" + "► Line 6\n\n" + "► Line 7\n\n" + "► Line 8\n\n" + "► Line 9\n\n" + "► Line 10\n\n";
 

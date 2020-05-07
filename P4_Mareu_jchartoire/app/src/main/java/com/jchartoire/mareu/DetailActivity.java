@@ -55,13 +55,13 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
 
     private String pickerTag;
     private ApiService apiService;
-    private Room selectedRoom;
-    private List<Room> rooms;
     private ArrayAdapter<Room> roomsAdapter;
     private Meeting meeting;
     private List<Meeting> meetings;
     private List<User> users;
+    private List<Room> rooms;
     private Date selectedStartDate, selectedEndDate;
+    private Room selectedRoom;
     private boolean createNewMeeting;
 
     private ActivityDetailBinding binding;

@@ -77,8 +77,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
         } else return 0;
     }
 
-    public void setData(List<Meeting> meetings)
-    {
+    void setData(List<Meeting> meetings) {
         this.meetingList = meetings;
         notifyDataSetChanged();
     }

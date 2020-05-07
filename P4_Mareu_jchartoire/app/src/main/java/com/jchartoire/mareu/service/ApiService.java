@@ -11,7 +11,8 @@ import java.util.List;
  */
 public interface ApiService {
 
-//region API Meeting
+    //region API Meeting
+
     /**
      * @return Return the list of meetings
      */
@@ -34,9 +35,10 @@ public interface ApiService {
      * @return Return the list of filtered meetings
      */
     List<Meeting> getFilteredMeetings(int type, String param);
-//endregion
+    //endregion
 
-//region API User
+    //region API User
+
     /**
      * @return Return a User
      */
@@ -47,9 +49,10 @@ public interface ApiService {
      * @return Return a User
      */
     User getUserByEmail(String email);
-//endregion
+    //endregion
 
-//region API Room
+    //region API Room
+
     /**
      * @return Return a Room
      */
@@ -60,5 +63,5 @@ public interface ApiService {
      * @return Return a Room
      */
     Room getRoomById(long Id);
-//endregion
+    //endregion
 }

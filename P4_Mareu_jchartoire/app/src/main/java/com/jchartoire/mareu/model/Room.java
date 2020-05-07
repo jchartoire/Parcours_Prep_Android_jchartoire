@@ -1,5 +1,7 @@
 package com.jchartoire.mareu.model;
 
+import androidx.annotation.NonNull;
+
 /**
  * Model object representing a room
  */
@@ -24,28 +26,17 @@ public class Room {
         return id;
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getRoomName() {
         return roomName;
-    }
-
-    public void setRoomName(String roomName) {
-        this.roomName = roomName;
     }
 
     public int getColor() {
         return color;
     }
 
-    public void setColor(int color) {
-        this.color = color;
-    }
-
+    @NonNull
     @Override
     public String toString() {
-        return this.roomName;            // What to display in the Spinner list.
+        return this.roomName;   // What to display in the Spinner list.
     }
 }
