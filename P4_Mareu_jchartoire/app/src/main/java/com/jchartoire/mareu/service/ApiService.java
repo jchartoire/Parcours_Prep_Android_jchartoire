@@ -12,7 +12,6 @@ import java.util.List;
 public interface ApiService {
 
 //region API Meeting
-
     /**
      * @return Return the list of meetings
      */
@@ -34,9 +33,10 @@ public interface ApiService {
     /**
      * @return Return the list of filtered meetings
      */
-    List<Meeting> getFilteredMeetings(int type, String param);//endregion
-//region API User
+    List<Meeting> getFilteredMeetings(int type, String param);
+//endregion
 
+//region API User
     /**
      * @return Return a User
      */
@@ -50,7 +50,6 @@ public interface ApiService {
 //endregion
 
 //region API Room
-
     /**
      * @return Return a Room
      */
