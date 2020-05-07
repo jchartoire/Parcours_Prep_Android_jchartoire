@@ -80,7 +80,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
 
         initList();
         initFilterInfoBar();
-        initRecyclerView();
     }
 
     @Override
@@ -112,24 +111,23 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         return super.onOptionsItemSelected(item);
     }
 
-    private void initRecyclerView() {
-        meetings = apiService.getFilteredMeetings(filterType, filterPattern);
-        adapter = new ItemRecyclerViewAdapter(meetings);
-        binding.recyclerView.setAdapter(adapter);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter.notifyDataSetChanged();
-    }
-
     /*=== Init the List of meetings ===*/
     private void initList() {
-        meetings = apiService.getMeetings();
+        meetings = apiService.getFilteredMeetings(filterType, filterPattern);
         Collections.sort(meetings, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting m1, Meeting m2) {
                 return m1.getStartDate().compareTo(m2.getStartDate());
             }
         });
-        rooms = apiService.getRooms();
+        if (adapter == null) {
+            rooms = apiService.getRooms();
+            adapter = new ItemRecyclerViewAdapter(meetings);
+            binding.recyclerView.setAdapter(adapter);
+            binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        } else {
+            adapter.setData(meetings);
+        }
     }
 
     /*=== Init the List of meetings ===*/
@@ -161,14 +159,13 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // save current filter
-        filterType = 1;
         Calendar calendar = Calendar.getInstance();
         // get initial today's date and edit only Year, Month, Day
         calendar.set(year, month, day);
         String dateSet = dateFormatter.format(calendar.getTime());
+        filterType = 1;
         filterPattern = dateSet;
-        meetings = apiService.getFilteredMeetings(filterType, filterPattern);
-        adapter.notifyDataSetChanged();
+        initList();
         // set bottom filter info bar
         binding.filterType.setText(String.format("%s%s", getString(R.string.filter_By_Date_Text), dateSet));
         ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
@@ -213,10 +210,9 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 if (selectedRoomFilterString != null) {
-                    meetings = apiService.getFilteredMeetings(2, selectedRoomFilterString);
                     filterType = 2;
                     filterPattern = selectedRoomFilterString;
-                    adapter.notifyDataSetChanged();
+                    initList();
                     // set bottom filter info bar
                     binding.filterType.setText(String.format("%s%s", getString(R.string.filter_text), selectedRoomFilterString));
                     ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
@@ -237,10 +233,9 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     public void resetFilter() {
         // reset filter
         selectedRoomFilterString = "";
-        meetings = apiService.getFilteredMeetings(0, null);
         filterType = 0;
         filterPattern = null;
-        adapter.notifyDataSetChanged();
+        initList();
         // reset bottom filter info bar
         binding.filterType.setText(getString(R.string.no_Filter_Text));
         ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = 0;
@@ -252,8 +247,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         super.onResume();
         initList();
         initFilterInfoBar();
-        meetings = apiService.getFilteredMeetings(filterType, filterPattern);
-        adapter.notifyDataSetChanged();
     }
 
     @Override
@@ -275,7 +268,5 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     public void onDeleteMeeting(DeleteMeetingEvent event) {
         apiService.deleteMeeting(event.meeting);
         initList();
-        meetings = apiService.getFilteredMeetings(filterType, filterPattern);
-        adapter.notifyDataSetChanged();
     }
 }

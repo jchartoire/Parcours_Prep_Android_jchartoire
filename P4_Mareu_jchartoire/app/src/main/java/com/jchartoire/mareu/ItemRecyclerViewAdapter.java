@@ -76,6 +76,12 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ViewHolder> {
             return meetingList.size();
         } else return 0;
     }
+
+    public void setData(List<Meeting> meetings)
+    {
+        this.meetingList = meetings;
+        notifyDataSetChanged();
+    }
 }
 
 class ViewHolder extends RecyclerView.ViewHolder {

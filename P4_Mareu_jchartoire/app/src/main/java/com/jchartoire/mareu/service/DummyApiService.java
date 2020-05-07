@@ -17,7 +17,6 @@ public class DummyApiService implements ApiService {
     private List<User> users = DummyGenerator.generateUsers();
     private List<Room> rooms = DummyGenerator.generateRooms();
     private List<Meeting> meetings = DummyGenerator.generateMeetings();
-    private List<Meeting> meetingsFiltered = new ArrayList<>(meetings);
 
 //region API Meeting
     @Override
@@ -47,14 +46,12 @@ public class DummyApiService implements ApiService {
 
     @Override
     public List<Meeting> getFilteredMeetings(int type, String param) {
+        List<Meeting> meetingsFiltered = new ArrayList<>();
         switch (type) {
             case 0: // Reset filter
-                // update existing list
-                meetingsFiltered.clear();
-                meetingsFiltered.addAll(meetings);
+                meetingsFiltered = new ArrayList<>(meetings);
                 break;
             case 1: // filter by date
-                meetingsFiltered.clear();
                 for (Meeting meeting : meetings) {
                     if (dateFormatter.format(meeting.getStartDate()).equals(param)) {
                         meetingsFiltered.add(meeting);
@@ -62,7 +59,6 @@ public class DummyApiService implements ApiService {
                 }
                 break;
             case 2: // filter by room
-                meetingsFiltered.clear();
                 for (Meeting meeting : meetings) {
                     if (meeting.getRoom().getRoomName().equals(param)) {
                         meetingsFiltered.add(meeting);
