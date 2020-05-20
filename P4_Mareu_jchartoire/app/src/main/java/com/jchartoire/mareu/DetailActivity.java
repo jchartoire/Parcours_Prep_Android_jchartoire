@@ -164,19 +164,31 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         });
 
         /*=== MultiAutoCompleteTextView setup , set adapter to fill the data in suggestion list ===*/
+        final MultiAutoCompleteTextView mactvParticipants = editTextViewBinding.mactvParticipants;
         ArrayAdapter<User> mactvAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, users);    // set adapter to fill the
         // data in suggestion list
-        editTextViewBinding.mactvParticipants.setAdapter(mactvAdapter);
-        editTextViewBinding.mactvParticipants.setThreshold(1);    // set threshold value 1 that help us to start the searching from first character
-        editTextViewBinding.mactvParticipants.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());   // set tokenizer that distinguish the various substrings by comma
+        mactvParticipants.setAdapter(mactvAdapter);
+        mactvParticipants.setThreshold(1);    // set threshold value 1 that help us to start the searching from first character
+        mactvParticipants.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());   // set tokenizer that distinguish the various substrings by comma
+        mactvParticipants.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mactvParticipants.showDropDown();
+            }
+        });
 
         /*=== AutoCompleteTextView setup, set adapter to fill the data in suggestion list ===*/
-        AutoCompleteTextView actv_leader = editTextViewBinding.actvLeader;
+        final AutoCompleteTextView actv_leader = editTextViewBinding.actvLeader;
         ArrayAdapter<User> actvAdapter = new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, users);
         actv_leader.setAdapter(actvAdapter);
         // set threshold value that help us to start the searching from first character
         actv_leader.setThreshold(1);
-        actv_leader.setValidator(new Validator());
+        actv_leader.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                actv_leader.showDropDown();
+            }
+        });
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -326,17 +338,19 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
                 if (viewSwitcherBinding.getCurrentView() == editTextViewBinding.getRoot()) {
                     // remove focus from editText
                     this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+                    editTextViewBinding.mactvParticipants.requestFocus();
                     if (editTextValidator()) {
+                        if (createNewMeeting) {
+                            saveMeetingDetails();
+                            finish();
+                        } else {
+                            saveMeetingDetails();
+                            updateTextView();
+                            setEditionMode(false);
+                        }
                         return true;
                     }
-                    if (createNewMeeting) {
-                        saveMeetingDetails();
-                        finish();
-                    } else {
-                        saveMeetingDetails();
-                        updateTextView();
-                        setEditionMode(false);
-                    }
+
                 }
                 return true;
 
@@ -371,20 +385,45 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     }
 
     public boolean editTextValidator() {
+        String[] valideUsersList = new String[users.size()];
+        for (int i = 0; i < users.size(); i++) {
+            valideUsersList[i] = users.get(i).getEmail();
+        }
+        Arrays.sort(valideUsersList);
+
         if (TextUtils.isEmpty(editTextViewBinding.etMeetingTitle.getText())) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.title_missing),
                     Snackbar.LENGTH_LONG).setAction("Error", null).show();
-            return true;
+            return false;
         }
-        if (TextUtils.isEmpty(editTextViewBinding.actvLeader.getText())) {
+        String actvLeaderText = editTextViewBinding.actvLeader.getText().toString();
+        if (TextUtils.isEmpty(actvLeaderText) || ! Arrays.asList(valideUsersList).contains(actvLeaderText)) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.leader_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
-            return true;
+            return false;
         }
-        if (TextUtils.isEmpty(editTextViewBinding.mactvParticipants.getText())) {
+        String mactvParticipantsText = editTextViewBinding.mactvParticipants.getText().toString();
+        if (TextUtils.isEmpty(mactvParticipantsText)) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.participants_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
-            return true;
+            return false;
+        } else {
+            String[] usersEmailList = editTextViewBinding.mactvParticipants.getText().toString().split("\\s*,\\s*");
+            boolean isvalid = false;
+            for (String email : usersEmailList) {
+                for (String str : valideUsersList) {
+                    if (email.contains(str)) {
+                        isvalid = true;
+                        break;
+                    }
+                }
+                if (! isvalid) {
+                    Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.wrong_email) + " : " + email,
+                            Snackbar.LENGTH_LONG).setAction(
+                            "Error", null).show();
+                    return false;
+                }
+            }
         }
         for (Meeting meetingToTest : meetings) {
             Date TestStartDate = meetingToTest.getStartDate();
@@ -397,10 +436,10 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
                     }
                 });
                 builder.show();
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 
     public void dialogConfirmation() {
@@ -409,7 +448,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             builder.setMessage(getResources().getString(R.string.save_message));
             builder.setPositiveButton(getResources().getString(R.string.positive_button_text), new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    if (! editTextValidator()) {
+                    if (editTextValidator()) {
                         saveMeetingDetails();
                         finish();
                     }
@@ -442,32 +481,5 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     public void onDestroy() {
         super.onDestroy();
         binding = null;
-    }
-
-    /*=== AutoCompleteTextView validator ===*/
-    class Validator implements AutoCompleteTextView.Validator, View.OnFocusChangeListener {
-        @Override
-        public boolean isValid(CharSequence text) {
-            String[] valideUsersList = new String[users.size()];
-            for (int i = 0; i < users.size(); i++) {
-                valideUsersList[i] = users.get(i).getEmail();
-            }
-            Arrays.sort(valideUsersList);
-            return Arrays.asList(valideUsersList).contains(text.toString());
-        }
-
-        @Override
-        public CharSequence fixText(CharSequence invalidText) {
-            Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.wrong_email), Snackbar.LENGTH_LONG).setAction(
-                    "Erreur", null).show();
-            return "";
-        }
-
-        @Override
-        public void onFocusChange(View v, boolean hasFocus) {
-            if (v.getId() == R.id.actv_leader && ! hasFocus) {
-                ((AutoCompleteTextView) v).performValidation();
-            }
-        }
     }
 }
