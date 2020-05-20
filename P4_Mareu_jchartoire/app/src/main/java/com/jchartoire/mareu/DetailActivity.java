@@ -408,7 +408,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
                     null).show();
             return false;
         } else {
-            String[] usersEmailList = editTextViewBinding.mactvParticipants.getText().toString().split("\\s*,\\s*");
+            String[] usersEmailList = mactvParticipantsText.split("\\s*,\\s*");
             boolean isvalid = false;
             for (String email : usersEmailList) {
                 for (String str : valideUsersList) {
