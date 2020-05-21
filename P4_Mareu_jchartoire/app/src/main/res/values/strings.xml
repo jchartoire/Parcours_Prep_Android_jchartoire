@@ -20,7 +20,7 @@
     <string name="reset_filter_text">"Réinitialiser"</string>
 
     <!-- snackbar info -->
-    <string name="wrong_email">Email invalide</string>
+    <string name="wrong_email">"Email invalide : "</string>
     <string name="leader_missing">Email de l\'animateur manquant, ou incorrect</string>
     <string name="title_missing">Titre manquant</string>
     <string name="participants_missing">Aucun participant renseigné</string>

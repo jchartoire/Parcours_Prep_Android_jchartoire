@@ -32,7 +32,6 @@ import com.jchartoire.mareu.tools.DatePickerFragment;
 import com.jchartoire.mareu.tools.TimePickerFragment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -98,7 +97,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         widgetsSetup();
     }
 
-    private void initDetails() {
+    void initDetails() {
         meetings = apiService.getMeetings();
 
         /*=== get the intent of the meeting sent from ItemRecyclerViewAdapter ===*/
@@ -384,20 +383,18 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         }
     }
 
-    public boolean editTextValidator() {
-        String[] valideUsersList = new String[users.size()];
-        for (int i = 0; i < users.size(); i++) {
-            valideUsersList[i] = users.get(i).getEmail();
+    boolean editTextValidator() {
+        List<String> valideUsersList = new ArrayList<>();
+        for (User user : users) {
+            valideUsersList.add(user.getEmail());
         }
-        Arrays.sort(valideUsersList);
-
         if (TextUtils.isEmpty(editTextViewBinding.etMeetingTitle.getText())) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.title_missing),
                     Snackbar.LENGTH_LONG).setAction("Error", null).show();
             return false;
         }
         String actvLeaderText = editTextViewBinding.actvLeader.getText().toString();
-        if (TextUtils.isEmpty(actvLeaderText) || ! Arrays.asList(valideUsersList).contains(actvLeaderText)) {
+        if (TextUtils.isEmpty(actvLeaderText) || ! valideUsersList.contains(actvLeaderText)) {
             Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.leader_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
             return false;
@@ -409,16 +406,9 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             return false;
         } else {
             String[] usersEmailList = mactvParticipantsText.split("\\s*,\\s*");
-            boolean isvalid = false;
             for (String email : usersEmailList) {
-                for (String str : valideUsersList) {
-                    if (email.contains(str)) {
-                        isvalid = true;
-                        break;
-                    }
-                }
-                if (! isvalid) {
-                    Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.wrong_email) + " : " + email,
+                if (! valideUsersList.contains(email)) {
+                    Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.wrong_email) + email,
                             Snackbar.LENGTH_LONG).setAction(
                             "Error", null).show();
                     return false;
@@ -442,7 +432,7 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         return true;
     }
 
-    public void dialogConfirmation() {
+    void dialogConfirmation() {
         if (ok_settings.isVisible()) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setMessage(getResources().getString(R.string.save_message));
