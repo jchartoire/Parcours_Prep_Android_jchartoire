@@ -16,7 +16,7 @@ Cadrage des fonctionnalités à développer :
 > * Filtre des réunions par date ou par lieu.
 > * Gestion de l'affichage responsive sur toutes les tailles de téléphone et de tablette
 >   Android, en modes portrait et paysage.
-> * Application supportant Android 3.0 (AP121) et ses versions supérieures.
+> * Application supportant Android 3.0 (API21) et ses versions supérieures.
 
 ## Installation
 * Pour reprendre ma version du projet, rendez vous à la racine du dépôt qui contient tous mes projets du parcours "Prep' Android" d'OpenClassrooms, à cette adresse :
