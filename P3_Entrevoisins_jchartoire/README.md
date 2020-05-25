@@ -35,7 +35,7 @@ Cadrage des fonctionnalités à ajouter :
 
 ![](./Images_GitHub/SDK.png)
 
-* Vous pouvez exécuter l'application, ainsi que ses tests, sur la machine virtuel de votre choix.
+* Vous pouvez exécuter l'application, ainsi que ses tests, sur la machine virtuelle de votre choix.
 
 <p align="center">
   <img src="./Images_GitHub/Screenshot_1584640571.png" width="400">
