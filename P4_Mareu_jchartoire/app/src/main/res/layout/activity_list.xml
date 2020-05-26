@@ -22,18 +22,13 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <LinearLayout
-        android:id="@+id/item_layout"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/bottom_bar_height"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
@@ -53,13 +48,13 @@
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        tools:layout_height="@dimen/bottom_bar_height"
         android:layout_gravity="bottom"
         android:animateLayoutChanges="true"
         android:background="#009688"
         android:orientation="horizontal"
-        app:layout_anchor="@+id/item_layout"
-        app:layout_anchorGravity="bottom|center">
+        app:layout_anchor="@+id/recycler_view"
+        app:layout_anchorGravity="bottom|center"
+        tools:layout_height="@dimen/bottom_bar_height">
 
         <TextView
             android:id="@+id/filter_type"

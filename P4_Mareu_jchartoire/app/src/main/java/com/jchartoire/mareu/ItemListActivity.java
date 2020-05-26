@@ -135,21 +135,21 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
             case 0:
                 // reset bottom filter info bar
                 binding.filterType.setText(R.string.no_Filter_Text);
-                ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = 0;
+                ((ViewGroup.MarginLayoutParams) binding.recyclerView.getLayoutParams()).bottomMargin = 0;
                 binding.bottomBar.getLayoutParams().height = 0;
                 break;
 
             case 1:
                 // set bottom filter info bar
                 binding.filterType.setText(String.format("%s%s", getString(R.string.filter_By_Date_Text), filterPattern));
-                ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
+                ((ViewGroup.MarginLayoutParams) binding.recyclerView.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
                 binding.bottomBar.getLayoutParams().height = (int) getResources().getDimension(R.dimen.bottom_bar_height);
                 break;
 
             case 2:
                 // set bottom filter info bar
                 binding.filterType.setText(String.format("%s%s", getString(R.string.filter_text), filterPattern));
-                ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
+                ((ViewGroup.MarginLayoutParams) binding.recyclerView.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
                 binding.bottomBar.getLayoutParams().height = (int) getResources().getDimension(R.dimen.bottom_bar_height);
                 break;
         }
@@ -166,7 +166,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         initList();
         // set bottom filter info bar
         binding.filterType.setText(String.format("%s%s", getString(R.string.filter_By_Date_Text), dateSet));
-        ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
+        ((ViewGroup.MarginLayoutParams) binding.recyclerView.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
         binding.bottomBar.getLayoutParams().height = (int) getResources().getDimension(R.dimen.bottom_bar_height);
     }
 
@@ -213,7 +213,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
                     initList();
                     // set bottom filter info bar
                     binding.filterType.setText(String.format("%s%s", getString(R.string.filter_text), selectedRoomFilterString));
-                    ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
+                    ((ViewGroup.MarginLayoutParams) binding.recyclerView.getLayoutParams()).bottomMargin = (int) getResources().getDimension(R.dimen.bottom_bar_height);
                     binding.bottomBar.getLayoutParams().height = (int) getResources().getDimension(R.dimen.bottom_bar_height);
                 } else {
                     resetFilter();
@@ -236,7 +236,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         initList();
         // reset bottom filter info bar
         binding.filterType.setText(getString(R.string.no_Filter_Text));
-        ((ViewGroup.MarginLayoutParams) binding.itemLayout.getLayoutParams()).bottomMargin = 0;
+        ((ViewGroup.MarginLayoutParams) binding.recyclerView.getLayoutParams()).bottomMargin = 0;
         binding.bottomBar.getLayoutParams().height = 0;
     }
 
