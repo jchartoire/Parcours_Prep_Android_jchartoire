@@ -128,7 +128,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         }
     }
 
-    /*=== Init the List of meetings ===*/
+    /*=== Init info bar ===*/
     private void initFilterInfoBar() {
         // reset bottom filter info bar
         switch (filterType) {
