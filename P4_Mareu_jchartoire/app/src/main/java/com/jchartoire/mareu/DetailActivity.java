@@ -47,11 +47,15 @@ import static com.jchartoire.mareu.tools.DateUtils.timeFormatter;
 public class DetailActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener,
         DatePickerDialog.OnDateSetListener, View.OnClickListener {
 
+    // viewBinding
+    private ActivityDetailBinding binding;
+    private FragmentDetailContentEdittextBinding editTextViewBinding;
+    private FragmentDetailContentTextviewBinding textViewViewBinding;
+
     // layout viewSwitcher
-    private ViewSwitcher viewSwitcherBinding;
+    private ViewSwitcher viewSwitcher;
 
     private MenuItem ok_settings, edit_settings;
-
     private String pickerTag;
     private ApiService apiService;
     private ArrayAdapter<Room> roomsAdapter;
@@ -63,10 +67,6 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     private Room selectedRoom;
     private boolean createNewMeeting;
 
-    private ActivityDetailBinding binding;
-    private FragmentDetailContentEdittextBinding editTextViewBinding;
-    private FragmentDetailContentTextviewBinding textViewViewBinding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,9 +76,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        /*=== Binding ===*/
-        //viewSwitcher content
-        viewSwitcherBinding = binding.viewSwitcher;
+        /*=== Binding viewSwitcher content ===*/
+        viewSwitcher = binding.viewSwitcher;
         editTextViewBinding = binding.edittextView;
         textViewViewBinding = binding.textviewView;
 
@@ -228,13 +227,13 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
     void setEditionMode(boolean editionMode) {
         if (editionMode) {
             // switch to EditText view
-            viewSwitcherBinding.setDisplayedChild(viewSwitcherBinding.indexOfChild(editTextViewBinding.getRoot()));
+            viewSwitcher.setDisplayedChild(viewSwitcher.indexOfChild(editTextViewBinding.getRoot()));
             // setup visible menu buttons
             ok_settings.setVisible(true);
             edit_settings.setVisible(false);
         } else {
             // switch to TextView view
-            viewSwitcherBinding.setDisplayedChild(viewSwitcherBinding.indexOfChild(binding.textviewView.getRoot()));
+            viewSwitcher.setDisplayedChild(viewSwitcher.indexOfChild(binding.textviewView.getRoot()));
             // setup visible menu buttons
             ok_settings.setVisible(false);
             edit_settings.setVisible(true);
@@ -327,14 +326,14 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         int itemId = item.getItemId();
         switch (itemId) {
             case R.id.edit_settings:
-                if (viewSwitcherBinding.getCurrentView() == textViewViewBinding.getRoot()) {
+                if (viewSwitcher.getCurrentView() == textViewViewBinding.getRoot()) {
                     updateEditText();
                     setEditionMode(true);
                 }
                 return true;
 
             case R.id.ok_settings:
-                if (viewSwitcherBinding.getCurrentView() == editTextViewBinding.getRoot()) {
+                if (viewSwitcher.getCurrentView() == editTextViewBinding.getRoot()) {
                     // remove focus from editText
                     this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
                     editTextViewBinding.mactvParticipants.requestFocus();
@@ -389,26 +388,26 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             valideUsersList.add(user.getEmail());
         }
         if (TextUtils.isEmpty(editTextViewBinding.etMeetingTitle.getText())) {
-            Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.title_missing),
+            Snackbar.make(viewSwitcher.getCurrentView(), getResources().getString(R.string.title_missing),
                     Snackbar.LENGTH_LONG).setAction("Error", null).show();
             return false;
         }
         String actvLeaderText = editTextViewBinding.actvLeader.getText().toString();
         if (TextUtils.isEmpty(actvLeaderText) || ! valideUsersList.contains(actvLeaderText)) {
-            Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.leader_missing), Snackbar.LENGTH_LONG).setAction("Error",
+            Snackbar.make(viewSwitcher.getCurrentView(), getResources().getString(R.string.leader_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
             return false;
         }
         String mactvParticipantsText = editTextViewBinding.mactvParticipants.getText().toString();
         if (TextUtils.isEmpty(mactvParticipantsText)) {
-            Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.participants_missing), Snackbar.LENGTH_LONG).setAction("Error",
+            Snackbar.make(viewSwitcher.getCurrentView(), getResources().getString(R.string.participants_missing), Snackbar.LENGTH_LONG).setAction("Error",
                     null).show();
             return false;
         } else {
             String[] usersEmailList = mactvParticipantsText.split("\\s*,\\s*");
             for (String email : usersEmailList) {
                 if (! valideUsersList.contains(email)) {
-                    Snackbar.make(viewSwitcherBinding.getCurrentView(), getResources().getString(R.string.wrong_email) + email,
+                    Snackbar.make(viewSwitcher.getCurrentView(), getResources().getString(R.string.wrong_email) + email,
                             Snackbar.LENGTH_LONG).setAction(
                             "Error", null).show();
                     return false;
