@@ -112,7 +112,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             selectedStartDate = calendar.getTime();
             calendar.setTime(meeting.getEndDate());
             selectedEndDate = calendar.getTime();
-        } else {
+        } 
+		else {
             createNewMeeting = true;
 
             /*=== init new meeting ===*/
@@ -126,13 +127,11 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             calendar.set(Calendar.HOUR_OF_DAY, 8);
             calendar.set(Calendar.MINUTE, 0);
             selectedStartDate = calendar.getTime();
-            // update textView
             editTextViewBinding.tvClickableDate.setText(dateFormatter.format(selectedStartDate));
             editTextViewBinding.tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
             // set default meeting duration to 2 hours
             calendar.add(Calendar.HOUR_OF_DAY, 2);
             selectedEndDate = calendar.getTime();
-            // update textView
             editTextViewBinding.tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
             // save new date to the meeting
             meeting.setStartDate(selectedStartDate);
