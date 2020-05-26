@@ -130,7 +130,6 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
 
     /*=== Init info bar ===*/
     private void initFilterInfoBar() {
-        // reset bottom filter info bar
         switch (filterType) {
             case 0:
                 // reset bottom filter info bar
