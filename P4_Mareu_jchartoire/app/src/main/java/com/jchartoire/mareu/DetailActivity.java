@@ -129,8 +129,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
             selectedStartDate = calendar.getTime();
             editTextViewBinding.tvClickableDate.setText(dateFormatter.format(selectedStartDate));
             editTextViewBinding.tvClickableStartHour.setText(timeFormatter.format(selectedStartDate));
-            // set default meeting duration to 2 hours
-            calendar.add(Calendar.HOUR_OF_DAY, 2);
+            // set default meeting duration to 1 hours
+            calendar.add(Calendar.HOUR_OF_DAY, 1);
             selectedEndDate = calendar.getTime();
             editTextViewBinding.tvClickableEndHour.setText(timeFormatter.format(selectedEndDate));
             // save new date to the meeting
