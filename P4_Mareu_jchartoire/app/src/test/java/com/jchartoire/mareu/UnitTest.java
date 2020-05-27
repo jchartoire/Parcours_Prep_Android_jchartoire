@@ -78,7 +78,10 @@ class UnitTest {
     void createMeeting() {
         /* create a new meeting with just an ID, others details can remain empty */
         long newId = System.currentTimeMillis();
-        Meeting newMeeting = new Meeting(newId, "", null, null, null, null, null, "");
+        Date dummyStartDate = getDateFor(2020, Calendar.JANUARY, 1, 8, 0);
+        Date dummyEndDate = getDateFor(2020, Calendar.JANUARY, 1, 12, 0);
+        Meeting newMeeting = new Meeting(newId, "", dummyUsers.get(0), dummyStartDate, dummyEndDate, dummyRooms.get(0),
+                Arrays.asList(dummyUsers.get(0), dummyUsers.get(1)),"");
         apiService.createMeeting(newMeeting);
         Meeting meetingToTest = apiService.getMeetingById(newId);
         assertEquals(newMeeting, meetingToTest);

@@ -46,7 +46,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
     private LinearLayout spinnerLayout;
     private List<Room> rooms;
     private int filterType = 0;
-    private String filterPattern = null;
+    private String filterPattern = "";
     private String selectedRoomFilterString;
 
     @Override
@@ -231,7 +231,7 @@ public class ItemListActivity extends AppCompatActivity implements DatePickerDia
         // reset filter
         selectedRoomFilterString = "";
         filterType = 0;
-        filterPattern = null;
+        filterPattern = "";
         initList();
         // reset bottom filter info bar
         binding.filterType.setText(getString(R.string.no_Filter_Text));

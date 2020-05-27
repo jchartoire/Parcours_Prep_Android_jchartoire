@@ -115,9 +115,8 @@ public class DetailActivity extends AppCompatActivity implements TimePickerDialo
         } 
 		else {
             createNewMeeting = true;
-
             /*=== init new meeting ===*/
-            meeting = new Meeting(System.currentTimeMillis(), "", null, null, null, null, null, null);
+            meeting = new Meeting(System.currentTimeMillis(), "", null, null, null, null, null, "");
 
             /*=== init start and end date based on today's date ===*/
             //get the date of the day

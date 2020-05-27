@@ -133,14 +133,14 @@ public class InstrumentedTest {
      * When we click on an item, a new detail page should launching
      */
     @Test
-    public void meetingsList_clickItem_shouldLaunchDetail_andShowNeighboursName() {
+    public void meetingsList_clickItem_shouldLaunchDetail_andShowMeetingTitle() {
         // store the name of the meeting at first position of the list
         Meeting meeting = apiService.getMeetings().get(0);
-        String meetingName = meeting.getTitle();
+        String meetingTitle = meeting.getTitle();
         // perform a click on first item
         onView(withId(R.id.recycler_view)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         // Then check if the textViewName field in detail activity contains meeting's name
-        onView(allOf(withId(R.id.tv_meeting_title), isDisplayed())).check(matches(withText(meetingName)));
+        onView(allOf(withId(R.id.tv_meeting_title), isDisplayed())).check(matches(withText(meetingTitle)));
     }
 
     /**

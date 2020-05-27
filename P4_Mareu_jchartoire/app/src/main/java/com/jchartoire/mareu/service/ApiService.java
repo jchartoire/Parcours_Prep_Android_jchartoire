@@ -7,7 +7,7 @@ import com.jchartoire.mareu.model.User;
 import java.util.List;
 
 /**
- * Neighbour API client
+ * API client
  */
 public interface ApiService {
 
