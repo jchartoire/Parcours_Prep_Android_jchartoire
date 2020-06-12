@@ -40,29 +40,35 @@ import static org.junit.Assert.assertThat;
  */
 @RunWith(AndroidJUnit4.class)
 public class MainActivityInstrumentedTest {
+    @Rule
+    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
     private TaskDao taskDao;
     private TodocDatabase todocDatabase;
 
-    @Rule
-    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class);
+    @Before
+    public void initDb() {
+        this.todocDatabase = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
+                TodocDatabase.class, "TodocDatabase.db").build();
+        taskDao = todocDatabase.taskDao();
+        taskDao.deleteAll();
 
-//
-//    @Before
-//    public void initDb() {
-//        this.todocDatabase = Room.inMemoryDatabaseBuilder(ApplicationProvider.getApplicationContext(),
-//                TodocDatabase.class)
-//                // Allowing main thread queries, just for testing.
-//                .allowMainThreadQueries()
-//                .build();
-//        taskDao = todocDatabase.taskDao();
-//        taskDao.deleteAll();
-//        System.currentTimeMillis();
-//    }
-//
-//    @After
-//    public void closeDb() {
-//        todocDatabase.close();
-//    }
+//        MainActivity activity = rule.getActivity();
+//        RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
+//        listTasks.getAdapter().notifyDataSetChanged();
+        //TODO: comment peut on utiliser notifyDataSetChanged de l'adapter dans ce Before. La suppression fonctionne, mais l'adapteur n'est
+        // pas mis à jour
+    }
+
+    @After
+    public void resetDb() {
+        this.todocDatabase = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
+                TodocDatabase.class, "TodocDatabase.db")
+                // Allowing main thread queries, just for testing.
+                .allowMainThreadQueries()
+                .build();
+        taskDao = todocDatabase.taskDao();
+        taskDao.deleteAll();
+    }
 
     @Test
     public void addAndRemoveTask() {

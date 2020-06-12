@@ -45,7 +45,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     private EditText dialogEditText = null;
     @Nullable
     private Spinner dialogSpinner = null;
-
     @NonNull
     private RecyclerView listTasks;
     @NonNull
@@ -53,13 +52,11 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
 
     // viewBinding
     private ActivityMainBinding activityBinding;
-    //private DialogAddTaskBinding dialogBinding;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityBinding = ActivityMainBinding.inflate(getLayoutInflater());
-//        dialogBinding = DialogAddTaskBinding.inflate(getLayoutInflater());
         setContentView(activityBinding.getRoot());
         /*=== VIEWMODEL ===*/
         todocViewModel = new ViewModelProvider(this).get(TodocViewModel.class);
@@ -159,15 +156,9 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
     private void showAddTaskDialog() {
         final AlertDialog dialog = getAddTaskDialog();
-
         dialog.show();
-;
-//        dialogEditText = dialogBinding.txtTaskName;
-//        dialogSpinner = dialogBinding.projectSpinner;
-        //TODO: faire fonctionner le viewbinding sur le dialog
         dialogEditText = dialog.findViewById(R.id.txt_task_name);
         dialogSpinner = dialog.findViewById(R.id.project_spinner);
-
         populateDialogSpinner();
     }
 
@@ -233,15 +224,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
         });
         return dialog;
     }
-
-//    @Override
-//    public View onCreateView (LayoutInflater inflater,
-//                              ViewGroup container,
-//                              Bundle savedInstanceState) {
-//        dialogBinding = DialogAddTaskBinding.inflate(inflater, container, false);
-//        View view = dialogBinding.getRoot();
-//        return view;
-//    }
 
     /**
      * Sets the data of the Spinner with projects to associate to a new task

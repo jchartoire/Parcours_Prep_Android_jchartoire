@@ -1,8 +1,8 @@
 *.iml
 *.DS_Store
 *.externalNativeBuild
-*.gradle
 *.gradle/
+*/gradle
 *.idea/
 *build/
 *release/
