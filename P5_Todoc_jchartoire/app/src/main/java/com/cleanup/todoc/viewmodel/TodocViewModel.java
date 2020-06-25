@@ -4,8 +4,8 @@ import android.app.Application;
 
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
-import com.cleanup.todoc.repository.ProjectRepository;
-import com.cleanup.todoc.repository.TaskRepository;
+import com.cleanup.todoc.repositories.ProjectRepository;
+import com.cleanup.todoc.repositories.TaskRepository;
 
 import java.util.List;
 

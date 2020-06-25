@@ -1,4 +1,4 @@
-package com.cleanup.todoc.repository;
+package com.cleanup.todoc.repositories;
 
 import android.app.Application;
 
@@ -12,7 +12,7 @@ import androidx.lifecycle.LiveData;
 
 public class ProjectRepository {
 
-    private static LiveData<List<Project>> allProjects;
+    private LiveData<List<Project>> allProjects;
 
     public ProjectRepository(Application application) {
         TodocDatabase database = TodocDatabase.getDatabase(application);
@@ -20,7 +20,7 @@ public class ProjectRepository {
         allProjects = projectDao.getAllProjects();
     }
 
-    public static LiveData<List<Project>> getAllProjects() {
+    public LiveData<List<Project>> getAllProjects() {
         return allProjects;
     }
 }

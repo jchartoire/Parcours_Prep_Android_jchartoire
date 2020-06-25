@@ -24,7 +24,7 @@ public abstract class TodocDatabase extends RoomDatabase {
             Executors.newFixedThreadPool(NUMBER_OF_THREADS);
     /*=== SINGLETON ===*/
     private static TodocDatabase INSTANCE;
-    private static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+    public static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);

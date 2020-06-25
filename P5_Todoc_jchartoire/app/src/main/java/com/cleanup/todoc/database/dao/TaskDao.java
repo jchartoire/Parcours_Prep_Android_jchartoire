@@ -14,7 +14,6 @@ import androidx.room.Update;
 
 @Dao
 public interface TaskDao {
-
     /*=== Read Task from database ===*/
     @Query("SELECT * FROM task_table")
     LiveData<List<Task>> getAllTasks();

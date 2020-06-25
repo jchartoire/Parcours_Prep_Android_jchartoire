@@ -46,26 +46,17 @@ public class MainActivityInstrumentedTest {
     private TodocDatabase todocDatabase;
 
     @Before
-    public void initDb() {
+    public void clearTodocDatabase() {
         this.todocDatabase = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
                 TodocDatabase.class, "TodocDatabase.db").build();
         taskDao = todocDatabase.taskDao();
         taskDao.deleteAll();
-
-//        MainActivity activity = rule.getActivity();
-//        RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
-//        listTasks.getAdapter().notifyDataSetChanged();
-        //TODO: comment peut on utiliser notifyDataSetChanged de l'adapter dans ce Before. La suppression fonctionne, mais l'adapteur n'est
-        // pas mis à jour
     }
 
     @After
-    public void resetDb() {
+    public void resetTodocDatabase() {
         this.todocDatabase = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
-                TodocDatabase.class, "TodocDatabase.db")
-                // Allowing main thread queries, just for testing.
-                .allowMainThreadQueries()
-                .build();
+                TodocDatabase.class, "TodocDatabase.db").build();
         taskDao = todocDatabase.taskDao();
         taskDao.deleteAll();
     }
@@ -76,7 +67,6 @@ public class MainActivityInstrumentedTest {
         TextView lblNoTask = activity.findViewById(R.id.lbl_no_task);
         RecyclerView listTasks = activity.findViewById(R.id.list_tasks);
 
-        int itemCount = listTasks.getAdapter().getItemCount();
         onView(withId(R.id.fab_add_task)).perform(click());
         onView(withId(R.id.txt_task_name)).perform(replaceText("Tâche example"));
         onView(withId(android.R.id.button1)).perform(click());
@@ -86,7 +76,7 @@ public class MainActivityInstrumentedTest {
         // Check that recyclerView is displayed
         assertThat(listTasks.getVisibility(), equalTo(View.VISIBLE));
         // Check that it contains one element only
-        assertThat(Objects.requireNonNull(listTasks.getAdapter()).getItemCount(), equalTo(itemCount + 1));
+        assertThat(Objects.requireNonNull(listTasks.getAdapter()).getItemCount(), equalTo(1));
 
         onView(withId(R.id.img_delete)).perform(click());
 

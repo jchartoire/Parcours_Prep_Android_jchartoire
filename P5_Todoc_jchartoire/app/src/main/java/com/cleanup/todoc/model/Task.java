@@ -47,6 +47,11 @@ public class Task {
         this.projectId = projectId;
     }
 
+//    @Nullable
+//    public Project getProject() {
+//        return Project.getProjectById(projectId);
+//    }
+
     public long getCreationTimestamp() {
         return creationTimestamp;
     }

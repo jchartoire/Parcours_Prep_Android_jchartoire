@@ -1,18 +1,32 @@
 package com.cleanup.todoc;
 
+import android.content.Context;
+
+import com.cleanup.todoc.database.TodocDatabase;
+import com.cleanup.todoc.database.dao.ProjectDao;
+import com.cleanup.todoc.database.dao.TaskDao;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
-import com.cleanup.todoc.repository.ProjectRepository;
+import com.cleanup.todoc.repositories.ProjectRepository;
 
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.robolectric.RobolectricTestRunner;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Room;
+import androidx.test.platform.app.InstrumentationRegistry;
 
+import static com.cleanup.todoc.database.TodocDatabase.roomCallback;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
@@ -22,20 +36,32 @@ import static org.junit.Assert.assertSame;
  *
  * @author Gaëtan HERFRAY
  */
+@RunWith(RobolectricTestRunner.class)
 public class TaskUnitTest {
+    private TaskDao taskDao;
+    private TodocDatabase todocDatabase;
+
+    @Before
+    public void createDb() {
+        Context context = InstrumentationRegistry.getInstrumentation().getContext();
+        todocDatabase = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build();
+        taskDao = todocDatabase.taskDao();
+        ProjectDao projectDao = todocDatabase.projectDao();
+        projectDao.insertProject(new Project(1L, "Projet Tartampion", 0xFF4183CC));
+        projectDao.insertProject(new Project(2L, "Projet Lucidia", 0xFF119D58));
+        projectDao.insertProject(new Project(3L, "Projet Circus", 0xFFFFD455));
+    }
+
+    @After
+    public void closeDb() {
+        todocDatabase.close();
+    }
+
     @Test
     public void test_projects() {
-        final Task task1 = new Task(1, 1, "task 1", new Date().getTime());
-        final Task task2 = new Task(2, 2, "task 2", new Date().getTime());
-        final Task task3 = new Task(3, 3, "task 3", new Date().getTime());
-        final Task task4 = new Task(4, 4, "task 4", new Date().getTime());
-
-        LiveData<List<Project>> projects = ProjectRepository.getAllProjects();
-
-//        assertEquals("Projet Tartampion", task1.getProject().getName());
-//        assertEquals("Projet Lucidia", task2.getProject().getName());
-//        assertEquals("Projet Circus", task3.getProject().getName());
-//        assertNull(task4.getProject());
+        taskDao.insertTask(new Task(4L,3L, "test4", System.currentTimeMillis()));
+//
+        //assertNull(getProjectById(task4.getProjectId()));
     }
 
     @Test
