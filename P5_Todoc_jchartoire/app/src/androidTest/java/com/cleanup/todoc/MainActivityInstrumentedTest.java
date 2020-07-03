@@ -47,8 +47,7 @@ public class MainActivityInstrumentedTest {
 
     @Before
     public void clearTodocDatabase() {
-        this.todocDatabase = Room.databaseBuilder(ApplicationProvider.getApplicationContext(),
-                TodocDatabase.class, "TodocDatabase.db").build();
+        this.todocDatabase = TodocDatabase.getDatabase(ApplicationProvider.getApplicationContext());
         taskDao = todocDatabase.taskDao();
         taskDao.deleteAll();
     }

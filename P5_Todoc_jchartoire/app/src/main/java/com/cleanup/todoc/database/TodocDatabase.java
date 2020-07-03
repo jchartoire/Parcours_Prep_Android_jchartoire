@@ -37,10 +37,10 @@ public abstract class TodocDatabase extends RoomDatabase {
                 projectDao.insertProject(new Project(2L, "Projet Lucidia", 0xFF119D58));
                 projectDao.insertProject(new Project(3L, "Projet Circus", 0xFFFFD455));
 
-                taskDao.insertTask(new Task(1L,1L, "test1", System.currentTimeMillis()));
-                taskDao.insertTask(new Task(2L,2L, "test2", System.currentTimeMillis()));
-                taskDao.insertTask(new Task(3L,3L, "test3", System.currentTimeMillis()));
-                taskDao.insertTask(new Task(4L,3L, "test4", System.currentTimeMillis()));
+                taskDao.insertTask(new Task(1L,1L, "testA", System.currentTimeMillis()));
+                taskDao.insertTask(new Task(2L,2L, "testB", System.currentTimeMillis()));
+                taskDao.insertTask(new Task(3L,3L, "testC", System.currentTimeMillis()));
+                taskDao.insertTask(new Task(4L,3L, "testD", System.currentTimeMillis()));
             });
         }
     };

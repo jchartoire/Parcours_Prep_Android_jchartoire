@@ -1,52 +1,51 @@
 package com.cleanup.todoc;
 
 import android.content.Context;
+import android.os.Build;
 
 import com.cleanup.todoc.database.TodocDatabase;
 import com.cleanup.todoc.database.dao.ProjectDao;
 import com.cleanup.todoc.database.dao.TaskDao;
 import com.cleanup.todoc.model.Project;
 import com.cleanup.todoc.model.Task;
-import com.cleanup.todoc.repositories.ProjectRepository;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+import org.robolectric.annotation.Config;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
-import androidx.lifecycle.LiveData;
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.room.Room;
 import androidx.test.platform.app.InstrumentationRegistry;
 
-import static com.cleanup.todoc.database.TodocDatabase.roomCallback;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
-/**
- * Unit tests for tasks
- *
- * @author Gaëtan HERFRAY
- */
 @RunWith(RobolectricTestRunner.class)
+@Config(sdk = {Build.VERSION_CODES.LOLLIPOP}, manifest = Config.NONE)
 public class TaskUnitTest {
+    @Rule
+    public InstantTaskExecutorRule instantTaskExecutorRule = new InstantTaskExecutorRule();
+
     private TaskDao taskDao;
+    private ProjectDao projectDao;
     private TodocDatabase todocDatabase;
 
     @Before
-    public void createDb() {
+    public void initDb() {
         Context context = InstrumentationRegistry.getInstrumentation().getContext();
-        todocDatabase = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build();
-        taskDao = todocDatabase.taskDao();
-        ProjectDao projectDao = todocDatabase.projectDao();
+        this.todocDatabase = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build();
+        taskDao = this.todocDatabase.taskDao();
+        projectDao = this.todocDatabase.projectDao();
         projectDao.insertProject(new Project(1L, "Projet Tartampion", 0xFF4183CC));
         projectDao.insertProject(new Project(2L, "Projet Lucidia", 0xFF119D58));
         projectDao.insertProject(new Project(3L, "Projet Circus", 0xFFFFD455));
@@ -54,18 +53,50 @@ public class TaskUnitTest {
 
     @After
     public void closeDb() {
-        todocDatabase.close();
+        taskDao.deleteAll();
+        this.todocDatabase.close();
     }
 
     @Test
-    public void test_projects() {
-        taskDao.insertTask(new Task(4L,3L, "test4", System.currentTimeMillis()));
-//
-        //assertNull(getProjectById(task4.getProjectId()));
+    @DisplayName("insert a task in database, read the task inserted, then delete it")
+    public void insert_read_and_delete_task() throws InterruptedException {
+        List<Task> tasksList = LiveDataTestUtil.getValue(taskDao.getAllTasks());
+        assertEquals(0, tasksList.size());
+
+        Task task = new Task(1L, 1L, "task", System.currentTimeMillis());
+        taskDao.insertTask(task);
+        tasksList = LiveDataTestUtil.getValue(taskDao.getAllTasks());
+        assertEquals(1, tasksList.size());
+        assertEquals("task", tasksList.get(0).getName());
+
+        taskDao.deleteTask(task);
+        tasksList = LiveDataTestUtil.getValue(taskDao.getAllTasks());
+        assertEquals(0, tasksList.size());
     }
 
     @Test
-    public void test_az_comparator() {
+    @DisplayName("insert a task with unexisting project should fail")
+    public void insert_task_with_unexisting_project() {
+        assertThrows(android.database.sqlite.SQLiteConstraintException.class,
+                () -> {
+                    Task task = new Task(1L, 4L, "task", System.currentTimeMillis());
+                    taskDao.insertTask(task);
+                });
+    }
+
+    @Test
+    @DisplayName("read projects in database")
+    public void read_project() throws InterruptedException {
+        List<Project> projectsList = LiveDataTestUtil.getValue(projectDao.getAllProjects());
+        assertEquals(3, projectsList.size());
+        assertEquals("Projet Circus", projectsList.get(0).getName());
+        assertEquals("Projet Lucidia", projectsList.get(1).getName());
+        assertEquals("Projet Tartampion", projectsList.get(2).getName());
+    }
+
+    @Test
+    @DisplayName("sort method by task name AZ")
+    public void az_comparator() {
         final Task task1 = new Task(1, 1, "aaa", 123);
         final Task task2 = new Task(2, 2, "zzz", 124);
         final Task task3 = new Task(3, 3, "hhh", 125);
@@ -82,7 +113,8 @@ public class TaskUnitTest {
     }
 
     @Test
-    public void test_za_comparator() {
+    @DisplayName("sort method by task name ZA")
+    public void za_comparator() {
         final Task task1 = new Task(1, 1, "aaa", 123);
         final Task task2 = new Task(2, 2, "zzz", 124);
         final Task task3 = new Task(3, 3, "hhh", 125);
@@ -99,7 +131,8 @@ public class TaskUnitTest {
     }
 
     @Test
-    public void test_recent_comparator() {
+    @DisplayName("sort method by creation date, recent first")
+    public void recent_comparator() {
         final Task task1 = new Task(1, 1, "aaa", 123);
         final Task task2 = new Task(2, 2, "zzz", 124);
         final Task task3 = new Task(3, 3, "hhh", 125);
@@ -116,7 +149,8 @@ public class TaskUnitTest {
     }
 
     @Test
-    public void test_old_comparator() {
+    @DisplayName("sort method by creation date, old first")
+    public void old_comparator() {
         final Task task1 = new Task(1, 1, "aaa", 123);
         final Task task2 = new Task(2, 2, "zzz", 124);
         final Task task3 = new Task(3, 3, "hhh", 125);

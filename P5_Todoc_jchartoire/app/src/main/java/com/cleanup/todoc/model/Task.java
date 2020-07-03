@@ -3,10 +3,8 @@ package com.cleanup.todoc.model;
 import java.util.Comparator;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 @Entity(foreignKeys = @ForeignKey(entity = Project.class,
@@ -19,8 +17,6 @@ public class Task {
 
     private long projectId;
 
-    @SuppressWarnings("NullableProblems")
-    @NonNull
     private String name;
     private long creationTimestamp;
 
