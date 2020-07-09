@@ -30,24 +30,6 @@ public class Project {
         this.color = color;
     }
 
-//    /**
-//     * Returns all the projects of the application.
-//     *
-//     * @return all the projects of the application
-//     */
-//    @NonNull
-//    public static Project[] getAllProjects() {
-//        return ProjectRepository.getAllProjects().getValue().toArray(new Project[0]);
-//    }
-//
-//    public static Project getProjectById(long id) {
-//        for (Project project : Objects.requireNonNull(ProjectRepository.getAllProjects().getValue())) {
-//            if (project.id == id)
-//                return project;
-//        }
-//        return null;
-//    }
-
     public long getId() {
         return id;
     }

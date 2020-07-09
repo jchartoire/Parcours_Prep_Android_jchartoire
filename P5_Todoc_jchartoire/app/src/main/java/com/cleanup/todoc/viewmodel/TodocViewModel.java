@@ -19,17 +19,10 @@ public class TodocViewModel extends AndroidViewModel {
     private TaskRepository taskRepository;
     private ProjectRepository projectRepository;
 
-    /*=== DATA ===*/
-    private LiveData<List<Task>> allTasks;
-    private LiveData<List<Project>> allProjects;
-
     public TodocViewModel(@NonNull Application application) {
         super(application);
         taskRepository = new TaskRepository(application);
-        allTasks = taskRepository.getAllTasks();
-
         projectRepository = new ProjectRepository(application);
-        allProjects = projectRepository.getAllProjects();
     }
 
     public void insertTask(Task task) {
@@ -41,10 +34,10 @@ public class TodocViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Task>> getAllTasks() {
-        return allTasks;
+        return taskRepository.getAllTasks();
     }
 
     public LiveData<List<Project>> getAllProjects() {
-        return allProjects;
+        return projectRepository.getAllProjects();
     }
 }
