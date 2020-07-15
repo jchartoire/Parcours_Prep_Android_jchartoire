@@ -7,7 +7,7 @@ import com.cleanup.todoc.database.dao.TaskDao;
 import com.cleanup.todoc.model.Task;
 
 import java.util.List;
-import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
@@ -17,9 +17,7 @@ public class TaskRepository {
     private TaskDao taskDao;
     private LiveData<List<Task>> allTasks;
 
-    private static final int NUMBER_OF_THREADS = 4;
-    static final ExecutorService databaseWriteExecutor =
-            Executors.newFixedThreadPool(NUMBER_OF_THREADS);
+    static final Executor executor = Executors.newSingleThreadExecutor();
 
     public TaskRepository(Application application) {
         TodocDatabase database = TodocDatabase.getDatabase(application);
@@ -32,10 +30,10 @@ public class TaskRepository {
     }
 
     public void insertTask(Task task) {
-        databaseWriteExecutor.execute(() -> taskDao.insertTask(task));
+        executor.execute(() -> taskDao.insertTask(task));
     }
 
     public void deleteTask(Task task) {
-        databaseWriteExecutor.execute(() -> taskDao.deleteTask(task));
+        executor.execute(() -> taskDao.deleteTask(task));
     }
 }
