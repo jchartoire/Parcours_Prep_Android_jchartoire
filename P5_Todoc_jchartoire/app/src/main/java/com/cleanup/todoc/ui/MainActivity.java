@@ -108,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
     @Override
     public void onDeleteTask(Task task) {
         todocViewModel.deleteTask(task);
-        updateTasks();
     }
 
     /**
@@ -131,15 +130,8 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
             }
             // If both project and name of the task have been set
             else if (taskProject != null) {
-                long id = System.currentTimeMillis();
 
-                Task task = new Task(
-                        id,
-                        taskProject.getId(),
-                        taskName,
-                        new Date().getTime()
-                );
-
+                Task task = new Task(0, taskProject.getId(), taskName, new Date().getTime());
                 addTask(task);
 
                 dialogInterface.dismiss();
@@ -167,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements TasksAdapter.Dele
      */
     private void addTask(@NonNull Task task) {
         todocViewModel.insertTask(task);
-        updateTasks();
     }
 
     /**

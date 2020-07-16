@@ -46,9 +46,9 @@ public class TaskUnitTest {
         this.todocDatabase = Room.inMemoryDatabaseBuilder(context, TodocDatabase.class).allowMainThreadQueries().build();
         taskDao = this.todocDatabase.taskDao();
         projectDao = this.todocDatabase.projectDao();
-        projectDao.insertProject(new Project(1L, "Projet Tartampion", 0xFF4183CC));
-        projectDao.insertProject(new Project(2L, "Projet Lucidia", 0xFF119D58));
-        projectDao.insertProject(new Project(3L, "Projet Circus", 0xFFFFD455));
+        projectDao.insertProject(new Project(1, "Projet Tartampion", 0xFF4183CC));
+        projectDao.insertProject(new Project(2, "Projet Lucidia", 0xFF119D58));
+        projectDao.insertProject(new Project(3, "Projet Circus", 0xFFFFD455));
     }
 
     @After
@@ -63,13 +63,13 @@ public class TaskUnitTest {
         List<Task> tasksList = LiveDataTestUtil.getValue(taskDao.getAllTasks());
         assertEquals(0, tasksList.size());
 
-        Task task = new Task(1L, 1L, "task", System.currentTimeMillis());
+        Task task = new Task(0, 1, "task", System.currentTimeMillis());
         taskDao.insertTask(task);
         tasksList = LiveDataTestUtil.getValue(taskDao.getAllTasks());
         assertEquals(1, tasksList.size());
         assertEquals("task", tasksList.get(0).getName());
 
-        taskDao.deleteTask(task);
+        taskDao.deleteTask(tasksList.get(0));
         tasksList = LiveDataTestUtil.getValue(taskDao.getAllTasks());
         assertEquals(0, tasksList.size());
     }
@@ -79,7 +79,7 @@ public class TaskUnitTest {
     public void insert_task_with_unexisting_project() {
         assertThrows(android.database.sqlite.SQLiteConstraintException.class,
                 () -> {
-                    Task task = new Task(1L, 4L, "task", System.currentTimeMillis());
+                    Task task = new Task(0, 4, "task", System.currentTimeMillis());
                     taskDao.insertTask(task);
                 });
     }

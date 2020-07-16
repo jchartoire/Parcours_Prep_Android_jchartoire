@@ -32,14 +32,14 @@ public abstract class TodocDatabase extends RoomDatabase {
                 // Populate the database in the background.
                 ProjectDao projectDao = INSTANCE.projectDao();
                 TaskDao taskDao = INSTANCE.taskDao();
-                projectDao.insertProject(new Project(1L, "Projet Tartampion", 0xFF4183CC));
-                projectDao.insertProject(new Project(2L, "Projet Lucidia", 0xFF119D58));
-                projectDao.insertProject(new Project(3L, "Projet Circus", 0xFFFFD455));
+                projectDao.insertProject(new Project(1, "Projet Tartampion", 0xFF4183CC));
+                projectDao.insertProject(new Project(2, "Projet Lucidia", 0xFF119D58));
+                projectDao.insertProject(new Project(3, "Projet Circus", 0xFFFFD455));
 
-                taskDao.insertTask(new Task(1L, 1L, "testA", System.currentTimeMillis()));
-                taskDao.insertTask(new Task(2L, 2L, "testB", System.currentTimeMillis()));
-                taskDao.insertTask(new Task(3L, 3L, "testC", System.currentTimeMillis()));
-                taskDao.insertTask(new Task(4L, 3L, "testD", System.currentTimeMillis()));
+                taskDao.insertTask(new Task(0, 1, "testA", System.currentTimeMillis()));
+                taskDao.insertTask(new Task(0, 2, "testB", System.currentTimeMillis()));
+                taskDao.insertTask(new Task(0, 3, "testC", System.currentTimeMillis()));
+                taskDao.insertTask(new Task(0, 3, "testD", System.currentTimeMillis()));
             });
         }
     };

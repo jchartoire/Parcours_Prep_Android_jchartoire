@@ -18,6 +18,7 @@ public class Task {
     private long projectId;
 
     private String name;
+
     private long creationTimestamp;
 
     /**
@@ -42,11 +43,6 @@ public class Task {
     private void setProjectId(long projectId) {
         this.projectId = projectId;
     }
-
-//    @Nullable
-//    public Project getProject() {
-//        return Project.getProjectById(projectId);
-//    }
 
     public long getCreationTimestamp() {
         return creationTimestamp;
